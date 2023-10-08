@@ -21,10 +21,10 @@ target_sources(MeddySDK_Meddyproject
         "${MeddySDK_Meddyproject_BINARY_DIR}" # base directory of generated headers
       FILES
         # Add all public header files.
-        "${MeddySDK_Meddyproject_SOURCE_DIR}/Source/Public/Meddyproject.h"
+        "${MeddySDK_Meddyproject_SOURCE_DIR}/Source/Public/MeddySDK.Meddyproject.h"
   PRIVATE
     # Add all private source files.
-    "${MeddySDK_Meddyproject_SOURCE_DIR}/Source/Private/Meddyproject.cpp"
+    "${MeddySDK_Meddyproject_SOURCE_DIR}/Source/Private/MeddySDK.Meddyproject.cpp"
   )
 
 # Add include directories.
