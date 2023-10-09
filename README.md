@@ -1,1 +1,1 @@
-# MeddySDK.Meddyproject
+# MeddySDK_Meddyproject
