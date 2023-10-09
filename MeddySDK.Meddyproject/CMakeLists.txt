@@ -6,7 +6,24 @@ project(MeddySDK_Meddyproject
   LANGUAGES CXX
   )
 
+# Add target.
+#
+# We namespace target names using underscore characters "_". Not namespacing your target names can result in their
+# file names not be specific enough. E.g., for the DAM library of MeddySDK, we want its library file to be named
+# something like "MeddySDK_DAM.lib" instead of just "DAM.lib" - because would be super unclear.
 add_library(MeddySDK_Meddyproject)
+
+# Add alias targets named with special characters that files can't have.
+#
+# We use these aliases when refering to the targets so that it's impossible for CMake to interpret them as files.
+#
+# It's conventional to use "::" in these names like namespaces. Our targets are already named with namespacing in mind so
+# we just prepend "::" to their names, analogous to how we indicate global scope in cpp.
+#
+# The aliases are used by build interface users. Install interface users use the original target names combined with their
+# export namespaces. Make sure the names for both use cases are the same. This is important for consistency. Namely, so
+# that build interface users can use `OVERRIDE_FIND_PACKAGE` with `FetchContent_Declare()`.
+add_library(::MeddySDK_Meddyproject ALIAS MeddySDK_Meddyproject)
 
 # Add source files. Including header files as well so they are easily-discoverable by IDEs.
 target_sources(MeddySDK_Meddyproject
@@ -61,7 +78,7 @@ install(TARGETS MeddySDK_Meddyproject
 # Generate script that imports targets associated with our export.
 install(EXPORT MeddySDK_MeddyprojectExport
   FILE "MeddySDK_MeddyprojectExport.cmake"
-  NAMESPACE MeddySDK_MeddyprojectExport::
+  NAMESPACE ::
   DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/MeddySDK_Meddyproject"
   )
 
