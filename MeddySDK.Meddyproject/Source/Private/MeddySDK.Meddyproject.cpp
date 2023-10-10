@@ -1,2 +1,0 @@
-
-#include "MeddySDK.Meddyproject.h"
