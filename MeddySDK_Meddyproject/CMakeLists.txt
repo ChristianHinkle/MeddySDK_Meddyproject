@@ -88,7 +88,7 @@ install(TARGETS MeddySDK_Meddyproject
 install(EXPORT MeddySDK_MeddyprojectExport
   FILE "MeddySDK_MeddyprojectExport.cmake"
   NAMESPACE ::
-  DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/MeddySDK_Meddyproject"
+  DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/MeddySDK_Meddyproject" # TODO: should we include the ${PROJECT_VERSION} in this destination path?
   )
 
 # Create a package version file for our export.
