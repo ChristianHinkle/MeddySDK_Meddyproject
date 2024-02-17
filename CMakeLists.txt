@@ -30,6 +30,12 @@ add_library(MeddySDK_Meddyproject)
 
 add_library(::MeddySDK_Meddyproject ALIAS MeddySDK_Meddyproject)
 
+# List out required language features.
+target_compile_features(MeddySDK_Meddyproject
+  PUBLIC
+    cxx_std_20
+  )
+
 # Add source files. Including header files as well so they are easily-discoverable by IDEs.
 target_sources(MeddySDK_Meddyproject
   PUBLIC

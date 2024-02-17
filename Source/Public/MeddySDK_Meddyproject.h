@@ -1,10 +1,7 @@
 
 #pragma once
 
-namespace MeddySDK
+namespace MeddySDK::Meddyproject
 {
-    namespace Meddyproject
-    {
-        void MyBoostFilesystemExperiment();
-    }
+    void MyBoostFilesystemExperiment();
 }
