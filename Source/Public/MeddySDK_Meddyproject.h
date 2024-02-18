@@ -1,7 +1,9 @@
 
 #pragma once
 
+#include "meddysdk_meddyproject_export.h"
+
 namespace MeddySDK::Meddyproject
 {
-    void MyBoostFilesystemExperiment();
+    MEDDYSDK_MEDDYPROJECT_EXPORT void MyBoostFilesystemExperiment();
 }

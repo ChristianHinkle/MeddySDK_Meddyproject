@@ -36,6 +36,10 @@ target_compile_features(MeddySDK_Meddyproject
     cxx_std_20
   )
 
+# Generate header with export macros for our target.
+include(GenerateExportHeader)
+generate_export_header(MeddySDK_Meddyproject)
+
 #
 # Add all header files. Organized into file sets.
 #
@@ -55,6 +59,7 @@ target_sources(MeddySDK_Meddyproject
         "${CMAKE_CURRENT_BINARY_DIR}"
       FILES
         # Add all public header files.
+        "${CMAKE_CURRENT_BINARY_DIR}/meddysdk_meddyproject_export.h"
         "${MeddySDK_Meddyproject_SOURCE_DIR}/Source/Public/MeddySDK_Meddyproject.h"
   PRIVATE
     FILE_SET meddysdk_meddyproject_private_headers
