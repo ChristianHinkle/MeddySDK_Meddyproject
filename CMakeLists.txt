@@ -36,46 +36,65 @@ target_compile_features(MeddySDK_Meddyproject
     cxx_std_20
   )
 
-# Add source files. Including header files as well so they are easily-discoverable by IDEs.
+#
+# Add all header files. Organized into file sets.
+#
+# The file set of public headers is important because we use it to install
+# them for install interface users.
+#
+# Listing all files is important so they are easily-discoverable by IDEs.
+#
 target_sources(MeddySDK_Meddyproject
   PUBLIC
-    #
-    # Add all public headers under a file set.
-    #
-    # This file set is usable for installing headers.
-    #
     FILE_SET meddysdk_meddyproject_public_headers
       TYPE HEADERS
       BASE_DIRS
+        # Base directory of public headers.
         "${MeddySDK_Meddyproject_SOURCE_DIR}/Source/Public"
-        "${MeddySDK_Meddyproject_BINARY_DIR}" # base directory of generated headers.
+        # Base directory of generated headers.
+        "${CMAKE_CURRENT_BINARY_DIR}"
       FILES
         # Add all public header files.
         "${MeddySDK_Meddyproject_SOURCE_DIR}/Source/Public/MeddySDK_Meddyproject.h"
   PRIVATE
-    # Add all private source files.
+    FILE_SET meddysdk_meddyproject_private_headers
+      TYPE HEADERS
+      BASE_DIRS
+        # Base directory of private headers.
+        "${MeddySDK_Meddyproject_SOURCE_DIR}/Source/Private"
+        # Base directory of generated headers.
+        "${CMAKE_CURRENT_BINARY_DIR}"
+      FILES
+        # Add all private header files.
+  )
+
+# Add all source files.
+target_sources(MeddySDK_Meddyproject
+  PRIVATE
     "${MeddySDK_Meddyproject_SOURCE_DIR}/Source/Private/MeddySDK_Meddyproject.cpp"
   )
 
 #
 # Add include directories.
 #
-# All are enclosed in BUILD_INTERFACE because they are specific to our source directory and
-# should be used only when building binaries for our target.
+# Paths are enclosed in BUILD_INTERFACE when they can only be used when building binaries for our target.
 #
 # No install-specific directories are provided here. That gets taken care of
 # elsewhere, i.e., the install command.
 #
 # Also, make sure include statements of public headers are compatible between install interface users
 # and build interface users. E.g., a user's include statements should work for both packaged
-# library usage and subproject library usage, without having to adapt their code to either usage.
+# library usage and subproject library usage, without having to adapt their code to either use case.
 #
 target_include_directories(MeddySDK_Meddyproject
   PUBLIC
-    "$<BUILD_INTERFACE:${MeddySDK_Meddyproject_SOURCE_DIR}/Source/Public>" # add our public includes.
-    "$<BUILD_INTERFACE:${MeddySDK_Meddyproject_BINARY_DIR}>" # add easy access to generated headers.
+    # Add our public includes.
+    "$<BUILD_INTERFACE:${MeddySDK_Meddyproject_SOURCE_DIR}/Source/Public>"
+    # Add access to generated headers.
+    "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>"
   PRIVATE
-    "$<BUILD_INTERFACE:${MeddySDK_Meddyproject_SOURCE_DIR}/Source>" # add easy access to non-public includes.
+    # Add easy access to non-public includes.
+    "$<BUILD_INTERFACE:${MeddySDK_Meddyproject_SOURCE_DIR}/Source>"
   )
 
 # Get the Boost export. This gives us its imported targets.
