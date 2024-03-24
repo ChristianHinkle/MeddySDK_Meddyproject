@@ -7,28 +7,31 @@ project(MeddySDK_Meddyproject
   )
 
 #
-# Add target.
+# Add targets.
 #
 # We namespace target names using underscore characters "_". Not namespacing your target names can result in their
 # file names not be specific enough. E.g., for the DAM library of MeddySDK, we want its library file to be named
-# something like "MeddySDK_DAM.lib" instead of just "DAM.lib" - because would be super unclear.
+# something like "MeddySDK_DAM.lib" instead of just "DAM.lib" - because that would be super vague.
 #
+
 add_library(MeddySDK_Meddyproject)
 
 #
-# Add alias targets named with special characters that files can't have.
+# Add alias targets.
 #
-# We use these aliases when refering to the targets so that it's impossible for CMake to interpret them as files.
+# We name these with special characters that filenames can't have. We use these aliases instead of the direct
+# target names where possible so that they can't be be interpreted as filenames.
 #
-# It's conventional to use "::" in these names like namespaces. Our targets are already named with namespacing in mind so
-# we just prepend "::" to their names, analogous to how we indicate global scope in cpp.
+# It's conventional to use "::" in these names, like namespaces. If a target doesn't have anything to namespace in its
+# name then just prepend "::" to it, analogous to how we indicate global scope in cpp.
 #
-# The aliases are used by build interface users. Install interface users use the original target names combined with their
-# export namespaces. Make sure the names for both use cases are the same. This is important for consistency. Namely, so
-# that build interface users can use `OVERRIDE_FIND_PACKAGE` with `FetchContent_Declare()`.
+# The aliases set up here get used by build interface users. Make sure the same aliases are also set up for install
+# interface users somewhere else. We do that in the export's config file. It's important to make sure the names are
+# the same in both cases for consistency. Namely, so that build interface users can use `OVERRIDE_FIND_PACKAGE` with
+# `FetchContent_Declare()`.
 #
 
-add_library(::MeddySDK_Meddyproject ALIAS MeddySDK_Meddyproject)
+add_library(MeddySDK::Meddyproject ALIAS MeddySDK_Meddyproject)
 
 # List out required language features.
 target_compile_features(MeddySDK_Meddyproject
@@ -124,7 +127,6 @@ install(TARGETS MeddySDK_Meddyproject
 # Generate script that imports targets associated with our export.
 install(EXPORT MeddySDK_MeddyprojectExport
   FILE "MeddySDK_MeddyprojectExport.cmake"
-  NAMESPACE ::
   DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/MeddySDK_Meddyproject" # TODO: should we include the ${PROJECT_VERSION} in this destination path?
   )
 
