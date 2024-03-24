@@ -99,7 +99,7 @@ target_link_libraries(MeddySDK_Meddyproject
   PRIVATE
     # Only depend on imported targets if we are BUILD_LOCAL_INTERFACE because we don't
     # want to have to put them in the export.
-    $<BUILD_LOCAL_INTERFACE:Boost::filesystem> # add the imported Boost::filesystem target.
+    $<BUILD_LOCAL_INTERFACE:Boost::filesystem> # Add the imported Boost::filesystem target as a dependency.
   )
 
 include(GNUInstallDirs)
