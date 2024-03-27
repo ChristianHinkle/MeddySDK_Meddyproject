@@ -3,15 +3,15 @@
 #include "MeddySDK_Meddyproject.h"
 
 #include <iostream>
-#include "boost/filesystem/path.hpp"
+#include <filesystem>
 
 void MeddySDK::Meddyproject::MyBoostFilesystemExperiment()
 {
-    boost::filesystem::path MyPath = boost::filesystem::path("C:/Yoooo");
+    std::filesystem::path MyPath = std::filesystem::path("C:/Yoooo");
 
     std::cout << "Yo. Here is MyPath: " << MyPath << "." << std::endl;
 
-    boost::filesystem::path MyOtherPath = boost::filesystem::path("C:/YooooImDifferent");
+    std::filesystem::path MyOtherPath = std::filesystem::path("C:/YooooImDifferent");
 
     std::cout << "Yo. Here is MyOtherPath: " << MyOtherPath << "." << std::endl;
 

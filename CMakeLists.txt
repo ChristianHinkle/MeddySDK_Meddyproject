@@ -92,17 +92,6 @@ target_sources(MeddySDK_Meddyproject
     "${MeddySDK_Meddyproject_SOURCE_DIR}/Source/Private/MeddySDK_Meddyproject.cpp"
   )
 
-# Get the Boost export. This gives us its imported targets.
-find_package(Boost CONFIG REQUIRED COMPONENTS filesystem)
-
-# Add dependencies to other targets.
-target_link_libraries(MeddySDK_Meddyproject
-  PRIVATE
-    # Only depend on imported targets if we are BUILD_LOCAL_INTERFACE because we don't
-    # want to have to put them in the export.
-    $<BUILD_LOCAL_INTERFACE:Boost::filesystem> # Add the imported Boost::filesystem target as a dependency.
-  )
-
 include(GNUInstallDirs)
 
 # Associate our target with an export and set up installation.
