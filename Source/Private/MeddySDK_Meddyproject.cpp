@@ -1,3 +1,4 @@
+// Copyright (c) 2023-2024 Christian Hinkle, Brian Hinkle.
 
 #include "MeddySDK_Meddyproject.h"
 
