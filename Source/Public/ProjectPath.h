@@ -25,5 +25,5 @@ namespace MeddySDK::Meddyproject::ProjectPath
      * @return The path to the meddyproject directory.
      */
     MEDDYSDK_MEDDYPROJECT_EXPORT std::filesystem::path MakeProjectPath(
-        std::filesystem::path inDirectoryPathCopy);
+        std::filesystem::path inDirectoryPath);
 }
