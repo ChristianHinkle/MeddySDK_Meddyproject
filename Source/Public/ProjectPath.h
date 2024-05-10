@@ -20,7 +20,7 @@ namespace MeddySDK::Meddyproject::ProjectPath
     /**
      * @brief Makes a path to the meddyproject for the given directory path.
      *
-     * @param inDirectoryPathCopy The parent directory for meddyproject path to return.
+     * @param inDirectoryPath The parent directory for meddyproject path to return.
      *
      * @return The path to the meddyproject directory.
      */
