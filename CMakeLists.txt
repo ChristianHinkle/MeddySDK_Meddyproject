@@ -71,7 +71,7 @@ target_sources(MeddySDK_Meddyproject
       FILES
         # Add all public header files.
         "${CMAKE_CURRENT_BINARY_DIR}/meddysdk_meddyproject_export.h"
-        "${MeddySDK_Meddyproject_SOURCE_DIR}/Source/Public/ProjectPath.h"
+        "${MeddySDK_Meddyproject_SOURCE_DIR}/Source/Public/Path.h"
   PRIVATE
     FILE_SET meddysdk_meddyproject_private_headers
       TYPE HEADERS
@@ -91,7 +91,7 @@ target_sources(MeddySDK_Meddyproject
 # Add all source files.
 target_sources(MeddySDK_Meddyproject
   PRIVATE
-    "${MeddySDK_Meddyproject_SOURCE_DIR}/Source/Private/ProjectPath.cpp"
+    "${MeddySDK_Meddyproject_SOURCE_DIR}/Source/Private/Path.cpp"
   )
 
 include(GNUInstallDirs)

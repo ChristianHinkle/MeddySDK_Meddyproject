@@ -7,15 +7,15 @@
 #include <filesystem>
 #include <string_view>
 
-#define MEDDYSDK_MEDDYPROJECT_PROJECTPATH_PROJECT_DIRECTORY_STRING_LITERAL ".meddyproject"
+#define MEDDYSDK_MEDDYPROJECT_PATH_PROJECT_DIRECTORY_STRING_LITERAL ".meddyproject"
 
 /**
  * @brief Filesystem path utilities for meddyprojects.
  */
-namespace MeddySDK::Meddyproject::ProjectPath
+namespace MeddySDK::Meddyproject::Path
 {
     constexpr std::string_view ProjectDirectoryString =
-        MEDDYSDK_MEDDYPROJECT_PROJECTPATH_PROJECT_DIRECTORY_STRING_LITERAL;
+        MEDDYSDK_MEDDYPROJECT_PATH_PROJECT_DIRECTORY_STRING_LITERAL;
 
     /**
      * @brief Makes a path to the meddyproject for the given directory path.
