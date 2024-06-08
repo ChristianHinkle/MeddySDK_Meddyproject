@@ -3,7 +3,9 @@
 cmake_minimum_required(VERSION 3.24)
 
 project(MeddySDK_Meddyproject
-  VERSION 0.1
+  VERSION 0.1.0
+  DESCRIPTION ""
+  HOMEPAGE_URL "https://github.com/ChristianHinko/MeddySDK_Meddyproject"
   LANGUAGES CXX
   )
 
@@ -134,3 +136,21 @@ install(
     "${CMAKE_CURRENT_BINARY_DIR}/MeddySDK_MeddyprojectConfigVersion.cmake"
   DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/MeddySDK_Meddyproject"
   )
+
+# Set some simple values for CPack based on this current project. The default
+# values for these are specific to the top-level project but we want to allow for
+# having several projects generate their own CPack configs without conflicting.
+set(CPACK_PACKAGE_NAME "${PROJECT_NAME}")
+set(CPACK_PACKAGE_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}")
+set(CPACK_PACKAGE_VERSION_MINOR "${PROJECT_VERSION_MINOR}")
+set(CPACK_PACKAGE_VERSION_PATCH "${PROJECT_VERSION_PATCH}")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "${PROJECT_DESCRIPTION}")
+set(CPACK_PACKAGE_HOMEPAGE_URL "${PROJECT_HOMEPAGE_URL}")
+set(CPACK_INSTALL_CMAKE_PROJECTS "${CMAKE_BINARY_DIR};${PROJECT_NAME};ALL;/")
+
+# Output the generated CPack config in a directory specific to this project. This is
+# nice so we can generate our own config without conflicting with other projects.
+set(CPACK_OUTPUT_CONFIG_FILE "${CMAKE_BINARY_DIR}/${PROJECT_NAME}/CPackConfig.cmake")
+
+# Generate a CPackConfig.cmake file for this project.
+include(CPack)
