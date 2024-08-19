@@ -5,7 +5,7 @@
 #include <filesystem>
 
 std::filesystem::path MeddySDK::Meddyproject::Path::MakeProjectPath(
-    std::filesystem::path inDirectoryPath)
+    std::filesystem::path&& inDirectoryPath)
 {
     inDirectoryPath.append(ProjectDirectoryString);
     return inDirectoryPath;
