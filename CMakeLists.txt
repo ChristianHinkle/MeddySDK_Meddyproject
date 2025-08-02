@@ -36,15 +36,15 @@ add_library(MeddySDK_Meddyproject)
 
 add_library(MeddySDK::Meddyproject ALIAS MeddySDK_Meddyproject)
 
+# Generate a cpp header file that provides export macros for our library.
+include(GenerateExportHeader)
+generate_export_header(MeddySDK_Meddyproject)
+
 # List out required language features.
 target_compile_features(MeddySDK_Meddyproject
   PUBLIC
     cxx_std_20
   )
-
-# Generate cpp header file with export macros for our target.
-include(GenerateExportHeader)
-generate_export_header(MeddySDK_Meddyproject)
 
 #
 # Add all header files and set up their include directories.
