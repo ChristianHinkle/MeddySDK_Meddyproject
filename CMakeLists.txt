@@ -1,6 +1,6 @@
 # Copyright (c) 2023-2024 Christian Hinkle, Brian Hinkle.
 
-cmake_minimum_required(VERSION 3.24)
+cmake_minimum_required(VERSION 4.0)
 
 project(MeddySDK_Meddyproject
   VERSION 0.1.0
@@ -9,12 +9,20 @@ project(MeddySDK_Meddyproject
   LANGUAGES CXX
   )
 
+# Tell CMake where our cmake scripts ("modules") are.
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMake/Modules")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMake/Modules/CPack")
+
 #
 # Add targets.
 #
 # We namespace target names using underscore characters "_". Not namespacing your target names can result in their
 # file names not be specific enough. E.g., for the DAM library of MeddySDK, we want its library file to be named
 # something like "MeddySDK_DAM.lib" instead of just "DAM.lib" - because that would be super vague.
+#
+# The name you pass in here will be the name of the output binary file. It's okay to give special name here if that's what
+# you want your binary file to be called. E.g., for MeddySDKCLI, we actually name the executable file "meddy" for our
+# desired command line format.
 #
 
 add_library(MeddySDK_Meddyproject)
@@ -65,13 +73,13 @@ target_sources(MeddySDK_Meddyproject
       TYPE HEADERS
       BASE_DIRS
         # Base directory of public headers.
-        "${MeddySDK_Meddyproject_SOURCE_DIR}/Source/Public"
+        "${CMAKE_CURRENT_SOURCE_DIR}/Source/Public"
         # Base directory of generated headers.
         "${CMAKE_CURRENT_BINARY_DIR}"
       FILES
         # Add all public header files.
         "${CMAKE_CURRENT_BINARY_DIR}/meddysdk_meddyproject_export.h"
-        "${MeddySDK_Meddyproject_SOURCE_DIR}/Source/Public/Path.h"
+        "${CMAKE_CURRENT_SOURCE_DIR}/Source/Public/Path.h"
   PRIVATE
     FILE_SET meddysdk_meddyproject_private_headers
       TYPE HEADERS
@@ -83,7 +91,7 @@ target_sources(MeddySDK_Meddyproject
         # cpp include statements, you have to type "Private/" to access the non-public headers. This
         # makes it obvious for programmers when a header shouldn't be included in public files.
         #
-        "${MeddySDK_Meddyproject_SOURCE_DIR}/Source"
+        "${CMAKE_CURRENT_SOURCE_DIR}/Source"
       FILES
         # Add all private header files.
   )
@@ -91,14 +99,14 @@ target_sources(MeddySDK_Meddyproject
 # Add all source files.
 target_sources(MeddySDK_Meddyproject
   PRIVATE
-    "${MeddySDK_Meddyproject_SOURCE_DIR}/Source/Private/Path.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Source/Private/Path.cpp"
   )
 
 include(GNUInstallDirs)
 
-# Associate our target with an export and set up installation.
+# Associate our targets with an export and specify how their files would be installed.
 install(TARGETS MeddySDK_Meddyproject
-  EXPORT MeddySDK_MeddyprojectExport
+  EXPORT "${PROJECT_NAME}Export"
   LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
   ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
   RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
@@ -111,30 +119,30 @@ install(TARGETS MeddySDK_Meddyproject
   # install interface users and build interface users. E.g., a user's include statements should work for
   # both packaged library usage and subproject library usage, without having to adapt their code to either use case.
   #
-  INCLUDES DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/MeddySDK_Meddyproject"
+  INCLUDES DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}"
   # Copy over public headers.
-  FILE_SET meddysdk_meddyproject_public_headers DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/MeddySDK_Meddyproject"
+  FILE_SET meddysdk_meddyproject_public_headers DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}"
   )
 
 # Generate script that imports targets associated with our export.
-install(EXPORT MeddySDK_MeddyprojectExport
-  FILE "MeddySDK_MeddyprojectExport.cmake"
-  DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/MeddySDK_Meddyproject"
+install(EXPORT "${PROJECT_NAME}Export"
+  FILE "${PROJECT_NAME}Export.cmake"
+  DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
   )
 
 # Create a package version file for our export.
 include(CMakePackageConfigHelpers)
-write_basic_package_version_file("${CMAKE_CURRENT_BINARY_DIR}/MeddySDK_MeddyprojectConfigVersion.cmake"
-  VERSION ${MeddySDK_Meddyproject_VERSION}
+write_basic_package_version_file("${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
+  VERSION ${PROJECT_VERSION}
   COMPATIBILITY SameMajorVersion
   )
 
 # Copy any files for downstream usage to the install directory.
 install(
   FILES
-    "${MeddySDK_Meddyproject_SOURCE_DIR}/MeddySDK_MeddyprojectConfig.cmake"
-    "${CMAKE_CURRENT_BINARY_DIR}/MeddySDK_MeddyprojectConfigVersion.cmake"
-  DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/MeddySDK_Meddyproject"
+    "${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}Config.cmake"
+    "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
+  DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
   )
 
 # Set some simple values for CPack based on this current project. The default
@@ -148,10 +156,36 @@ set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "${PROJECT_DESCRIPTION}")
 set(CPACK_PACKAGE_HOMEPAGE_URL "${PROJECT_HOMEPAGE_URL}")
 set(CPACK_INSTALL_CMAKE_PROJECTS "${CMAKE_BINARY_DIR};${PROJECT_NAME};ALL;/")
 
-# Output the generated CPack configs in a directory specific to this project. This is
+# Tell CMake to output the generated CPack configs in a directory specific to this project. This is
 # nice so we can generate our own config without conflicting with other projects.
 set(CPACK_OUTPUT_CONFIG_FILE "${CMAKE_BINARY_DIR}/${PROJECT_NAME}/CPackConfig.cmake")
 set(CPACK_SOURCE_OUTPUT_CONFIG_FILE "${CMAKE_BINARY_DIR}/${PROJECT_NAME}/CPackSourceConfig.cmake")
+
+# TODO: Decide on an appropriate place to set generator-specific variables. I tried
+# wrapping this NSIS-specific variable in an if condition `CPACK_GENERATOR MATCHES "NSIS"` but
+# it was never being entered.
+
+#
+# Use NSIS' feature for appending our binary directory to the PATH environment
+# variable.
+#
+# Important: Make sure you modify your NSIS installation with the files from the "strlen_8192" version before
+# running CPack! Or else the installer will fail to modify the PATH env var for most users, because
+# variables in NSIS cannot exceed 1024 characters by default, and PATH env vars tend to be very lengthy.
+#
+# See our custom NSIS template where we make sure the "PATH" environment variable is
+# modified by default: "CMake/Modules/CPack/NSIS.InstallOptions.ini.in".
+#
+# TODO: I would like to have this functionality for other generators as well, but I
+# can't seem to find a generator-agnostic solution to this. E.g., in CMake's source
+# code, they re-implement this feature specifically for their WIX generator. I believe this
+# kind of per-generator implementation would be the "correct" way. Alternatively, it might
+# be possible to invoke a script that sets the env var manually after the generator finishes
+# installation of the package, but I would want to be transparent about that and give the
+# user control over that behavior; not to mention, it would also have to do the opposite
+# on uninstall.
+#
+set(CPACK_NSIS_MODIFY_PATH "ON")
 
 # Generate a CPackConfig.cmake file for this project.
 include(CPack)
