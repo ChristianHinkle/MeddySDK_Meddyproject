@@ -89,7 +89,10 @@ target_sources(MeddySDK_Meddyproject
       FILES
         # Add all public header files.
         "${CMAKE_CURRENT_BINARY_DIR}/meddysdk_meddyproject_export.h"
-        "${CMAKE_CURRENT_SOURCE_DIR}/Source/Public/Path.h"
+        "${CMAKE_CURRENT_SOURCE_DIR}/Source/Public/Meddyproject.h"
+        "${CMAKE_CURRENT_SOURCE_DIR}/Source/Public/FilesystemUtils.h"
+        "${CMAKE_CURRENT_SOURCE_DIR}/Source/Public/StringUtils.h"
+        "${CMAKE_CURRENT_SOURCE_DIR}/Source/Public/CharBufferString.h"
   PRIVATE
     FILE_SET meddysdk_meddyproject_private_headers
       TYPE HEADERS
@@ -109,7 +112,10 @@ target_sources(MeddySDK_Meddyproject
 # Add all source files.
 target_sources(MeddySDK_Meddyproject
   PRIVATE
-    "${CMAKE_CURRENT_SOURCE_DIR}/Source/Private/Path.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Source/Private/Meddyproject.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Source/Private/FilesystemUtils.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Source/Private/StringUtils.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Source/Private/CharBufferString.cpp"
   )
 
 include(GNUInstallDirs)

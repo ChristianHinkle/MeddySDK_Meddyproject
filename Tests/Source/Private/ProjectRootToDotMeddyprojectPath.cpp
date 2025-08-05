@@ -1,6 +1,6 @@
 // Copyright (c) 2023-2025 Christian Hinkle, Brian Hinkle.
 
-#include "Path.h"
+#include "Meddyproject.h"
 #include <iostream>
 #include <string_view>
 
@@ -30,7 +30,7 @@ int main(int argc, char** argv)
     std::cout << '\n';
 
     std::filesystem::path testResultActualPath =
-        MeddySDK::Meddyproject::Path::MakeProjectPath(std::filesystem::path(testInputPath));
+        MeddySDK::Meddyproject::ProjectRootToDotMeddyprojectPath(std::filesystem::path(testInputPath));
 
     std::cout << "Actual result path: " << testResultActualPath << "." << '\n';
 
