@@ -1,4 +1,4 @@
-# Copyright (c) 2023-2024 Christian Hinkle, Brian Hinkle.
+# Copyright (c) 2023-2025 Christian Hinkle, Brian Hinkle.
 
 include(CMakeFindDependencyMacro)
 
