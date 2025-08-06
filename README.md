@@ -7,7 +7,7 @@ For a superproject with all components Meddy has to offer, see https://github.co
 
 MeddySDK_Meddyproject has zero dependencies so far.
 
-## Build System
+## Build System ⌨
 
 Everything here is built off of CMake, which is cross-platform, and gets great support from IDEs.
 
@@ -21,7 +21,7 @@ VS Code has the "CMake Tools" and "C/C++" extensions, developed by Microsoft.
 
 Visual Studio has very nice integration, but they seem behind when it comes to supporting the latest CMake features. I've had experiences where I have to switch to using VS Code because of this.
 
-## Build Instructions
+## Build Instructions 🔨
 
 This project is fully isolated from its dependencies, and therefore must be tied together by a superproject. See https://github.com/ChristianHinko/MeddySDKStandalone for a complete build setup.
 
