@@ -5,7 +5,9 @@ For a superproject with all components Meddy has to offer, see https://github.co
 
 ## Dependencies
 
-MeddySDK_Meddyproject has zero dependencies so far.
+MeddySDK_Meddyproject
+- ~~[boost_filesystem](https://github.com/boostorg/filesystem)~~
+    - This dependency has been eliminated. We now use `std::filesystem` as a replacement.
 
 ## Build System ⌨
 
