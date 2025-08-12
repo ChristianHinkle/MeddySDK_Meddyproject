@@ -16,6 +16,11 @@ endif()
 
 # Conditionally enable our "tests" subproject.
 if(BUILD_TESTING)
+  # The reason we're okay with using `add_subdirectory` for this instead of a more-sophisticated `FetchContent` setup is
+  # because we're fairly certain that we are the only project that would want to use this testing version of our project. If we
+  # want to change this, we could structure both the test and non-test version of this project into two different subdirectories,
+  # which would be tied together by `FetchContent` from a parent project. This would allow one to find the other in a
+  # decoupled manner.
   add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/Tests")
 endif()
 
