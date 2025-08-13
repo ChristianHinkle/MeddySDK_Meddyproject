@@ -11,10 +11,11 @@ project(MeddySDK_Meddyproject_Tests
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMake/Modules")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMake/Modules/CPack")
 
-# Note that we do not "find package" for the MeddySDK_Meddyproject export. We don't need to since we are assuming that
-# our parent cmake project is using `add_subdirectory` on us. That means that we are being processed in the same
-# configuration step as them. The targets that we reference in `target_link_libraries` commands don't even need to
-# exist at this point because CMake only validates existence of the targets at the end of the entire configuration process.
+# Note that we do not "find package" for our parent project's export. We don't need to since we are assuming that
+# our parent project is using `add_subdirectory` on us. That means that we are being processed in the same
+# configuration step as them. The targets that we reference in `target_link_libraries` commands don't even need
+# to exist at this point because CMake only validates existence of the targets at the end of the entire configuration
+# process.
 
 add_executable(ProjectRootToDotMeddyprojectPath)
 target_compile_features(ProjectRootToDotMeddyprojectPath PUBLIC cxx_std_20)
