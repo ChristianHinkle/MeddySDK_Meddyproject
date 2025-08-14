@@ -7,16 +7,18 @@ project(MeddySDK_Meddyproject_Tests
   LANGUAGES CXX
   )
 
-# Note that we do not "find package" for our parent project's export. We don't need to since we are assuming that
-# our parent project is using `add_subdirectory` on us. That means that we are being processed in the same
-# configuration step as them. The targets that we reference in `target_link_libraries` commands don't even need
-# to exist at this point because CMake only validates existence of the targets at the end of the entire configuration
-# process.
+#
+# Get the MeddySDK_Meddyproject_Static export. This gives us its imported targets.
+#
+# TODO: Remove the "_Static" postfix and use `COMPONENT` to access the static library. We can't right now because we
+# are in an intermediate point of transitioning to this new organized structure. So "MeddySDK_Meddyproject_Static" is THE export, for now.
+#
+find_package(MeddySDK_Meddyproject_Static 0 CONFIG REQUIRED)
 
 add_executable(ProjectRootToDotMeddyprojectPath)
 target_compile_features(ProjectRootToDotMeddyprojectPath PUBLIC cxx_std_20)
 target_sources(ProjectRootToDotMeddyprojectPath PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/Source/Private/ProjectRootToDotMeddyprojectPath.cpp")
-target_link_libraries(ProjectRootToDotMeddyprojectPath PRIVATE MeddySDK::Meddyproject)
+target_link_libraries(ProjectRootToDotMeddyprojectPath PRIVATE MeddySDK::Meddyproject::Static)
 
 add_test(NAME MeddySDK.Meddyproject.ProjectRootToDotMeddyprojectPath.UserVideos
   COMMAND ProjectRootToDotMeddyprojectPath
@@ -39,7 +41,7 @@ add_test(NAME MeddySDK.Meddyproject.ProjectRootToDotMeddyprojectPath.Empty
 add_executable(DotMeddyprojectToProjectRootPath)
 target_compile_features(DotMeddyprojectToProjectRootPath PUBLIC cxx_std_20)
 target_sources(DotMeddyprojectToProjectRootPath PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/Source/Private/DotMeddyprojectToProjectRootPath.cpp")
-target_link_libraries(DotMeddyprojectToProjectRootPath PRIVATE MeddySDK::Meddyproject)
+target_link_libraries(DotMeddyprojectToProjectRootPath PRIVATE MeddySDK::Meddyproject::Static)
 
 add_test(NAME MeddySDK.Meddyproject.DotMeddyprojectToProjectRootPath.UserVideos
   COMMAND DotMeddyprojectToProjectRootPath
@@ -62,7 +64,7 @@ add_test(NAME MeddySDK.Meddyproject.DotMeddyprojectToProjectRootPath.Empty
 add_executable(DotMeddyprojectToManifestFilePath)
 target_compile_features(DotMeddyprojectToManifestFilePath PUBLIC cxx_std_20)
 target_sources(DotMeddyprojectToManifestFilePath PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/Source/Private/DotMeddyprojectToManifestFilePath.cpp")
-target_link_libraries(DotMeddyprojectToManifestFilePath PRIVATE MeddySDK::Meddyproject)
+target_link_libraries(DotMeddyprojectToManifestFilePath PRIVATE MeddySDK::Meddyproject::Static)
 
 add_test(NAME MeddySDK.Meddyproject.DotMeddyprojectToManifestFilePath.UserVideos
   COMMAND DotMeddyprojectToManifestFilePath

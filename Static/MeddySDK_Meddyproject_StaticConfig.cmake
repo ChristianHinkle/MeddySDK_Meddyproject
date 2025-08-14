@@ -3,7 +3,7 @@
 include(CMakeFindDependencyMacro)
 
 # Include our export. This imports all of our targets.
-include("${CMAKE_CURRENT_LIST_DIR}/MeddySDK_MeddyprojectExport.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/MeddySDK_Meddyproject_StaticExport.cmake")
 
 #
 # Add alias targets whose names match those from the project file.
@@ -12,4 +12,4 @@ include("${CMAKE_CURRENT_LIST_DIR}/MeddySDK_MeddyprojectExport.cmake")
 # interface users can use `OVERRIDE_FIND_PACKAGE` with `FetchContent_Declare()`.
 #
 
-add_library(MeddySDK::Meddyproject ALIAS MeddySDK_Meddyproject)
+add_library(MeddySDK::Meddyproject::Static ALIAS MeddySDK_Meddyproject_Static)
