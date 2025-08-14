@@ -7,10 +7,6 @@ project(MeddySDK_Meddyproject_Tests
   LANGUAGES CXX
   )
 
-# Tell CMake where our cmake scripts ("modules") are.
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMake/Modules")
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMake/Modules/CPack")
-
 # Note that we do not "find package" for our parent project's export. We don't need to since we are assuming that
 # our parent project is using `add_subdirectory` on us. That means that we are being processed in the same
 # configuration step as them. The targets that we reference in `target_link_libraries` commands don't even need
