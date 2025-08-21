@@ -7,13 +7,11 @@ project(MeddySDK_Meddyproject_Tests
   LANGUAGES CXX
   )
 
-#
-# Get the MeddySDK_Meddyproject_Static export. This gives us its imported targets.
-#
-# TODO: Remove the "_Static" postfix and use `COMPONENT` to access the static library. We can't right now because we
-# are in an intermediate point of transitioning to this new organized structure. So "MeddySDK_Meddyproject_Static" is THE export, for now.
-#
-find_package(MeddySDK_Meddyproject_Static 0 CONFIG REQUIRED)
+# Note that we do not "find package" for our parent project. We don't need to since we are built in the same
+# cmake invocation as the it. That means we're being processed during the same configuration step as them, which
+# means we'll have all their targets. Also, the targets that we reference in `target_link_libraries` commands don't
+# even need to exist yet because CMake only validates the existence of targets at the end of the entire
+# configuration process.
 
 add_executable(ProjectRootToDotMeddyprojectPath)
 target_compile_features(ProjectRootToDotMeddyprojectPath PUBLIC cxx_std_20)

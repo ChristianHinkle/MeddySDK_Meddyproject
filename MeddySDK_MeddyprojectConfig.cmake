@@ -3,7 +3,7 @@
 include(CMakeFindDependencyMacro)
 
 # Include our export. This imports all of our targets.
-include("${CMAKE_CURRENT_LIST_DIR}/MeddySDK_Meddyproject_StaticExport.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/MeddySDK_MeddyprojectExport.cmake")
 
 #
 # Add alias targets whose names match those from the project file.
