@@ -7,10 +7,6 @@ project(MeddySDK_Meddyproject_Static
   LANGUAGES CXX
   )
 
-# Tell CMake where our cmake scripts ("modules") are.
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMake/Modules")
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMake/Modules/CPack")
-
 #
 # Create targets.
 #

@@ -9,6 +9,10 @@ project(MeddySDK_Meddyproject
   LANGUAGES CXX
   )
 
+# Tell CMake where our cmake scripts ("modules") are.
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMake/Modules")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMake/Modules/CPack")
+
 # Set up testing. Defines `BUILD_TESTING` which is ON by default. This must be called by the top-level project only.
 if(PROJECT_IS_TOP_LEVEL)
   include(CTest)
