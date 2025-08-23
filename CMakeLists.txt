@@ -57,6 +57,10 @@ FetchContent_Declare(MeddySDK_Meddyproject_Shared
   SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Shared"
   )
 
+FetchContent_Declare(MeddySDK_Meddyproject_Module
+  SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Module"
+  )
+
 FetchContent_Declare(MeddySDK_Meddyproject_Object
   SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Object"
   )
@@ -83,6 +87,8 @@ FetchContent_MakeAvailable(MeddySDK_Meddyproject_Source)
 FetchContent_MakeAvailable(MeddySDK_Meddyproject_Static)
 
 FetchContent_MakeAvailable(MeddySDK_Meddyproject_Shared)
+
+FetchContent_MakeAvailable(MeddySDK_Meddyproject_Module)
 
 FetchContent_MakeAvailable(MeddySDK_Meddyproject_Object)
 

@@ -7,6 +7,8 @@
 
 #if __has_include(<meddysdk_meddyproject_shared_export.h>)
 #include <meddysdk_meddyproject_shared_export.h>
+#elif __has_include(<meddysdk_meddyproject_module_export.h>)
+#include <meddysdk_meddyproject_module_export.h>
 #elif __has_include(<meddysdk_meddyproject_object_export.h>)
 #include <meddysdk_meddyproject_object_export.h>
 #elif __has_include(<meddysdk_meddyproject_static_export.h>)
