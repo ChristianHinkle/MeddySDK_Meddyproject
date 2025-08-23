@@ -12,8 +12,8 @@
 #elif __has_include(<meddysdk_meddyproject_static_export.h>)
 #include <meddysdk_meddyproject_static_export.h>
 #else
-// Since no generated header files exist, it must mean we are the interface library (being used as a header-only library).
-#include "meddysdk_meddyproject_interface_export.h"
+// Since no generated header files exist, it must mean we are an interface library (being used as a header-only library).
+#include "meddysdk_meddyproject_include_export.h"
 #endif
 
 #endif // #ifndef MEDDYSDK_MEDDYPROJECT_EXPORT_H

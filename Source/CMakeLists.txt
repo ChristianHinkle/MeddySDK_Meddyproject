@@ -2,7 +2,7 @@
 
 cmake_minimum_required(VERSION 4.0)
 
-project(MeddySDK_Meddyproject_Static
+project(MeddySDK_Meddyproject_Source
   VERSION 0.1.0
   LANGUAGES CXX
   )
@@ -14,7 +14,7 @@ project(MeddySDK_Meddyproject_Static
 # the DAM library of MeddySDK, we name it "MeddySDK_DAM" instead of just "DAM", because that would be very vague.
 #
 
-add_library(MeddySDK_Meddyproject_Static STATIC)
+add_library(MeddySDK_Meddyproject_Source INTERFACE)
 
 #
 # Set output names of our targets.
@@ -23,7 +23,7 @@ add_library(MeddySDK_Meddyproject_Static STATIC)
 # target name. E.g., for MeddySDKCLI, we name its executable file "meddy" to suit our desired command line usage.
 #
 
-set_target_properties(MeddySDK_Meddyproject_Static
+set_target_properties(MeddySDK_Meddyproject_Source
   PROPERTIES
     OUTPUT_NAME "MeddySDK_Meddyproject"
   )
@@ -43,19 +43,11 @@ set_target_properties(MeddySDK_Meddyproject_Static
 # `FetchContent_Declare()`.
 #
 
-add_library(MeddySDK::Meddyproject::Static ALIAS MeddySDK_Meddyproject_Static)
-
-# Generate a cpp header file that provides export macros for our library.
-include(GenerateExportHeader)
-generate_export_header(MeddySDK_Meddyproject_Static
-  BASE_NAME MeddySDK_Meddyproject
-  EXPORT_FILE_NAME "meddysdk_meddyproject_static_export.h"
-  INCLUDE_GUARD_NAME "MEDDYSDK_MEDDYPROJECT_STATIC_EXPORT_H"
-  )
+add_library(MeddySDK::Meddyproject::Source ALIAS MeddySDK_Meddyproject_Source)
 
 # List out required language features.
-target_compile_features(MeddySDK_Meddyproject_Static
-  PUBLIC
+target_compile_features(MeddySDK_Meddyproject_Source
+  INTERFACE
     cxx_std_20
   )
 
@@ -71,14 +63,31 @@ target_compile_features(MeddySDK_Meddyproject_Static
 #
 # A nice benefit of listing all header files is that they can be easily-discoverable by IDEs.
 #
-target_sources(MeddySDK_Meddyproject_Static
-  PUBLIC
-    FILE_SET meddysdk_meddyproject_static_public_headers
+target_sources(MeddySDK_Meddyproject_Source
+  INTERFACE
+    FILE_SET meddysdk_meddyproject_source_interface_headers
       TYPE HEADERS
       BASE_DIRS
-        "${CMAKE_CURRENT_BINARY_DIR}" # The base directory of generated headers.
+        #
+        # Base directory of private headers.
+        #
+        # It's nice to leave the "Source" directory out of this base include path so that, for
+        # cpp include statements, you have to type "Source/" to access the non-public headers. This
+        # makes it obvious for programmers when a header shouldn't be included in public files.
+        #
+        "${CMAKE_CURRENT_SOURCE_DIR}"
       FILES
-        "${CMAKE_CURRENT_BINARY_DIR}/meddysdk_meddyproject_static_export.h"
+        # Add all private header files.
+  )
+
+# Add all source files.
+target_sources(MeddySDK_Meddyproject_Source
+  INTERFACE
+    "${CMAKE_CURRENT_SOURCE_DIR}/Source/MeddySDK_Meddyproject_Export.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Source/Meddyproject.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Source/FilesystemUtils.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Source/StringUtils.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Source/CharBufferString.cpp"
   )
 
 # Note that we do not "find package" for our parent project. We don't need to since we are built in the same
@@ -89,32 +98,10 @@ target_sources(MeddySDK_Meddyproject_Static
 
 # Add dependencies to other targets. For imported targets, it's important to only depend on them if we
 # are BUILD_LOCAL_INTERFACE, because we don't want them to get mixed into our export.
-target_link_libraries(MeddySDK_Meddyproject_Static
+target_link_libraries(MeddySDK_Meddyproject_Source
   INTERFACE
     $<BUILD_LOCAL_INTERFACE:MeddySDK::Meddyproject::Include>
-  PRIVATE
-    $<BUILD_LOCAL_INTERFACE:MeddySDK::Meddyproject::Source>
   )
 
-include(GNUInstallDirs)
-
-# Associate our targets with an export and specify how their files would be installed.
-install(TARGETS MeddySDK_Meddyproject_Static
-  EXPORT "MeddySDK_MeddyprojectExport"
-  COMPONENT "Static"
-  LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
-  ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
-  RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
-  #
-  # Add to interface include directories.
-  #
-  # Note: We take care of install-specific include directories here instead of `target_include_directories()`.
-  #
-  # Note: It's important to make sure cpp include statements of public headers are compatible between
-  # install interface users and build interface users. E.g., a user's include statements should work for
-  # both packaged library usage and subproject library usage, without having to adapt their code to either use case.
-  #
-  INCLUDES DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}"
-  # Copy over public headers.
-  FILE_SET meddysdk_meddyproject_static_public_headers DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}"
-  )
+# Idea: It might be cool to install this library and all its source files. That would allow downstream projects to use
+# us. For now, this library is just a way for us to share source files across all the different types of libraries.

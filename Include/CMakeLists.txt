@@ -2,7 +2,7 @@
 
 cmake_minimum_required(VERSION 4.0)
 
-project(MeddySDK_Meddyproject_Interface
+project(MeddySDK_Meddyproject_Include
   VERSION 0.1.0
   LANGUAGES CXX
   )
@@ -14,7 +14,7 @@ project(MeddySDK_Meddyproject_Interface
 # the DAM library of MeddySDK, we name it "MeddySDK_DAM" instead of just "DAM", because that would be very vague.
 #
 
-add_library(MeddySDK_Meddyproject_Interface INTERFACE)
+add_library(MeddySDK_Meddyproject_Include INTERFACE)
 
 #
 # Set output names of our targets.
@@ -23,7 +23,7 @@ add_library(MeddySDK_Meddyproject_Interface INTERFACE)
 # target name. E.g., for MeddySDKCLI, we name its executable file "meddy" to suit our desired command line usage.
 #
 
-set_target_properties(MeddySDK_Meddyproject_Interface
+set_target_properties(MeddySDK_Meddyproject_Include
   PROPERTIES
     OUTPUT_NAME "MeddySDK_Meddyproject"
   )
@@ -43,10 +43,10 @@ set_target_properties(MeddySDK_Meddyproject_Interface
 # `FetchContent_Declare()`.
 #
 
-add_library(MeddySDK::Meddyproject::Interface ALIAS MeddySDK_Meddyproject_Interface)
+add_library(MeddySDK::Meddyproject::Include ALIAS MeddySDK_Meddyproject_Include)
 
 # List out required language features.
-target_compile_features(MeddySDK_Meddyproject_Interface
+target_compile_features(MeddySDK_Meddyproject_Include
   INTERFACE
     cxx_std_20
   )
@@ -63,15 +63,15 @@ target_compile_features(MeddySDK_Meddyproject_Interface
 #
 # A nice benefit of listing all header files is that they can be easily-discoverable by IDEs.
 #
-target_sources(MeddySDK_Meddyproject_Interface
+target_sources(MeddySDK_Meddyproject_Include
   INTERFACE
-    FILE_SET meddysdk_meddyproject_interface_headers
+    FILE_SET meddysdk_meddyproject_include_interface_headers
       TYPE HEADERS
       BASE_DIRS
         "${CMAKE_CURRENT_SOURCE_DIR}/Include"
       FILES
         "${CMAKE_CURRENT_SOURCE_DIR}/Include/MeddySDK_Meddyproject_Export.h"
-        "${CMAKE_CURRENT_SOURCE_DIR}/Include/meddysdk_meddyproject_interface_export.h"
+        "${CMAKE_CURRENT_SOURCE_DIR}/Include/meddysdk_meddyproject_include_export.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/Include/Meddyproject.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/Include/FilesystemUtils.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/Include/StringUtils.h"
@@ -87,9 +87,9 @@ target_sources(MeddySDK_Meddyproject_Interface
 include(GNUInstallDirs)
 
 # Associate our targets with an export and specify how their files would be installed.
-install(TARGETS MeddySDK_Meddyproject_Interface
+install(TARGETS MeddySDK_Meddyproject_Include
   EXPORT "MeddySDK_MeddyprojectExport"
-  COMPONENT "Interface"
+  COMPONENT "Include"
   LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
   ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
   RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
@@ -104,5 +104,5 @@ install(TARGETS MeddySDK_Meddyproject_Interface
   #
   INCLUDES DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}"
   # Copy over any interface-facing headers.
-  FILE_SET meddysdk_meddyproject_interface_headers DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}"
+  FILE_SET meddysdk_meddyproject_include_interface_headers DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}"
   )

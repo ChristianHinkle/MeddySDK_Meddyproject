@@ -41,30 +41,29 @@ include(FetchContent)
 # declarations refer to them by directory path.
 #
 
-FetchContent_Declare(MeddySDK_Meddyproject_Interface
-  SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Interface"
-  OVERRIDE_FIND_PACKAGE
+FetchContent_Declare(MeddySDK_Meddyproject_Include
+  SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Include"
   )
 
-FetchContent_Declare(MeddySDK_Meddyproject_Object
-  SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Object"
-  OVERRIDE_FIND_PACKAGE
+FetchContent_Declare(MeddySDK_Meddyproject_Source
+  SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Source"
   )
 
 FetchContent_Declare(MeddySDK_Meddyproject_Static
   SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Static"
-  OVERRIDE_FIND_PACKAGE
   )
 
 FetchContent_Declare(MeddySDK_Meddyproject_Shared
   SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Shared"
-  OVERRIDE_FIND_PACKAGE
+  )
+
+FetchContent_Declare(MeddySDK_Meddyproject_Object
+  SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Object"
   )
 
 if(BUILD_TESTING)
   FetchContent_Declare(MeddySDK_Meddyproject_Tests
     SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Tests"
-    OVERRIDE_FIND_PACKAGE
     )
 endif()
 
@@ -77,18 +76,22 @@ endif()
 # when a project is needed as a dependency several times.
 #
 
-FetchContent_MakeAvailable(MeddySDK_Meddyproject_Interface)
+FetchContent_MakeAvailable(MeddySDK_Meddyproject_Include)
 
-FetchContent_MakeAvailable(MeddySDK_Meddyproject_Object)
+FetchContent_MakeAvailable(MeddySDK_Meddyproject_Source)
 
 FetchContent_MakeAvailable(MeddySDK_Meddyproject_Static)
 
 FetchContent_MakeAvailable(MeddySDK_Meddyproject_Shared)
 
+FetchContent_MakeAvailable(MeddySDK_Meddyproject_Object)
+
 # Conditionally enable our "tests" subproject.
 if(BUILD_TESTING)
   FetchContent_MakeAvailable(MeddySDK_Meddyproject_Tests)
 endif()
+
+include(GNUInstallDirs)
 
 # Generate script that imports targets associated with our export.
 install(EXPORT "${PROJECT_NAME}Export"

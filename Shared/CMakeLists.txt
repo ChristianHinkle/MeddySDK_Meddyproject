@@ -81,12 +81,6 @@ target_sources(MeddySDK_Meddyproject_Shared
         "${CMAKE_CURRENT_BINARY_DIR}/meddysdk_meddyproject_shared_export.h"
   )
 
-# Add all private sources to compile. TODO: Move these to an interface library that holds all private sources.
-target_sources(MeddySDK_Meddyproject_Shared
-  PRIVATE
-    $<TARGET_PROPERTY:MeddySDK::Meddyproject::Object,SOURCES>
-  )
-
 # Note that we do not "find package" for our parent project. We don't need to since we are built in the same
 # cmake invocation as the it. That means we're being processed during the same configuration step as them, which
 # means we'll have all their targets. Also, the targets that we reference in `target_link_libraries` commands don't
@@ -96,8 +90,10 @@ target_sources(MeddySDK_Meddyproject_Shared
 # Add dependencies to other targets. For imported targets, it's important to only depend on them if we
 # are BUILD_LOCAL_INTERFACE, because we don't want them to get mixed into our export.
 target_link_libraries(MeddySDK_Meddyproject_Shared
-  PUBLIC
-    $<BUILD_LOCAL_INTERFACE:MeddySDK::Meddyproject::Interface>
+  INTERFACE
+    $<BUILD_LOCAL_INTERFACE:MeddySDK::Meddyproject::Include>
+  PRIVATE
+    $<BUILD_LOCAL_INTERFACE:MeddySDK::Meddyproject::Source>
   )
 
 include(GNUInstallDirs)

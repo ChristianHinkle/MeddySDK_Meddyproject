@@ -79,30 +79,6 @@ target_sources(MeddySDK_Meddyproject_Object
         "${CMAKE_CURRENT_BINARY_DIR}" # The base directory of generated headers.
       FILES
         "${CMAKE_CURRENT_BINARY_DIR}/meddysdk_meddyproject_object_export.h"
-  PRIVATE
-    FILE_SET meddysdk_meddyproject_object_private_headers
-      TYPE HEADERS
-      BASE_DIRS
-        #
-        # Base directory of private headers.
-        #
-        # It's nice to leave the "Source" directory out of this base include path so that, for
-        # cpp include statements, you have to type "Source/" to access the non-public headers. This
-        # makes it obvious for programmers when a header shouldn't be included in public files.
-        #
-        "${CMAKE_CURRENT_SOURCE_DIR}"
-      FILES
-        # Add all private header files.
-  )
-
-# Add all source files.
-target_sources(MeddySDK_Meddyproject_Object
-  PRIVATE
-    "${CMAKE_CURRENT_SOURCE_DIR}/Source/MeddySDK_Meddyproject_Export.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Source/Meddyproject.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Source/FilesystemUtils.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Source/StringUtils.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Source/CharBufferString.cpp"
   )
 
 # Note that we do not "find package" for our parent project. We don't need to since we are built in the same
@@ -114,8 +90,10 @@ target_sources(MeddySDK_Meddyproject_Object
 # Add dependencies to other targets. For imported targets, it's important to only depend on them if we
 # are BUILD_LOCAL_INTERFACE, because we don't want them to get mixed into our export.
 target_link_libraries(MeddySDK_Meddyproject_Object
-  PUBLIC
-    $<BUILD_LOCAL_INTERFACE:MeddySDK::Meddyproject::Interface>
+  INTERFACE
+    $<BUILD_LOCAL_INTERFACE:MeddySDK::Meddyproject::Include>
+  PRIVATE
+    $<BUILD_LOCAL_INTERFACE:MeddySDK::Meddyproject::Source>
   )
 
 include(GNUInstallDirs)

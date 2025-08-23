@@ -12,7 +12,7 @@ include("${CMAKE_CURRENT_LIST_DIR}/MeddySDK_MeddyprojectExport.cmake")
 # interface users can use `OVERRIDE_FIND_PACKAGE` with `FetchContent_Declare()`.
 #
 
-add_library(MeddySDK::Meddyproject::Interface ALIAS MeddySDK_Meddyproject_Interface)
-add_library(MeddySDK::Meddyproject::Object ALIAS MeddySDK_Meddyproject_Object)
+add_library(MeddySDK::Meddyproject::Include ALIAS MeddySDK_Meddyproject_Include)
 add_library(MeddySDK::Meddyproject::Static ALIAS MeddySDK_Meddyproject_Static)
 add_library(MeddySDK::Meddyproject::Shared ALIAS MeddySDK_Meddyproject_Shared)
+add_library(MeddySDK::Meddyproject::Object ALIAS MeddySDK_Meddyproject_Object)
