@@ -2,7 +2,7 @@
 
 cmake_minimum_required(VERSION 4.0)
 
-project(MeddySDK_Meddyproject_Static
+project(MeddySDK_Meddyproject_Shared
   VERSION 0.1.0
   LANGUAGES CXX
   )
@@ -14,7 +14,7 @@ project(MeddySDK_Meddyproject_Static
 # the DAM library of MeddySDK, we name it "MeddySDK_DAM" instead of just "DAM", because that would be very vague.
 #
 
-add_library(MeddySDK_Meddyproject_Static STATIC)
+add_library(MeddySDK_Meddyproject_Shared SHARED)
 
 #
 # Set output names of our targets.
@@ -23,7 +23,7 @@ add_library(MeddySDK_Meddyproject_Static STATIC)
 # target name. E.g., for MeddySDKCLI, we name its executable file "meddy" to suit our desired command line usage.
 #
 
-set_target_properties(MeddySDK_Meddyproject_Static
+set_target_properties(MeddySDK_Meddyproject_Shared
   PROPERTIES
     OUTPUT_NAME "MeddySDK_Meddyproject"
   )
@@ -43,18 +43,18 @@ set_target_properties(MeddySDK_Meddyproject_Static
 # `FetchContent_Declare()`.
 #
 
-add_library(MeddySDK::Meddyproject::Static ALIAS MeddySDK_Meddyproject_Static)
+add_library(MeddySDK::Meddyproject::Shared ALIAS MeddySDK_Meddyproject_Shared)
 
 # Generate a cpp header file that provides export macros for our library.
 include(GenerateExportHeader)
-generate_export_header(MeddySDK_Meddyproject_Static
+generate_export_header(MeddySDK_Meddyproject_Shared
   BASE_NAME MeddySDK_Meddyproject
-  EXPORT_FILE_NAME "meddysdk_meddyproject_static_export.h"
-  INCLUDE_GUARD_NAME "MEDDYSDK_MEDDYPROJECT_STATIC_EXPORT_H"
+  EXPORT_FILE_NAME "meddysdk_meddyproject_shared_export.h"
+  INCLUDE_GUARD_NAME "MEDDYSDK_MEDDYPROJECT_SHARED_EXPORT_H"
   )
 
 # List out required language features.
-target_compile_features(MeddySDK_Meddyproject_Static
+target_compile_features(MeddySDK_Meddyproject_Shared
   PUBLIC
     cxx_std_20
   )
@@ -71,18 +71,18 @@ target_compile_features(MeddySDK_Meddyproject_Static
 #
 # A nice benefit of listing all header files is that they can be easily-discoverable by IDEs.
 #
-target_sources(MeddySDK_Meddyproject_Static
+target_sources(MeddySDK_Meddyproject_Shared
   PUBLIC
-    FILE_SET meddysdk_meddyproject_static_public_headers
+    FILE_SET meddysdk_meddyproject_shared_public_headers
       TYPE HEADERS
       BASE_DIRS
         "${CMAKE_CURRENT_BINARY_DIR}" # The base directory of generated headers.
       FILES
-        "${CMAKE_CURRENT_BINARY_DIR}/meddysdk_meddyproject_static_export.h"
+        "${CMAKE_CURRENT_BINARY_DIR}/meddysdk_meddyproject_shared_export.h"
   )
 
 # Add all private sources to compile. TODO: Move these to an interface library that holds all private sources.
-target_sources(MeddySDK_Meddyproject_Static
+target_sources(MeddySDK_Meddyproject_Shared
   PRIVATE
     $<TARGET_PROPERTY:MeddySDK::Meddyproject::Object,SOURCES>
   )
@@ -95,7 +95,7 @@ target_sources(MeddySDK_Meddyproject_Static
 
 # Add dependencies to other targets. For imported targets, it's important to only depend on them if we
 # are BUILD_LOCAL_INTERFACE, because we don't want them to get mixed into our export.
-target_link_libraries(MeddySDK_Meddyproject_Static
+target_link_libraries(MeddySDK_Meddyproject_Shared
   PUBLIC
     $<BUILD_LOCAL_INTERFACE:MeddySDK::Meddyproject::Interface>
   )
@@ -103,9 +103,9 @@ target_link_libraries(MeddySDK_Meddyproject_Static
 include(GNUInstallDirs)
 
 # Associate our targets with an export and specify how their files would be installed.
-install(TARGETS MeddySDK_Meddyproject_Static
+install(TARGETS MeddySDK_Meddyproject_Shared
   EXPORT "MeddySDK_MeddyprojectExport"
-  COMPONENT "Static"
+  COMPONENT "Shared"
   LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
   ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
   RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
@@ -120,5 +120,5 @@ install(TARGETS MeddySDK_Meddyproject_Static
   #
   INCLUDES DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}"
   # Copy over public headers.
-  FILE_SET meddysdk_meddyproject_static_public_headers DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}"
+  FILE_SET meddysdk_meddyproject_shared_public_headers DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}"
   )

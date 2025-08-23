@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "meddysdk_meddyproject_export.h"
+#include "MeddySDK_Meddyproject_Export.h"
 #include <string_view>
 #include <array>
 #include <concepts>

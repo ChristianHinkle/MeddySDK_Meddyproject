@@ -41,8 +41,23 @@ include(FetchContent)
 # declarations refer to them by directory path.
 #
 
+FetchContent_Declare(MeddySDK_Meddyproject_Interface
+  SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Interface"
+  OVERRIDE_FIND_PACKAGE
+  )
+
+FetchContent_Declare(MeddySDK_Meddyproject_Object
+  SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Object"
+  OVERRIDE_FIND_PACKAGE
+  )
+
 FetchContent_Declare(MeddySDK_Meddyproject_Static
   SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Static"
+  OVERRIDE_FIND_PACKAGE
+  )
+
+FetchContent_Declare(MeddySDK_Meddyproject_Shared
+  SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Shared"
   OVERRIDE_FIND_PACKAGE
   )
 
@@ -62,7 +77,13 @@ endif()
 # when a project is needed as a dependency several times.
 #
 
+FetchContent_MakeAvailable(MeddySDK_Meddyproject_Interface)
+
+FetchContent_MakeAvailable(MeddySDK_Meddyproject_Object)
+
 FetchContent_MakeAvailable(MeddySDK_Meddyproject_Static)
+
+FetchContent_MakeAvailable(MeddySDK_Meddyproject_Shared)
 
 # Conditionally enable our "tests" subproject.
 if(BUILD_TESTING)
