@@ -1,13 +1,13 @@
 // Copyright (c) 2023-2025 Christian Hinkle, Brian Hinkle.
 
-#include "Meddyproject.h"
+#include <Meddyproject.h>
 
 #include <filesystem>
 #include <utility>
 #include <cassert>
 #include <fstream>
-#include "CharBufferString.h"
-#include "FilesystemUtils.h"
+#include <CharBufferString.h>
+#include <FilesystemUtils.h>
 
 using namespace MeddySDK::Meddyproject;
 
