@@ -15,7 +15,7 @@ project(MeddySDK_Meddyproject_Tests
 
 add_executable(ProjectRootToDotMeddyprojectPath)
 target_compile_features(ProjectRootToDotMeddyprojectPath PUBLIC cxx_std_20)
-target_sources(ProjectRootToDotMeddyprojectPath PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/Source/Private/ProjectRootToDotMeddyprojectPath.cpp")
+target_sources(ProjectRootToDotMeddyprojectPath PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/Source/ProjectRootToDotMeddyprojectPath.cpp")
 target_link_libraries(ProjectRootToDotMeddyprojectPath PRIVATE MeddySDK::Meddyproject::Static)
 
 add_test(NAME MeddySDK.Meddyproject.ProjectRootToDotMeddyprojectPath.UserVideos
@@ -38,7 +38,7 @@ add_test(NAME MeddySDK.Meddyproject.ProjectRootToDotMeddyprojectPath.Empty
 
 add_executable(DotMeddyprojectToProjectRootPath)
 target_compile_features(DotMeddyprojectToProjectRootPath PUBLIC cxx_std_20)
-target_sources(DotMeddyprojectToProjectRootPath PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/Source/Private/DotMeddyprojectToProjectRootPath.cpp")
+target_sources(DotMeddyprojectToProjectRootPath PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/Source/DotMeddyprojectToProjectRootPath.cpp")
 target_link_libraries(DotMeddyprojectToProjectRootPath PRIVATE MeddySDK::Meddyproject::Static)
 
 add_test(NAME MeddySDK.Meddyproject.DotMeddyprojectToProjectRootPath.UserVideos
@@ -61,7 +61,7 @@ add_test(NAME MeddySDK.Meddyproject.DotMeddyprojectToProjectRootPath.Empty
 
 add_executable(DotMeddyprojectToManifestFilePath)
 target_compile_features(DotMeddyprojectToManifestFilePath PUBLIC cxx_std_20)
-target_sources(DotMeddyprojectToManifestFilePath PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/Source/Private/DotMeddyprojectToManifestFilePath.cpp")
+target_sources(DotMeddyprojectToManifestFilePath PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/Source/DotMeddyprojectToManifestFilePath.cpp")
 target_link_libraries(DotMeddyprojectToManifestFilePath PRIVATE MeddySDK::Meddyproject::Static)
 
 add_test(NAME MeddySDK.Meddyproject.DotMeddyprojectToManifestFilePath.UserVideos
