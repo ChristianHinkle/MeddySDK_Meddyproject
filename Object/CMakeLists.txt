@@ -49,7 +49,7 @@ add_library(MeddySDK::Meddyproject::Object ALIAS MeddySDK_Meddyproject_Object)
 include(GenerateExportHeader)
 generate_export_header(MeddySDK_Meddyproject_Object
   BASE_NAME MeddySDK_Meddyproject
-  EXPORT_FILE_NAME "meddysdk_meddyproject_object_export.h"
+  EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/Include/meddysdk_meddyproject_object_export.h"
   INCLUDE_GUARD_NAME "MEDDYSDK_MEDDYPROJECT_OBJECT_EXPORT_H"
   )
 
@@ -76,9 +76,9 @@ target_sources(MeddySDK_Meddyproject_Object
     FILE_SET meddysdk_meddyproject_object_public_headers
       TYPE HEADERS
       BASE_DIRS
-        "${CMAKE_CURRENT_BINARY_DIR}" # The base directory of generated headers.
+        "${CMAKE_CURRENT_BINARY_DIR}/Include" # The base directory of generated headers.
       FILES
-        "${CMAKE_CURRENT_BINARY_DIR}/meddysdk_meddyproject_object_export.h"
+        "${CMAKE_CURRENT_BINARY_DIR}/Include/meddysdk_meddyproject_object_export.h"
   )
 
 # Note that we do not "find package" for our parent project. We don't need to since we are built in the same
