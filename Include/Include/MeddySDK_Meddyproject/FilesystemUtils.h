@@ -2,11 +2,11 @@
 
 #pragma once
 
-#include "MeddySDK_Meddyproject_Export.h"
+#include <MeddySDK_Meddyproject_Export.h>
 #include <filesystem>
-#include "StringUtils.h"
+#include <MeddySDK_Meddyproject/StringUtils.h>
 #include <string_view>
-#include "CharBufferString.h"
+#include <MeddySDK_Meddyproject/CharBufferString.h>
 
 /**
  * @brief String literal alternative to `MeddySDK::Meddyproject::FilesystemUtils::CrossPlatformPathSeparator`.

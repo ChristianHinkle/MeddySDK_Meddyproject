@@ -2,10 +2,10 @@
 
 #pragma once
 
-#include "MeddySDK_Meddyproject_Export.h"
+#include <MeddySDK_Meddyproject_Export.h>
 #include <string_view>
 #include <span>
-#include "CharBufferString.h"
+#include <MeddySDK_Meddyproject/CharBufferString.h>
 
 /**
  * @brief String utilities to extend the default standard library tools.

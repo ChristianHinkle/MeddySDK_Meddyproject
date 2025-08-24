@@ -15,7 +15,7 @@
 #   include <meddysdk_meddyproject_static_export.h>
 #else
     // Since no generated header files exist, it must mean we are an interface library (being used as a header-only library).
-#   include "meddysdk_meddyproject_include_export.h"
+#   include <meddysdk_meddyproject_include_export.h>
 #endif
 
 // Undef the generated macros that we've decided not to use.

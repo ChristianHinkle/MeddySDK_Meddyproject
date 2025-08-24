@@ -63,6 +63,10 @@ target_compile_features(MeddySDK_Meddyproject_Include
 #
 # A nice benefit of listing all header files is that they can be easily-discoverable by IDEs.
 #
+# We make sure to group all of our header files into a subfolder named after our project. This is
+# important for avoiding include file path naming conflicts with other libraries. It also gives
+# us the freedom to name our files however, while still having context in their include path names.
+#
 target_sources(MeddySDK_Meddyproject_Include
   INTERFACE
     FILE_SET meddysdk_meddyproject_include_interface_headers
@@ -72,10 +76,10 @@ target_sources(MeddySDK_Meddyproject_Include
       FILES
         "${CMAKE_CURRENT_SOURCE_DIR}/Include/MeddySDK_Meddyproject_Export.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/Include/meddysdk_meddyproject_include_export.h"
-        "${CMAKE_CURRENT_SOURCE_DIR}/Include/Meddyproject.h"
-        "${CMAKE_CURRENT_SOURCE_DIR}/Include/FilesystemUtils.h"
-        "${CMAKE_CURRENT_SOURCE_DIR}/Include/StringUtils.h"
-        "${CMAKE_CURRENT_SOURCE_DIR}/Include/CharBufferString.h"
+        "${CMAKE_CURRENT_SOURCE_DIR}/Include/MeddySDK_Meddyproject/Meddyproject.h"
+        "${CMAKE_CURRENT_SOURCE_DIR}/Include/MeddySDK_Meddyproject/FilesystemUtils.h"
+        "${CMAKE_CURRENT_SOURCE_DIR}/Include/MeddySDK_Meddyproject/StringUtils.h"
+        "${CMAKE_CURRENT_SOURCE_DIR}/Include/MeddySDK_Meddyproject/CharBufferString.h"
   )
 
 # Note that we do not "find package" for our parent project. We don't need to since we are built in the same
