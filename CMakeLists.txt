@@ -18,28 +18,9 @@ if(PROJECT_IS_TOP_LEVEL)
   include(CTest)
 endif()
 
-#
-# We want to be build interface users of our subprojects instead of install
-# interface users, i.e., we want to build with our subprojects instead of building off
-# of pre-built binaries of them. This is how the development environment should be. We
-# want to build and develop all of these subprojects together.
-#
-
 include(FetchContent)
 
-#
 # Declare subprojects.
-#
-# We use `FetchContent_Declare()` to allow us to build with our subprojects instead
-# of building off of intalled packages of them.
-#
-# The `find_package()` command is what our projects use to retrieve external dependencies
-# and its default behavior looks through installed files to get them. So we use `OVERRIDE_FIND_PACKAGE`
-# to have it look to FetchContent declarations instead.
-#
-# Our subprojects exist as subdirectories so we just have their FetchContent
-# declarations refer to them by directory path.
-#
 
 FetchContent_Declare(MeddySDK_Meddyproject_Include
   SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Include"
@@ -71,14 +52,7 @@ if(BUILD_TESTING)
     )
 endif()
 
-#
 # Add subprojects.
-#
-# We use `FetchContent_MakeAvailable()` because it avoids project duplication for
-# us. If we were to use `add_subdirectory()` ourselves directly, we would have to set up
-# guards against adding subdirectories multiple times. That's prone to happening
-# when a project is needed as a dependency several times.
-#
 
 FetchContent_MakeAvailable(MeddySDK_Meddyproject_Include)
 
@@ -92,7 +66,6 @@ FetchContent_MakeAvailable(MeddySDK_Meddyproject_Module)
 
 FetchContent_MakeAvailable(MeddySDK_Meddyproject_Object)
 
-# Conditionally enable our "tests" subproject.
 if(BUILD_TESTING)
   FetchContent_MakeAvailable(MeddySDK_Meddyproject_Tests)
 endif()
