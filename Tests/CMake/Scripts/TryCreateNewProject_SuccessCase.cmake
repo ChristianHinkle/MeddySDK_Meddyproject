@@ -69,12 +69,12 @@ if(NOT EXISTS "${MY_TEST_WORKING_DIRECTORY}/TryCreateNewProject/SuccessCase/MyPr
 endif()
 
 if(NOT EXISTS "${MY_TEST_WORKING_DIRECTORY}/TryCreateNewProject/SuccessCase/MyProjectDir/MyOtherCoolTextFiles/Yo.txt")
-  message("Failed. A user's file directory \"MyProjectDir/MyOtherCoolTextFiles/Yo.txt\" has somehow been deleted during the c++ function!")
+  message("Failed. A user's file \"MyProjectDir/MyOtherCoolTextFiles/Yo.txt\" has somehow been deleted during the c++ function!")
   cmake_language(EXIT 9)
 endif()
 
 if(NOT EXISTS "${MY_TEST_WORKING_DIRECTORY}/TryCreateNewProject/SuccessCase/MyProjectDir/MyOtherCoolTextFiles/Hey.txt")
-  message("Failed. A user's file directory \"MyProjectDir/MyOtherCoolTextFiles/Hey.txt\" has somehow been deleted during the c++ function!")
+  message("Failed. A user's file \"MyProjectDir/MyOtherCoolTextFiles/Hey.txt\" has somehow been deleted during the c++ function!")
   cmake_language(EXIT 10)
 endif()
 
