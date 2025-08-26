@@ -11,35 +11,55 @@ MeddySDK_Meddyproject
 - ~~[boost_filesystem](https://github.com/boostorg/filesystem)~~
     - This dependency has been eliminated. We now use `std::filesystem` as a replacement.
 
-## Project Structure
+## Project Structure 📂
 
-MeddySDK_Meddyproject
-- Does it install: Yes, it's installed as the `MeddySDK_Meddyproject` package and export.
-- Subprojects
-    - Include
-        - Provides the target: `MeddySDK::Meddyproject::Include` (interface library).
-            - This can be used as a header-only library.
-        - Does it install: Yes, it's installed as the `Include` component.
-        - What it is: Holds all the public header files of our source code.
-    - Source
-        - Provided the target: `MeddySDK::Meddyproject::Source` (interface library).
-        - Does it install: No, but it's a cool idea. Maybe in the future.
-        - What it is: Holds all the private source files to compile.
-    - Static
-        - Provides the target: `MeddySDK::Meddyproject::Static` (static library).
-        - Does it install: Yes, it's installed as the `Static` component.
-    - Shared
-        - Provides the target: `MeddySDK::Meddyproject::Shared` (shared library).
-        - Does it install: Yes, it's installed as the `Shared` component.
-    - Module
-        - Provides the target: `MeddySDK::Meddyproject::Module` (module library).
-        - Does it install: Yes, it's installed as the `Module` component.
-    - Object
-        - Provides the target: `MeddySDK::Meddyproject::Object` (object library).
-        - Does it install: Yes, it's installed as the `Object` component.
-    - Tests
-        - Does it install: No, but we should support this so that dependent projects can use our test code to help with writing their own tests.
-        - What it is: Provides automated tests. See "Test Instructions" for how to use.
+Does it install: Yes, it's installed as the `MeddySDK_Meddyproject` package and export.
+
+### Include
+
+Provides the target: `MeddySDK::Meddyproject::Include` (interface library).
+
+Does it install: Yes, it's installed as the `Include` component.
+
+What it is: Holds all the public header files of our source code. This can be used as a header-only library.
+
+### Source
+
+Provided the target: `MeddySDK::Meddyproject::Source` (interface library).
+
+Does it install: No, but it's a cool idea. We should try supporting this in the future. It would have to install all of the source files.
+
+What it is: Holds all the private source files to compile.
+
+### Static
+
+Provides the target: `MeddySDK::Meddyproject::Static` (static library).
+
+Does it install: Yes, it's installed as the `Static` component.
+
+### Shared
+
+Provides the target: `MeddySDK::Meddyproject::Shared` (shared library).
+
+Does it install: Yes, it's installed as the `Shared` component.
+
+### Module
+
+Provides the target: `MeddySDK::Meddyproject::Module` (module library).
+
+Does it install: Yes, it's installed as the `Module` component.
+
+### Object
+
+Provides the target: `MeddySDK::Meddyproject::Object` (object library).
+
+Does it install: Yes, it's installed as the `Object` component.
+
+### Tests
+
+Does it install: No, but we should support this so that dependent projects can use our test code to help with writing their own tests.
+
+What it is: Provides automated tests. See "Test Instructions" for how to use.
 
 ## Build System ⌨
 
