@@ -108,10 +108,6 @@ set(CPACK_INSTALL_CMAKE_PROJECTS "${CMAKE_BINARY_DIR};${PROJECT_NAME};ALL;/")
 set(CPACK_OUTPUT_CONFIG_FILE "${CMAKE_BINARY_DIR}/${PROJECT_NAME}/CPackConfig.cmake")
 set(CPACK_SOURCE_OUTPUT_CONFIG_FILE "${CMAKE_BINARY_DIR}/${PROJECT_NAME}/CPackSourceConfig.cmake")
 
-# TODO: Decide on an appropriate place to set generator-specific variables. I tried
-# wrapping this NSIS-specific variable in an if condition `CPACK_GENERATOR MATCHES "NSIS"` but
-# it was never being entered.
-
 #
 # Use NSIS' feature for appending our binary directory to the PATH environment
 # variable.
