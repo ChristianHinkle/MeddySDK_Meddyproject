@@ -44,3 +44,17 @@ IDE: Choose the `windows-x64-debug` configure preset, and "configure" the CMake 
 Command line: `cmake --build --preset="windows-x64-debug"`.
 
 IDE: Choose the `windows-x64-debug` build preset, and "build" it.
+
+## Test Instructions 🧪
+
+Here's how to run automated tests, to verify that our code behaves as intended.
+
+### 1. Build the Project
+
+See "Build Instructions" above.
+
+### 2. Invoke CTest
+
+Command line: `ctest --preset="meddysdk-meddyproject-windows-x64-debug"`.
+
+IDE: Choose the `meddysdk-meddyproject-windows-x64-debug` test preset, and "run tests".
