@@ -13,6 +13,7 @@ include("${CMAKE_CURRENT_LIST_DIR}/MeddySDK_MeddyprojectExport.cmake")
 #
 
 add_library(MeddySDK::Meddyproject::Include ALIAS MeddySDK_Meddyproject_Include)
+add_library(MeddySDK::Meddyproject::Source ALIAS MeddySDK_Meddyproject_Source)
 add_library(MeddySDK::Meddyproject::Static ALIAS MeddySDK_Meddyproject_Static)
 add_library(MeddySDK::Meddyproject::Shared ALIAS MeddySDK_Meddyproject_Shared)
 add_library(MeddySDK::Meddyproject::Module ALIAS MeddySDK_Meddyproject_Module)

@@ -7,6 +7,9 @@ project(MeddySDK_Meddyproject_Source
   LANGUAGES CXX
   )
 
+include(GNUInstallDirs)
+include(MyGNUInstallDirs)
+
 #
 # Create targets.
 #
@@ -81,14 +84,44 @@ target_sources(MeddySDK_Meddyproject_Source
   )
 
 # Add all source files.
-target_sources(MeddySDK_Meddyproject_Source
-  INTERFACE
-    "${CMAKE_CURRENT_SOURCE_DIR}/Source/MeddySDK_Meddyproject_Export.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Source/Meddyproject.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Source/FilesystemUtils.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Source/StringUtils.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Source/CharBufferString.cpp"
-  )
+block(SCOPE_FOR VARIABLES)
+
+  # List of all source files.
+  set(MyTargetSources
+    "Source/MeddySDK_Meddyproject_Export.cpp"
+    "Source/Meddyproject.cpp"
+    "Source/FilesystemUtils.cpp"
+    "Source/StringUtils.cpp"
+    "Source/CharBufferString.cpp"
+    )
+
+  # Add source file paths for `BUILD_LOCAL_INTERFACE` users.
+  block(SCOPE_FOR VARIABLES)
+    # Wrap each source file path in the conditional generator expression.
+    set(MyTargetSourcesBuildLocalInterface ${MyTargetSources})
+    list(TRANSFORM MyTargetSourcesBuildLocalInterface PREPEND "$<BUILD_LOCAL_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/")
+    list(TRANSFORM MyTargetSourcesBuildLocalInterface APPEND ">")
+
+    target_sources(MeddySDK_Meddyproject_Source
+      INTERFACE
+        ${MyTargetSourcesBuildLocalInterface}
+      )
+  endblock()
+
+  # Add source file paths for `INSTALL_INTERFACE` users.
+  block(SCOPE_FOR VARIABLES)
+    # Wrap each source file path in the conditional generator expression.
+    set(MyTargetSourcesInstallInterface ${MyTargetSources})
+    list(TRANSFORM MyTargetSourcesInstallInterface PREPEND "$<INSTALL_INTERFACE:${MY_GNU_INSTALL_SRCDIR}/${PROJECT_NAME}/")
+    list(TRANSFORM MyTargetSourcesInstallInterface APPEND ">")
+
+    target_sources(MeddySDK_Meddyproject_Source
+      INTERFACE
+        ${MyTargetSourcesInstallInterface}
+      )
+  endblock()
+
+endblock()
 
 # Note that we do not "find package" for our parent project. We don't need to since we are built in the same
 # cmake invocation as the it. That means we're being processed during the same configuration step as them, which
@@ -103,5 +136,30 @@ target_link_libraries(MeddySDK_Meddyproject_Source
     $<BUILD_LOCAL_INTERFACE:MeddySDK::Meddyproject::Include>
   )
 
-# Idea: It might be cool to install this library and all its source files. That would allow downstream projects to use
-# us. For now, this library is just a way for us to share source files across all the different types of libraries.
+# Associate our targets with an export and specify how their files would be installed.
+install(TARGETS MeddySDK_Meddyproject_Source
+  EXPORT "MeddySDK_MeddyprojectExport"
+  COMPONENT "Source"
+  LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+  ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+  RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
+  #
+  # Add to interface include directories.
+  #
+  # Note: We take care of install-specific include directories here instead of `target_include_directories()`.
+  #
+  # Note: It's important to make sure cpp include statements of public headers are compatible between
+  # install interface users and build interface users. E.g., a user's include statements should work for
+  # both packaged library usage and subproject library usage, without having to adapt their code to either use case.
+  #
+  INCLUDES DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}"
+  # Copy over any interface-facing headers.
+  FILE_SET meddysdk_meddyproject_source_interface_headers DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}"
+  )
+
+# Specify how installing should copy our source files to the install directory. Note: The destination must
+# match with the `target_sources` paths that we used.
+install(
+  FILES $<TARGET_PROPERTY:MeddySDK_Meddyproject_Source,INTERFACE_SOURCES>
+  DESTINATION "${MY_GNU_INSTALL_SRCDIR}/${PROJECT_NAME}"
+  )

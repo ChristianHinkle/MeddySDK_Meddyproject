@@ -7,6 +7,9 @@ project(MeddySDK_Meddyproject_Object
   LANGUAGES CXX
   )
 
+include(GenerateExportHeader)
+include(GNUInstallDirs)
+
 #
 # Create targets.
 #
@@ -46,7 +49,6 @@ set_target_properties(MeddySDK_Meddyproject_Object
 add_library(MeddySDK::Meddyproject::Object ALIAS MeddySDK_Meddyproject_Object)
 
 # Generate a cpp header file that provides export macros for our library.
-include(GenerateExportHeader)
 generate_export_header(MeddySDK_Meddyproject_Object
   BASE_NAME MeddySDK_Meddyproject
   EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/Include/meddysdk_meddyproject_object_export.h"
@@ -95,8 +97,6 @@ target_link_libraries(MeddySDK_Meddyproject_Object
   PRIVATE
     $<BUILD_LOCAL_INTERFACE:MeddySDK::Meddyproject::Source>
   )
-
-include(GNUInstallDirs)
 
 # Associate our targets with an export and specify how their files would be installed.
 install(TARGETS MeddySDK_Meddyproject_Object

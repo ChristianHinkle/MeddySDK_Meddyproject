@@ -7,6 +7,8 @@ project(MeddySDK_Meddyproject_Include
   LANGUAGES CXX
   )
 
+include(GNUInstallDirs)
+
 #
 # Create targets.
 #
@@ -87,8 +89,6 @@ target_sources(MeddySDK_Meddyproject_Include
 # means we'll have all their targets. Also, the targets that we reference in `target_link_libraries` commands don't
 # even need to exist yet because CMake only validates the existence of targets at the end of the entire
 # configuration process.
-
-include(GNUInstallDirs)
 
 # Associate our targets with an export and specify how their files would be installed.
 install(TARGETS MeddySDK_Meddyproject_Include

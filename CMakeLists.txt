@@ -19,6 +19,8 @@ if(PROJECT_IS_TOP_LEVEL)
 endif()
 
 include(FetchContent)
+include(GNUInstallDirs)
+include(CMakePackageConfigHelpers)
 
 # Declare subprojects.
 
@@ -70,8 +72,6 @@ if(BUILD_TESTING)
   FetchContent_MakeAvailable(MeddySDK_Meddyproject_Tests)
 endif()
 
-include(GNUInstallDirs)
-
 # Generate script that imports targets associated with our export.
 install(EXPORT "${PROJECT_NAME}Export"
   FILE "${PROJECT_NAME}Export.cmake"
@@ -79,7 +79,6 @@ install(EXPORT "${PROJECT_NAME}Export"
   )
 
 # Create a package version file for our export.
-include(CMakePackageConfigHelpers)
 write_basic_package_version_file("${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
   VERSION ${PROJECT_VERSION}
   COMPATIBILITY SameMajorVersion
