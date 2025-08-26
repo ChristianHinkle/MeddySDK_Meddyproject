@@ -11,5 +11,80 @@
     ],
     "include": [
         "${sourceDir}/CMake/CMakePresets/GenericPresets.json"
+    ],
+    "testPresets": [
+        {
+            "name": "meddysdk-meddyproject-base",
+            "hidden": true,
+            "filter": {
+                "include": {
+                    "name": "MeddySDK.Meddyproject."
+                }
+            }
+        },
+        {
+            "name": "meddysdk-meddyproject-windows-x64-debug",
+            "displayName": "MeddySDK.Meddyproject - Windows x64 Debug",
+            "inherits": [
+                "meddysdk-meddyproject-base",
+                "windows-x64-debug"
+            ]
+        },
+        {
+            "name": "meddysdk-meddyproject-windows-x64-release",
+            "displayName": "MeddySDK.Meddyproject - Windows x64 Release",
+            "inherits": [
+                "meddysdk-meddyproject-base",
+                "windows-x64-release"
+            ]
+        },
+        {
+            "name": "meddysdk-meddyproject-windows-x86-debug",
+            "displayName": "MeddySDK.Meddyproject - Windows x86 Debug",
+            "inherits": [
+                "meddysdk-meddyproject-base",
+                "windows-x86-debug"
+            ]
+        },
+        {
+            "name": "meddysdk-meddyproject-windows-x86-release",
+            "displayName": "MeddySDK.Meddyproject - Windows x86 Release",
+            "inherits": [
+                "meddysdk-meddyproject-base",
+                "windows-x86-release"
+            ]
+        },
+        {
+            "name": "meddysdk-meddyproject-linux-debug",
+            "displayName": "MeddySDK.Meddyproject - Linux Debug",
+            "inherits": [
+                "meddysdk-meddyproject-base",
+                "linux-debug"
+            ]
+        },
+        {
+            "name": "meddysdk-meddyproject-linux-release",
+            "displayName": "MeddySDK.Meddyproject - Linux Release",
+            "inherits": [
+                "meddysdk-meddyproject-base",
+                "linux-release"
+            ]
+        },
+        {
+            "name": "meddysdk-meddyproject-macos-debug",
+            "displayName": "MeddySDK.Meddyproject - macOS Debug",
+            "inherits": [
+                "meddysdk-meddyproject-base",
+                "macos-debug"
+            ]
+        },
+        {
+            "name": "meddysdk-meddyproject-macos-release",
+            "displayName": "MeddySDK.Meddyproject - macOS Release",
+            "inherits": [
+                "meddysdk-meddyproject-base",
+                "macos-release"
+            ]
+        }
     ]
 }
