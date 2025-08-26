@@ -86,20 +86,20 @@ target_sources(MeddySDK_Meddyproject_Source
 # Add all source files.
 block(SCOPE_FOR VARIABLES)
 
-  # List of all source files.
+  # List of all source files (relative to our "Source" directory).
   set(MyTargetSources
-    "Source/MeddySDK_Meddyproject_Export.cpp"
-    "Source/Meddyproject.cpp"
-    "Source/FilesystemUtils.cpp"
-    "Source/StringUtils.cpp"
-    "Source/CharBufferString.cpp"
+    "MeddySDK_Meddyproject_Export.cpp"
+    "Meddyproject.cpp"
+    "FilesystemUtils.cpp"
+    "StringUtils.cpp"
+    "CharBufferString.cpp"
     )
 
   # Add source file paths for `BUILD_LOCAL_INTERFACE` users.
   block(SCOPE_FOR VARIABLES)
     # Wrap each source file path in the conditional generator expression.
     set(MyTargetSourcesBuildLocalInterface ${MyTargetSources})
-    list(TRANSFORM MyTargetSourcesBuildLocalInterface PREPEND "$<BUILD_LOCAL_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/")
+    list(TRANSFORM MyTargetSourcesBuildLocalInterface PREPEND "$<BUILD_LOCAL_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Source/")
     list(TRANSFORM MyTargetSourcesBuildLocalInterface APPEND ">")
 
     target_sources(MeddySDK_Meddyproject_Source
