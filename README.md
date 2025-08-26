@@ -15,7 +15,7 @@ MeddySDK_Meddyproject
 
 Does it install: Yes, it's installed as the `MeddySDK_Meddyproject` package and export.
 
-### Include
+### Include/
 
 Provides the target: `MeddySDK::Meddyproject::Include` (interface library).
 
@@ -23,7 +23,7 @@ Does it install: Yes, it's installed as the `Include` component.
 
 What it is: Holds all the public header files of our source code. This can be used as a header-only library.
 
-### Source
+### Source/
 
 Provides the target: `MeddySDK::Meddyproject::Source` (interface library).
 
@@ -31,31 +31,31 @@ Does it install: No, but it's a cool idea. We should try supporting this in the 
 
 What it is: Holds all the private source files to compile.
 
-### Static
+### Static/
 
 Provides the target: `MeddySDK::Meddyproject::Static` (static library).
 
 Does it install: Yes, it's installed as the `Static` component.
 
-### Shared
+### Shared/
 
 Provides the target: `MeddySDK::Meddyproject::Shared` (shared library).
 
 Does it install: Yes, it's installed as the `Shared` component.
 
-### Module
+### Module/
 
 Provides the target: `MeddySDK::Meddyproject::Module` (module library).
 
 Does it install: Yes, it's installed as the `Module` component.
 
-### Object
+### Object/
 
 Provides the target: `MeddySDK::Meddyproject::Object` (object library).
 
 Does it install: Yes, it's installed as the `Object` component.
 
-### Tests
+### Tests/
 
 Does it install: No, but we should support this so that dependent projects can use our test code to help with writing their own tests.
 
