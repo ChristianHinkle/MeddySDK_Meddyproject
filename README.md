@@ -25,7 +25,7 @@ What it is: Holds all the public header files of our source code. This can be us
 
 ### Source
 
-Provided the target: `MeddySDK::Meddyproject::Source` (interface library).
+Provides the target: `MeddySDK::Meddyproject::Source` (interface library).
 
 Does it install: No, but it's a cool idea. We should try supporting this in the future. It would have to install all of the source files.
 
