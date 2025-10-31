@@ -2,7 +2,16 @@
 
 cmake_minimum_required(VERSION 4.0)
 
-project(MeddySDK_Meddyproject
+# Write out the main project name here, in one place, to make renaming easier. This is mainly used by our
+# boilerplate code. There may be other mentions of the project's name mixed in certain places of this file, so
+# don't rely on these variables alone for renaming.
+SET(MY_BASE_PROJECT_NAME_FULL "MeddySDK_Meddyproject")
+string(TOLOWER ${MY_BASE_PROJECT_NAME_FULL} MY_BASE_PROJECT_NAME_FULL_LOWERCASE)
+string(TOUPPER ${MY_BASE_PROJECT_NAME_FULL} MY_BASE_PROJECT_NAME_FULL_UPPERCASE)
+SET(MY_BASE_PROJECT_NAME_NAMESPACE "MeddySDK")
+SET(MY_BASE_PROJECT_NAME_LEAFNAME "Meddyproject")
+
+project(${MY_BASE_PROJECT_NAME_FULL}
   VERSION 0.1.0
   DESCRIPTION ""
   HOMEPAGE_URL "https://github.com/ChristianHinko/MeddySDK_Meddyproject"
@@ -24,52 +33,52 @@ include(CMakePackageConfigHelpers)
 
 # Declare subprojects.
 
-FetchContent_Declare(MeddySDK_Meddyproject_Include
+FetchContent_Declare(${MY_BASE_PROJECT_NAME_FULL}_Include
   SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Include"
   )
 
-FetchContent_Declare(MeddySDK_Meddyproject_Source
+FetchContent_Declare(${MY_BASE_PROJECT_NAME_FULL}_Source
   SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Source"
   )
 
-FetchContent_Declare(MeddySDK_Meddyproject_Static
+FetchContent_Declare(${MY_BASE_PROJECT_NAME_FULL}_Static
   SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Static"
   )
 
-FetchContent_Declare(MeddySDK_Meddyproject_Shared
+FetchContent_Declare(${MY_BASE_PROJECT_NAME_FULL}_Shared
   SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Shared"
   )
 
-FetchContent_Declare(MeddySDK_Meddyproject_Module
+FetchContent_Declare(${MY_BASE_PROJECT_NAME_FULL}_Module
   SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Module"
   )
 
-FetchContent_Declare(MeddySDK_Meddyproject_Object
+FetchContent_Declare(${MY_BASE_PROJECT_NAME_FULL}_Object
   SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Object"
   )
 
 if(BUILD_TESTING)
-  FetchContent_Declare(MeddySDK_Meddyproject_Tests
+  FetchContent_Declare(${MY_BASE_PROJECT_NAME_FULL}_Tests
     SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Tests"
     )
 endif()
 
 # Add subprojects.
 
-FetchContent_MakeAvailable(MeddySDK_Meddyproject_Include)
+FetchContent_MakeAvailable(${MY_BASE_PROJECT_NAME_FULL}_Include)
 
-FetchContent_MakeAvailable(MeddySDK_Meddyproject_Source)
+FetchContent_MakeAvailable(${MY_BASE_PROJECT_NAME_FULL}_Source)
 
-FetchContent_MakeAvailable(MeddySDK_Meddyproject_Static)
+FetchContent_MakeAvailable(${MY_BASE_PROJECT_NAME_FULL}_Static)
 
-FetchContent_MakeAvailable(MeddySDK_Meddyproject_Shared)
+FetchContent_MakeAvailable(${MY_BASE_PROJECT_NAME_FULL}_Shared)
 
-FetchContent_MakeAvailable(MeddySDK_Meddyproject_Module)
+FetchContent_MakeAvailable(${MY_BASE_PROJECT_NAME_FULL}_Module)
 
-FetchContent_MakeAvailable(MeddySDK_Meddyproject_Object)
+FetchContent_MakeAvailable(${MY_BASE_PROJECT_NAME_FULL}_Object)
 
 if(BUILD_TESTING)
-  FetchContent_MakeAvailable(MeddySDK_Meddyproject_Tests)
+  FetchContent_MakeAvailable(${MY_BASE_PROJECT_NAME_FULL}_Tests)
 endif()
 
 # Generate script that imports targets associated with our export.

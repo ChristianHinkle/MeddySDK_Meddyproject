@@ -2,7 +2,16 @@
 
 cmake_minimum_required(VERSION 4.0)
 
-project(MeddySDK_Meddyproject_Tests
+# Write out the main project name here, in one place, to make renaming easier. This is mainly used by our
+# boilerplate code. There may be other mentions of the project's name mixed in certain places of this file, so
+# don't rely on these variables alone for renaming.
+SET(MY_BASE_PROJECT_NAME_FULL "MeddySDK_Meddyproject")
+string(TOLOWER ${MY_BASE_PROJECT_NAME_FULL} MY_BASE_PROJECT_NAME_FULL_LOWERCASE)
+string(TOUPPER ${MY_BASE_PROJECT_NAME_FULL} MY_BASE_PROJECT_NAME_FULL_UPPERCASE)
+SET(MY_BASE_PROJECT_NAME_NAMESPACE "MeddySDK")
+SET(MY_BASE_PROJECT_NAME_LEAFNAME "Meddyproject")
+
+project(${MY_BASE_PROJECT_NAME_FULL}_Tests
   VERSION 0.1.0
   LANGUAGES CXX
   )
@@ -16,7 +25,7 @@ project(MeddySDK_Meddyproject_Tests
 add_executable(ProjectRootToDotMeddyprojectPath)
 target_compile_features(ProjectRootToDotMeddyprojectPath PUBLIC cxx_std_20)
 target_sources(ProjectRootToDotMeddyprojectPath PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/Source/ProjectRootToDotMeddyprojectPath.cpp")
-target_link_libraries(ProjectRootToDotMeddyprojectPath PRIVATE MeddySDK::Meddyproject::Static)
+target_link_libraries(ProjectRootToDotMeddyprojectPath PRIVATE ${MY_BASE_PROJECT_NAME_NAMESPACE}::${MY_BASE_PROJECT_NAME_LEAFNAME}::Static)
 
 add_test(NAME MeddySDK.Meddyproject.ProjectRootToDotMeddyprojectPath.UserVideos
   COMMAND ProjectRootToDotMeddyprojectPath
@@ -39,7 +48,7 @@ add_test(NAME MeddySDK.Meddyproject.ProjectRootToDotMeddyprojectPath.Empty
 add_executable(DotMeddyprojectToProjectRootPath)
 target_compile_features(DotMeddyprojectToProjectRootPath PUBLIC cxx_std_20)
 target_sources(DotMeddyprojectToProjectRootPath PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/Source/DotMeddyprojectToProjectRootPath.cpp")
-target_link_libraries(DotMeddyprojectToProjectRootPath PRIVATE MeddySDK::Meddyproject::Static)
+target_link_libraries(DotMeddyprojectToProjectRootPath PRIVATE ${MY_BASE_PROJECT_NAME_NAMESPACE}::${MY_BASE_PROJECT_NAME_LEAFNAME}::Static)
 
 add_test(NAME MeddySDK.Meddyproject.DotMeddyprojectToProjectRootPath.UserVideos
   COMMAND DotMeddyprojectToProjectRootPath
@@ -62,7 +71,7 @@ add_test(NAME MeddySDK.Meddyproject.DotMeddyprojectToProjectRootPath.Empty
 add_executable(DotMeddyprojectToManifestFilePath)
 target_compile_features(DotMeddyprojectToManifestFilePath PUBLIC cxx_std_20)
 target_sources(DotMeddyprojectToManifestFilePath PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/Source/DotMeddyprojectToManifestFilePath.cpp")
-target_link_libraries(DotMeddyprojectToManifestFilePath PRIVATE MeddySDK::Meddyproject::Static)
+target_link_libraries(DotMeddyprojectToManifestFilePath PRIVATE ${MY_BASE_PROJECT_NAME_NAMESPACE}::${MY_BASE_PROJECT_NAME_LEAFNAME}::Static)
 
 add_test(NAME MeddySDK.Meddyproject.DotMeddyprojectToManifestFilePath.UserVideos
   COMMAND DotMeddyprojectToManifestFilePath
@@ -85,7 +94,7 @@ add_test(NAME MeddySDK.Meddyproject.DotMeddyprojectToManifestFilePath.Empty
 add_executable(TryCreateNewProject)
 target_compile_features(TryCreateNewProject PUBLIC cxx_std_20)
 target_sources(TryCreateNewProject PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/Source/TryCreateNewProject.cpp")
-target_link_libraries(TryCreateNewProject PRIVATE MeddySDK::Meddyproject::Static)
+target_link_libraries(TryCreateNewProject PRIVATE ${MY_BASE_PROJECT_NAME_NAMESPACE}::${MY_BASE_PROJECT_NAME_LEAFNAME}::Static)
 
 add_test(
   NAME MeddySDK.Meddyproject.TryCreateNewProject.SuccessCase

@@ -2,7 +2,16 @@
 
 cmake_minimum_required(VERSION 4.0)
 
-project(MeddySDK_Meddyproject_Shared
+# Write out the main project name here, in one place, to make renaming easier. This is mainly used by our
+# boilerplate code. There may be other mentions of the project's name mixed in certain places of this file, so
+# don't rely on these variables alone for renaming.
+SET(MY_BASE_PROJECT_NAME_FULL "MeddySDK_Meddyproject")
+string(TOLOWER ${MY_BASE_PROJECT_NAME_FULL} MY_BASE_PROJECT_NAME_FULL_LOWERCASE)
+string(TOUPPER ${MY_BASE_PROJECT_NAME_FULL} MY_BASE_PROJECT_NAME_FULL_UPPERCASE)
+SET(MY_BASE_PROJECT_NAME_NAMESPACE "MeddySDK")
+SET(MY_BASE_PROJECT_NAME_LEAFNAME "Meddyproject")
+
+project(${MY_BASE_PROJECT_NAME_FULL}_Shared
   VERSION 0.1.0
   LANGUAGES CXX
   )
@@ -17,7 +26,7 @@ include(GNUInstallDirs)
 # the DAM library of MeddySDK, we name it "MeddySDK_DAM" instead of just "DAM", because that would be very vague.
 #
 
-add_library(MeddySDK_Meddyproject_Shared SHARED)
+add_library(${MY_BASE_PROJECT_NAME_FULL}_Shared SHARED)
 
 #
 # Set output names of our targets.
@@ -26,9 +35,9 @@ add_library(MeddySDK_Meddyproject_Shared SHARED)
 # target name. E.g., for MeddySDKCLI, we name its executable file "meddy" to suit our desired command line usage.
 #
 
-set_target_properties(MeddySDK_Meddyproject_Shared
+set_target_properties(${MY_BASE_PROJECT_NAME_FULL}_Shared
   PROPERTIES
-    OUTPUT_NAME "MeddySDK_Meddyproject"
+    OUTPUT_NAME "${MY_BASE_PROJECT_NAME_FULL}"
   )
 
 #
@@ -46,17 +55,17 @@ set_target_properties(MeddySDK_Meddyproject_Shared
 # `FetchContent_Declare()`.
 #
 
-add_library(MeddySDK::Meddyproject::Shared ALIAS MeddySDK_Meddyproject_Shared)
+add_library(${MY_BASE_PROJECT_NAME_NAMESPACE}::${MY_BASE_PROJECT_NAME_LEAFNAME}::Shared ALIAS ${MY_BASE_PROJECT_NAME_FULL}_Shared)
 
 # Generate a cpp header file that provides export macros for our library.
-generate_export_header(MeddySDK_Meddyproject_Shared
-  BASE_NAME MeddySDK_Meddyproject
-  EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/Include/meddysdk_meddyproject_shared_export.h"
-  INCLUDE_GUARD_NAME "MEDDYSDK_MEDDYPROJECT_SHARED_EXPORT_H"
+generate_export_header(${MY_BASE_PROJECT_NAME_FULL}_Shared
+  BASE_NAME ${MY_BASE_PROJECT_NAME_FULL}
+  EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/Include/${MY_BASE_PROJECT_NAME_FULL_LOWERCASE}_shared_export.h"
+  INCLUDE_GUARD_NAME "${MY_BASE_PROJECT_NAME_FULL_UPPERCASE}_SHARED_EXPORT_H"
   )
 
 # List out required language features.
-target_compile_features(MeddySDK_Meddyproject_Shared
+target_compile_features(${MY_BASE_PROJECT_NAME_FULL}_Shared
   PUBLIC
     cxx_std_20
   )
@@ -73,14 +82,14 @@ target_compile_features(MeddySDK_Meddyproject_Shared
 #
 # A nice benefit of listing all header files is that they can be easily-discoverable by IDEs.
 #
-target_sources(MeddySDK_Meddyproject_Shared
+target_sources(${MY_BASE_PROJECT_NAME_FULL}_Shared
   PUBLIC
-    FILE_SET meddysdk_meddyproject_shared_public_headers
+    FILE_SET ${MY_BASE_PROJECT_NAME_FULL_LOWERCASE}_shared_public_headers
       TYPE HEADERS
       BASE_DIRS
         "${CMAKE_CURRENT_BINARY_DIR}/Include" # The base directory of generated headers.
       FILES
-        "${CMAKE_CURRENT_BINARY_DIR}/Include/meddysdk_meddyproject_shared_export.h"
+        "${CMAKE_CURRENT_BINARY_DIR}/Include/${MY_BASE_PROJECT_NAME_FULL_LOWERCASE}_shared_export.h"
   )
 
 # Note that we do not "find package" for our parent project. We don't need to since we are built in the same
@@ -91,16 +100,16 @@ target_sources(MeddySDK_Meddyproject_Shared
 
 # Add dependencies to other targets. For imported targets, it's important to only depend on them if we
 # are BUILD_LOCAL_INTERFACE, because we don't want them to get mixed into our export.
-target_link_libraries(MeddySDK_Meddyproject_Shared
+target_link_libraries(${MY_BASE_PROJECT_NAME_FULL}_Shared
   INTERFACE
-    $<BUILD_LOCAL_INTERFACE:MeddySDK::Meddyproject::Include>
+    $<BUILD_LOCAL_INTERFACE:${MY_BASE_PROJECT_NAME_NAMESPACE}::${MY_BASE_PROJECT_NAME_LEAFNAME}::Include>
   PRIVATE
-    $<BUILD_LOCAL_INTERFACE:MeddySDK::Meddyproject::Source>
+    $<BUILD_LOCAL_INTERFACE:${MY_BASE_PROJECT_NAME_NAMESPACE}::${MY_BASE_PROJECT_NAME_LEAFNAME}::Source>
   )
 
 # Associate our targets with an export and specify how their files would be installed.
-install(TARGETS MeddySDK_Meddyproject_Shared
-  EXPORT "MeddySDK_MeddyprojectExport"
+install(TARGETS ${MY_BASE_PROJECT_NAME_FULL}_Shared
+  EXPORT "${MY_BASE_PROJECT_NAME_FULL}Export"
   COMPONENT "Shared"
   LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}/${PROJECT_NAME}"
   ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}/${PROJECT_NAME}"
@@ -116,5 +125,5 @@ install(TARGETS MeddySDK_Meddyproject_Shared
   #
   INCLUDES DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}"
   # Copy over public headers.
-  FILE_SET meddysdk_meddyproject_shared_public_headers DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}"
+  FILE_SET ${MY_BASE_PROJECT_NAME_FULL_LOWERCASE}_shared_public_headers DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}"
   )

@@ -2,7 +2,16 @@
 
 cmake_minimum_required(VERSION 4.0)
 
-project(MeddySDK_Meddyproject_Source
+# Write out the main project name here, in one place, to make renaming easier. This is mainly used by our
+# boilerplate code. There may be other mentions of the project's name mixed in certain places of this file, so
+# don't rely on these variables alone for renaming.
+SET(MY_BASE_PROJECT_NAME_FULL "MeddySDK_Meddyproject")
+string(TOLOWER ${MY_BASE_PROJECT_NAME_FULL} MY_BASE_PROJECT_NAME_FULL_LOWERCASE)
+string(TOUPPER ${MY_BASE_PROJECT_NAME_FULL} MY_BASE_PROJECT_NAME_FULL_UPPERCASE)
+SET(MY_BASE_PROJECT_NAME_NAMESPACE "MeddySDK")
+SET(MY_BASE_PROJECT_NAME_LEAFNAME "Meddyproject")
+
+project(${MY_BASE_PROJECT_NAME_FULL}_Source
   VERSION 0.1.0
   LANGUAGES CXX
   )
@@ -17,7 +26,7 @@ include(MyGNUInstallDirs)
 # the DAM library of MeddySDK, we name it "MeddySDK_DAM" instead of just "DAM", because that would be very vague.
 #
 
-add_library(MeddySDK_Meddyproject_Source INTERFACE)
+add_library(${MY_BASE_PROJECT_NAME_FULL}_Source INTERFACE)
 
 #
 # Set output names of our targets.
@@ -26,9 +35,9 @@ add_library(MeddySDK_Meddyproject_Source INTERFACE)
 # target name. E.g., for MeddySDKCLI, we name its executable file "meddy" to suit our desired command line usage.
 #
 
-set_target_properties(MeddySDK_Meddyproject_Source
+set_target_properties(${MY_BASE_PROJECT_NAME_FULL}_Source
   PROPERTIES
-    OUTPUT_NAME "MeddySDK_Meddyproject"
+    OUTPUT_NAME "${MY_BASE_PROJECT_NAME_FULL}"
   )
 
 #
@@ -46,10 +55,10 @@ set_target_properties(MeddySDK_Meddyproject_Source
 # `FetchContent_Declare()`.
 #
 
-add_library(MeddySDK::Meddyproject::Source ALIAS MeddySDK_Meddyproject_Source)
+add_library(${MY_BASE_PROJECT_NAME_NAMESPACE}::${MY_BASE_PROJECT_NAME_LEAFNAME}::Source ALIAS ${MY_BASE_PROJECT_NAME_FULL}_Source)
 
 # List out required language features.
-target_compile_features(MeddySDK_Meddyproject_Source
+target_compile_features(${MY_BASE_PROJECT_NAME_FULL}_Source
   INTERFACE
     cxx_std_20
   )
@@ -66,9 +75,9 @@ target_compile_features(MeddySDK_Meddyproject_Source
 #
 # A nice benefit of listing all header files is that they can be easily-discoverable by IDEs.
 #
-target_sources(MeddySDK_Meddyproject_Source
+target_sources(${MY_BASE_PROJECT_NAME_FULL}_Source
   INTERFACE
-    FILE_SET meddysdk_meddyproject_source_interface_headers
+    FILE_SET ${MY_BASE_PROJECT_NAME_FULL_LOWERCASE}_source_interface_headers
       TYPE HEADERS
       BASE_DIRS
         #
@@ -88,7 +97,7 @@ block(SCOPE_FOR VARIABLES)
 
   # List of all source files (relative to our "Source" directory).
   set(MyTargetSources
-    "MeddySDK_Meddyproject_Export.cpp"
+    "${MY_BASE_PROJECT_NAME_FULL}_Export.cpp"
     "Meddyproject.cpp"
     "FilesystemUtils.cpp"
     "StringUtils.cpp"
@@ -102,7 +111,7 @@ block(SCOPE_FOR VARIABLES)
     list(TRANSFORM MyTargetSourcesBuildLocalInterface PREPEND "$<BUILD_LOCAL_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Source/")
     list(TRANSFORM MyTargetSourcesBuildLocalInterface APPEND ">")
 
-    target_sources(MeddySDK_Meddyproject_Source
+    target_sources(${MY_BASE_PROJECT_NAME_FULL}_Source
       INTERFACE
         ${MyTargetSourcesBuildLocalInterface}
       )
@@ -115,7 +124,7 @@ block(SCOPE_FOR VARIABLES)
     list(TRANSFORM MyTargetSourcesInstallInterface PREPEND "$<INSTALL_INTERFACE:${MY_GNU_INSTALL_SRCDIR}/${PROJECT_NAME}/")
     list(TRANSFORM MyTargetSourcesInstallInterface APPEND ">")
 
-    target_sources(MeddySDK_Meddyproject_Source
+    target_sources(${MY_BASE_PROJECT_NAME_FULL}_Source
       INTERFACE
         ${MyTargetSourcesInstallInterface}
       )
@@ -133,15 +142,15 @@ find_package(Boost CONFIG REQUIRED COMPONENTS filesystem)
 
 # Add dependencies to other targets. For imported targets, it's important to only depend on them if we
 # are BUILD_LOCAL_INTERFACE, because we don't want them to get mixed into our export.
-target_link_libraries(MeddySDK_Meddyproject_Source
+target_link_libraries(${MY_BASE_PROJECT_NAME_FULL}_Source
   INTERFACE
-    $<BUILD_LOCAL_INTERFACE:MeddySDK::Meddyproject::Include>
+    $<BUILD_LOCAL_INTERFACE:${MY_BASE_PROJECT_NAME_NAMESPACE}::${MY_BASE_PROJECT_NAME_LEAFNAME}::Include>
     $<BUILD_LOCAL_INTERFACE:Boost::filesystem>
   )
 
 # Associate our targets with an export and specify how their files would be installed.
-install(TARGETS MeddySDK_Meddyproject_Source
-  EXPORT "MeddySDK_MeddyprojectExport"
+install(TARGETS ${MY_BASE_PROJECT_NAME_FULL}_Source
+  EXPORT "${MY_BASE_PROJECT_NAME_FULL}Export"
   COMPONENT "Source"
   LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
   ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
@@ -157,12 +166,12 @@ install(TARGETS MeddySDK_Meddyproject_Source
   #
   INCLUDES DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}"
   # Copy over any interface-facing headers.
-  FILE_SET meddysdk_meddyproject_source_interface_headers DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}"
+  FILE_SET ${MY_BASE_PROJECT_NAME_FULL_LOWERCASE}_source_interface_headers DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}"
   )
 
 # Specify how installing should copy our source files to the install directory. Note: The destination must
 # match with the `target_sources` paths that we used.
 install(
-  FILES $<TARGET_PROPERTY:MeddySDK_Meddyproject_Source,INTERFACE_SOURCES>
+  FILES $<TARGET_PROPERTY:${MY_BASE_PROJECT_NAME_FULL}_Source,INTERFACE_SOURCES>
   DESTINATION "${MY_GNU_INSTALL_SRCDIR}/${PROJECT_NAME}"
   )

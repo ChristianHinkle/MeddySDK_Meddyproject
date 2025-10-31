@@ -2,7 +2,16 @@
 
 cmake_minimum_required(VERSION 4.0)
 
-project(MeddySDK_Meddyproject_Include
+# Write out the main project name here, in one place, to make renaming easier. This is mainly used by our
+# boilerplate code. There may be other mentions of the project's name mixed in certain places of this file, so
+# don't rely on these variables alone for renaming.
+SET(MY_BASE_PROJECT_NAME_FULL "MeddySDK_Meddyproject")
+string(TOLOWER ${MY_BASE_PROJECT_NAME_FULL} MY_BASE_PROJECT_NAME_FULL_LOWERCASE)
+string(TOUPPER ${MY_BASE_PROJECT_NAME_FULL} MY_BASE_PROJECT_NAME_FULL_UPPERCASE)
+SET(MY_BASE_PROJECT_NAME_NAMESPACE "MeddySDK")
+SET(MY_BASE_PROJECT_NAME_LEAFNAME "Meddyproject")
+
+project(${MY_BASE_PROJECT_NAME_FULL}_Include
   VERSION 0.1.0
   LANGUAGES CXX
   )
@@ -16,7 +25,7 @@ include(GNUInstallDirs)
 # the DAM library of MeddySDK, we name it "MeddySDK_DAM" instead of just "DAM", because that would be very vague.
 #
 
-add_library(MeddySDK_Meddyproject_Include INTERFACE)
+add_library(${MY_BASE_PROJECT_NAME_FULL}_Include INTERFACE)
 
 #
 # Set output names of our targets.
@@ -25,9 +34,9 @@ add_library(MeddySDK_Meddyproject_Include INTERFACE)
 # target name. E.g., for MeddySDKCLI, we name its executable file "meddy" to suit our desired command line usage.
 #
 
-set_target_properties(MeddySDK_Meddyproject_Include
+set_target_properties(${MY_BASE_PROJECT_NAME_FULL}_Include
   PROPERTIES
-    OUTPUT_NAME "MeddySDK_Meddyproject"
+    OUTPUT_NAME "${MY_BASE_PROJECT_NAME_FULL}"
   )
 
 #
@@ -45,10 +54,10 @@ set_target_properties(MeddySDK_Meddyproject_Include
 # `FetchContent_Declare()`.
 #
 
-add_library(MeddySDK::Meddyproject::Include ALIAS MeddySDK_Meddyproject_Include)
+add_library(${MY_BASE_PROJECT_NAME_NAMESPACE}::${MY_BASE_PROJECT_NAME_LEAFNAME}::Include ALIAS ${MY_BASE_PROJECT_NAME_FULL}_Include)
 
 # List out required language features.
-target_compile_features(MeddySDK_Meddyproject_Include
+target_compile_features(${MY_BASE_PROJECT_NAME_FULL}_Include
   INTERFACE
     cxx_std_20
   )
@@ -69,19 +78,19 @@ target_compile_features(MeddySDK_Meddyproject_Include
 # important for avoiding include file path naming conflicts with other libraries. It also gives
 # us the freedom to name our files however, while still having context in their include path names.
 #
-target_sources(MeddySDK_Meddyproject_Include
+target_sources(${MY_BASE_PROJECT_NAME_FULL}_Include
   INTERFACE
-    FILE_SET meddysdk_meddyproject_include_interface_headers
+    FILE_SET ${MY_BASE_PROJECT_NAME_FULL_LOWERCASE}_include_interface_headers
       TYPE HEADERS
       BASE_DIRS
         "${CMAKE_CURRENT_SOURCE_DIR}/Include"
       FILES
-        "${CMAKE_CURRENT_SOURCE_DIR}/Include/MeddySDK_Meddyproject_Export.h"
-        "${CMAKE_CURRENT_SOURCE_DIR}/Include/meddysdk_meddyproject_include_export.h"
-        "${CMAKE_CURRENT_SOURCE_DIR}/Include/MeddySDK_Meddyproject/Meddyproject.h"
-        "${CMAKE_CURRENT_SOURCE_DIR}/Include/MeddySDK_Meddyproject/FilesystemUtils.h"
-        "${CMAKE_CURRENT_SOURCE_DIR}/Include/MeddySDK_Meddyproject/StringUtils.h"
-        "${CMAKE_CURRENT_SOURCE_DIR}/Include/MeddySDK_Meddyproject/CharBufferString.h"
+        "${CMAKE_CURRENT_SOURCE_DIR}/Include/${MY_BASE_PROJECT_NAME_FULL}_Export.h"
+        "${CMAKE_CURRENT_SOURCE_DIR}/Include/${MY_BASE_PROJECT_NAME_FULL}_include_export.h"
+        "${CMAKE_CURRENT_SOURCE_DIR}/Include/${MY_BASE_PROJECT_NAME_FULL}/Meddyproject.h"
+        "${CMAKE_CURRENT_SOURCE_DIR}/Include/${MY_BASE_PROJECT_NAME_FULL}/FilesystemUtils.h"
+        "${CMAKE_CURRENT_SOURCE_DIR}/Include/${MY_BASE_PROJECT_NAME_FULL}/StringUtils.h"
+        "${CMAKE_CURRENT_SOURCE_DIR}/Include/${MY_BASE_PROJECT_NAME_FULL}/CharBufferString.h"
   )
 
 # Note that we do not "find package" for our parent project. We don't need to since we are built in the same
@@ -91,8 +100,8 @@ target_sources(MeddySDK_Meddyproject_Include
 # configuration process.
 
 # Associate our targets with an export and specify how their files would be installed.
-install(TARGETS MeddySDK_Meddyproject_Include
-  EXPORT "MeddySDK_MeddyprojectExport"
+install(TARGETS ${MY_BASE_PROJECT_NAME_FULL}_Include
+  EXPORT "${MY_BASE_PROJECT_NAME_FULL}Export"
   COMPONENT "Include"
   LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}/${PROJECT_NAME}"
   ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}/${PROJECT_NAME}"
@@ -108,5 +117,5 @@ install(TARGETS MeddySDK_Meddyproject_Include
   #
   INCLUDES DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}"
   # Copy over any interface-facing headers.
-  FILE_SET meddysdk_meddyproject_include_interface_headers DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}"
+  FILE_SET ${MY_BASE_PROJECT_NAME_FULL_LOWERCASE}_include_interface_headers DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}"
   )
