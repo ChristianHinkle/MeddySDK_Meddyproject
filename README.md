@@ -8,8 +8,7 @@ For a superproject with all components Meddy has to offer, see [MeddySDK](https:
 ## Dependencies
 
 MeddySDK_Meddyproject
-- ~~[boost_filesystem](https://github.com/boostorg/filesystem)~~
-    - This dependency has been eliminated. We now use `std::filesystem` as a replacement.
+- [boost_filesystem](https://github.com/boostorg/filesystem)
 
 ## Project Structure 📂
 

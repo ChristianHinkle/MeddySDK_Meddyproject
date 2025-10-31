@@ -129,11 +129,14 @@ endblock()
 # even need to exist yet because CMake only validates the existence of targets at the end of the entire
 # configuration process.
 
+find_package(Boost CONFIG REQUIRED COMPONENTS filesystem)
+
 # Add dependencies to other targets. For imported targets, it's important to only depend on them if we
 # are BUILD_LOCAL_INTERFACE, because we don't want them to get mixed into our export.
 target_link_libraries(MeddySDK_Meddyproject_Source
   INTERFACE
     $<BUILD_LOCAL_INTERFACE:MeddySDK::Meddyproject::Include>
+    $<BUILD_LOCAL_INTERFACE:Boost::filesystem>
   )
 
 # Associate our targets with an export and specify how their files would be installed.
