@@ -20,14 +20,14 @@ target_link_libraries(ProjectRootToDotMeddyprojectPath PRIVATE MeddySDK::Meddypr
 
 add_test(NAME MeddySDK.Meddyproject.ProjectRootToDotMeddyprojectPath.UserVideos
   COMMAND ProjectRootToDotMeddyprojectPath
-    "C:/Users/Meddy Man/Videos"
-    "C:/Users/Meddy Man/Videos/.meddyproject"
+    "/Users/Meddy Man/Videos"
+    "/Users/Meddy Man/Videos/.meddyproject"
   )
 
 add_test(NAME MeddySDK.Meddyproject.ProjectRootToDotMeddyprojectPath.RootC
   COMMAND ProjectRootToDotMeddyprojectPath
-    "C:/"
-    "C:/.meddyproject"
+    "/"
+    "/.meddyproject"
   )
 
 add_test(NAME MeddySDK.Meddyproject.ProjectRootToDotMeddyprojectPath.Empty
@@ -43,14 +43,14 @@ target_link_libraries(DotMeddyprojectToProjectRootPath PRIVATE MeddySDK::Meddypr
 
 add_test(NAME MeddySDK.Meddyproject.DotMeddyprojectToProjectRootPath.UserVideos
   COMMAND DotMeddyprojectToProjectRootPath
-    "C:/Users/Meddy Man/Videos/.meddyproject"
-    "C:/Users/Meddy Man/Videos"
+    "/Users/Meddy Man/Videos/.meddyproject"
+    "/Users/Meddy Man/Videos"
   )
 
 add_test(NAME MeddySDK.Meddyproject.DotMeddyprojectToProjectRootPath.RootC
   COMMAND DotMeddyprojectToProjectRootPath
-    "C:/.meddyproject"
-    "C:/"
+    "/.meddyproject"
+    "/"
   )
 
 add_test(NAME MeddySDK.Meddyproject.DotMeddyprojectToProjectRootPath.Empty
@@ -66,14 +66,14 @@ target_link_libraries(DotMeddyprojectToManifestFilePath PRIVATE MeddySDK::Meddyp
 
 add_test(NAME MeddySDK.Meddyproject.DotMeddyprojectToManifestFilePath.UserVideos
   COMMAND DotMeddyprojectToManifestFilePath
-    "C:/Users/Meddy Man/Videos/.meddyproject"
-    "C:/Users/Meddy Man/Videos/.meddyproject/Manifest.json"
+    "/Users/Meddy Man/Videos/.meddyproject"
+    "/Users/Meddy Man/Videos/.meddyproject/Manifest.json"
   )
 
 add_test(NAME MeddySDK.Meddyproject.DotMeddyprojectToManifestFilePath.RootC
   COMMAND DotMeddyprojectToManifestFilePath
-    "C:/.meddyproject"
-    "C:/.meddyproject/Manifest.json"
+    "/.meddyproject"
+    "/.meddyproject/Manifest.json"
   )
 
 add_test(NAME MeddySDK.Meddyproject.DotMeddyprojectToManifestFilePath.Empty

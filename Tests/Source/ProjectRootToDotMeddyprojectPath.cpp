@@ -21,6 +21,19 @@ int main(int argc, char** argv)
 
     std::cout << '\n';
 
+    //
+    // @Christian: TODO: [todo][filesystem][cpp] Results from MSVC aren't consistent enough for us here. Here is
+    // a breakdown of the problem:
+    // - `std::filesystem::weakly_canonical("/")` returns "C:\"
+    // - `std::filesystem::weakly_canonical("/MyFile")` returns "\MyFile"
+    //     - We need this one to return "C:\MyFile" instead.
+    // - `std::filesystem::weakly_canonical(std::filesystem::weakly_canonical("/MyFile").parent_path())` returns "C:\"
+    //
+    // On Linux, we get nice, consistent behavior.
+    //
+    // Consider switching back to `boost::filesystem` for, hopefully, more consistet behavior.
+    //
+
     std::filesystem::path testInputPath = std::filesystem::weakly_canonical(testInputString);
     std::filesystem::path testResultPathExpectedPath = std::filesystem::weakly_canonical(testResultExpectedString);
 
