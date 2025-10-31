@@ -29,8 +29,9 @@ int main(int argc, char** argv)
 
     std::cout << '\n';
 
-    std::filesystem::path testResultActualPath =
-        MeddySDK::Meddyproject::DotMeddyprojectToManifestFilePath(std::filesystem::path(testInputPath));
+    std::filesystem::path testResultActualPath = std::filesystem::weakly_canonical(
+        MeddySDK::Meddyproject::DotMeddyprojectToManifestFilePath(std::filesystem::path(testInputPath))
+        );
 
     std::cout << "Actual result path: " << testResultActualPath << "." << '\n';
 
