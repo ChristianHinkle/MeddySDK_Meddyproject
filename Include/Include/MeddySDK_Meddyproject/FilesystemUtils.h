@@ -7,6 +7,7 @@
 #include <MeddySDK_Meddyproject/StringUtils.h>
 #include <string_view>
 #include <MeddySDK_Meddyproject/CharBufferString.h>
+#include <algorithm>
 
 /**
  * @brief String literal alternative to `MeddySDK::Meddyproject::FilesystemUtils::CrossPlatformPathSeparator`.
