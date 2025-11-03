@@ -6,7 +6,8 @@
 #include <utility>
 #include <cassert>
 #include <fstream>
-#include <MeddySDK_Meddyproject/CharBufferString.h>
+#include <CppUtils_Misc/CharBufferString.h>
+#include <CppUtils_Misc/Filesystem.h>
 #include <MeddySDK_Meddyproject/FilesystemUtils.h>
 
 using namespace MeddySDK::Meddyproject;
@@ -166,8 +167,8 @@ bool MeddySDK::Meddyproject::IsDotMeddyprojectPath(const std::filesystem::path& 
     // prefer. Maybe consider enabling the boost libraries again, because the standard library is extremely limited with
     // this kind of stuff.
 
-    CharBufferString<char, FilesystemUtils::MaxFilenameLength> pathLeafNameCharBuffer =
-        FilesystemUtils::ConstructCharacterBufferFromPath<FilesystemUtils::MaxFilenameLength, char>(pathLeafName);
+    CppUtils::Misc::CharBufferString<char, FilesystemUtils::MaxFilenameLength> pathLeafNameCharBuffer =
+        CppUtils::Misc::Filesystem::ConstructCharacterBufferFromPath<FilesystemUtils::MaxFilenameLength, char>(pathLeafName);
 
     return pathLeafNameCharBuffer.GetStringView() == DotMeddyprojectString;
 }

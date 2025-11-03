@@ -4,10 +4,11 @@
 
 #include <MeddySDK_Meddyproject_Export.h>
 #include <filesystem>
-#include <MeddySDK_Meddyproject/StringUtils.h>
+#include <CppUtils_Misc/String.h>
 #include <string_view>
-#include <MeddySDK_Meddyproject/CharBufferString.h>
+#include <CppUtils_Misc/CharBufferString.h>
 #include <algorithm>
+#include <CppUtils_Misc/Filesystem.h>
 
 /**
  * @brief String literal alternative to `MeddySDK::Meddyproject::FilesystemUtils::CrossPlatformPathSeparator`.
@@ -32,31 +33,21 @@ namespace MeddySDK::Meddyproject::FilesystemUtils
      */
     constexpr std::size_t MaxFilenameLength = 1024;
 
-    MEDDYSDK_MEDDYPROJECT_EXPORT StdPathStringView GetStringViewFromPath(const std::filesystem::path& path);
-
     template <std::size_t bufferSize, class TChar = char, class TCharTraits = std::char_traits<TChar>>
-    CharBufferString<TChar, bufferSize, TCharTraits> ConstructCrossPlatformPathCharacterBuffer(const std::filesystem::path& path);
+    CppUtils::Misc::CharBufferString<TChar, bufferSize, TCharTraits> ConstructCrossPlatformPathCharacterBuffer(const std::filesystem::path& path);
 
     template <class TFwdIt, class TChar = char>
     void ConvertPathStringToCrossPlatformFormat(TFwdIt begin, TFwdIt end);
-
-    template <std::size_t bufferSize, class TChar = char, class TCharTraits = std::char_traits<TChar>>
-    CharBufferString<TChar, bufferSize, TCharTraits> ConstructCharacterBufferFromPath(const std::filesystem::path& path);
-
-    template <std::size_t bufferSize, class TChar = char, class TCharTraits = std::char_traits<TChar>>
-    void AppendPathToCharacterBuffer(
-        CharBufferString<TChar, bufferSize, TCharTraits>& characterBuffer,
-        const std::filesystem::path& path);
 }
 
 template <std::size_t bufferSize, class TChar, class TCharTraits>
-MeddySDK::Meddyproject::CharBufferString<TChar, bufferSize, TCharTraits> MeddySDK::Meddyproject::FilesystemUtils::ConstructCrossPlatformPathCharacterBuffer(
+CppUtils::Misc::CharBufferString<TChar, bufferSize, TCharTraits> MeddySDK::Meddyproject::FilesystemUtils::ConstructCrossPlatformPathCharacterBuffer(
     const std::filesystem::path& path)
 {
-    return CharBufferString<TChar, bufferSize, TCharTraits>(
-        [&path](CharBufferString<TChar, bufferSize, TCharTraits>& characterBuffer)
+    return CppUtils::Misc::CharBufferString<TChar, bufferSize, TCharTraits>(
+        [&path](CppUtils::Misc::CharBufferString<TChar, bufferSize, TCharTraits>& characterBuffer)
         {
-            AppendPathToCharacterBuffer<bufferSize, TChar, TCharTraits>(characterBuffer, path);
+            CppUtils::Misc::Filesystem::AppendPathToCharacterBuffer<bufferSize, TChar, TCharTraits>(characterBuffer, path);
             ConvertPathStringToCrossPlatformFormat(characterBuffer.begin(), characterBuffer.end());
         }
         );
@@ -70,29 +61,4 @@ void MeddySDK::Meddyproject::FilesystemUtils::ConvertPathStringToCrossPlatformFo
         end,
         static_cast<TChar>(std::filesystem::path::preferred_separator),
         static_cast<TChar>(CrossPlatformPathSeparator));
-}
-
-template <std::size_t bufferSize, class TChar, class TCharTraits>
-MeddySDK::Meddyproject::CharBufferString<TChar, bufferSize, TCharTraits> MeddySDK::Meddyproject::FilesystemUtils::ConstructCharacterBufferFromPath(
-    const std::filesystem::path& path)
-{
-    return CharBufferString<TChar, bufferSize, TCharTraits>(
-        [&path](CharBufferString<TChar, bufferSize, TCharTraits>& characterBuffer)
-        {
-            AppendPathToCharacterBuffer<bufferSize, TChar, TCharTraits>(characterBuffer, path.native());
-        }
-        );
-}
-
-template <std::size_t bufferSize, class TChar, class TCharTraits>
-void MeddySDK::Meddyproject::FilesystemUtils::AppendPathToCharacterBuffer(
-    CharBufferString<TChar, bufferSize, TCharTraits>& characterBuffer,
-    const std::filesystem::path& path)
-{
-    using TFromChar = std::filesystem::path::string_type::value_type;
-    using TFromTraits = std::filesystem::path::string_type::traits_type;
-
-    return StringUtils::AppendStringToCharacterBuffer<TChar, bufferSize, TFromChar, TFromTraits>(
-        characterBuffer,
-        path.native());
 }
