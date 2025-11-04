@@ -9,6 +9,7 @@ For a superproject with all components Meddy has to offer, see [MeddySDK](https:
 
 MeddySDK_Meddyproject
 - [boost_filesystem](https://github.com/boostorg/filesystem)
+- [CppUtils_Misc](https://github.com/ChristianHinkle/CppUtils_Misc)
 
 ## Project Structure 📂
 
