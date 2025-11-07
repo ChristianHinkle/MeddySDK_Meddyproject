@@ -39,7 +39,7 @@ add_test(NAME MeddySDK.Meddyproject.ProjectRootToDotMeddyprojectPath.UserVideos
     "/Users/Meddy Man/Videos/.meddyproject"
   )
 
-add_test(NAME MeddySDK.Meddyproject.ProjectRootToDotMeddyprojectPath.RootC
+add_test(NAME MeddySDK.Meddyproject.ProjectRootToDotMeddyprojectPath.AbsoluteRoot
   COMMAND ProjectRootToDotMeddyprojectPath
     "/"
     "/.meddyproject"
@@ -66,7 +66,7 @@ add_test(NAME MeddySDK.Meddyproject.DotMeddyprojectToProjectRootPath.UserVideos
     "/Users/Meddy Man/Videos"
   )
 
-add_test(NAME MeddySDK.Meddyproject.DotMeddyprojectToProjectRootPath.RootC
+add_test(NAME MeddySDK.Meddyproject.DotMeddyprojectToProjectRootPath.AbsoluteRoot
   COMMAND DotMeddyprojectToProjectRootPath
     "/.meddyproject"
     "/"
@@ -93,7 +93,7 @@ add_test(NAME MeddySDK.Meddyproject.DotMeddyprojectToManifestFilePath.UserVideos
     "/Users/Meddy Man/Videos/.meddyproject/Manifest.json"
   )
 
-add_test(NAME MeddySDK.Meddyproject.DotMeddyprojectToManifestFilePath.RootC
+add_test(NAME MeddySDK.Meddyproject.DotMeddyprojectToManifestFilePath.AbsoluteRoot
   COMMAND DotMeddyprojectToManifestFilePath
     "/.meddyproject"
     "/.meddyproject/Manifest.json"
