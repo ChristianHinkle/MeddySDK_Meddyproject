@@ -22,29 +22,31 @@ int main(int argc, char** argv)
     std::cout << '\n';
 
     //
-    // @Christian: TODO: [todo][filesystem][cpp] Results from MSVC aren't consistent enough for us here. Here is
-    // a breakdown of the problem:
+    // @Christian: Note: [std][boost][cpp] Using `boost::filesystem` here is important because `std::filesystem` gives
+    // some inconsistent results on MSVC. Here is a breakdown of that problem:
     // - `std::filesystem::weakly_canonical("/")` returns "C:\"
     // - `std::filesystem::weakly_canonical("/MyFile")` returns "\MyFile"
     //     - We need this one to return "C:\MyFile" instead.
     // - `std::filesystem::weakly_canonical(std::filesystem::weakly_canonical("/MyFile").parent_path())` returns "C:\"
     //
-    // On Linux, we get nice, consistent behavior.
+    // On Linux, though, `std::filesystem` gives nice, consistent behavior.
     //
-    // Consider switching back to `boost::filesystem` for, hopefully, more consistet behavior.
+    // We switched to `boost::filesystem` for more consistent behavior.
     //
 
-    std::filesystem::path testInputPath = std::filesystem::weakly_canonical(testInputString);
-    std::filesystem::path testResultPathExpectedPath = std::filesystem::weakly_canonical(testResultExpectedString);
+    // Note: [boost] This `lexically_normal` function doesn't have an rvalue overload, unfortunately. So it is causing
+    // a useless copy.
+    boost::filesystem::path testInputPath = boost::filesystem::path(testInputString).lexically_normal();
+    boost::filesystem::path testResultPathExpectedPath = boost::filesystem::path(testResultExpectedString).lexically_normal();
 
     std::cout << "Input path: " << testInputPath << "." << '\n';
     std::cout << "Expected result path: " << testResultPathExpectedPath << "." << '\n';
 
     std::cout << '\n';
 
-    std::filesystem::path testResultActualPath = std::filesystem::weakly_canonical(
-        MeddySDK::Meddyproject::ProjectRootToDotMeddyprojectPath(std::filesystem::path(testInputPath))
-        );
+    boost::filesystem::path testResultActualPath = boost::filesystem::path(
+        MeddySDK::Meddyproject::ProjectRootToDotMeddyprojectPath(boost::filesystem::path(testInputPath))
+        ).lexically_normal();
 
     std::cout << "Actual result path: " << testResultActualPath << "." << '\n';
 

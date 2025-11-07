@@ -16,6 +16,8 @@ project(${MY_BASE_PROJECT_NAME_FULL}_Tests
   LANGUAGES CXX
   )
 
+find_package(Boost 0 CONFIG REQUIRED COMPONENTS filesystem)
+
 # Note that we do not "find package" for our parent project. We don't need to since we are built in the same
 # cmake invocation as the it. That means we're being processed during the same configuration step as them, which
 # means we'll have all their targets. Also, the targets that we reference in `target_link_libraries` commands don't
@@ -25,7 +27,11 @@ project(${MY_BASE_PROJECT_NAME_FULL}_Tests
 add_executable(ProjectRootToDotMeddyprojectPath)
 target_compile_features(ProjectRootToDotMeddyprojectPath PUBLIC cxx_std_20)
 target_sources(ProjectRootToDotMeddyprojectPath PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/Source/ProjectRootToDotMeddyprojectPath.cpp")
-target_link_libraries(ProjectRootToDotMeddyprojectPath PRIVATE ${MY_BASE_PROJECT_NAME_NAMESPACE}::${MY_BASE_PROJECT_NAME_LEAFNAME}::Static)
+target_link_libraries(ProjectRootToDotMeddyprojectPath
+  PRIVATE
+    ${MY_BASE_PROJECT_NAME_NAMESPACE}::${MY_BASE_PROJECT_NAME_LEAFNAME}::Static
+    Boost::filesystem
+  )
 
 add_test(NAME MeddySDK.Meddyproject.ProjectRootToDotMeddyprojectPath.UserVideos
   COMMAND ProjectRootToDotMeddyprojectPath
@@ -48,7 +54,11 @@ add_test(NAME MeddySDK.Meddyproject.ProjectRootToDotMeddyprojectPath.Empty
 add_executable(DotMeddyprojectToProjectRootPath)
 target_compile_features(DotMeddyprojectToProjectRootPath PUBLIC cxx_std_20)
 target_sources(DotMeddyprojectToProjectRootPath PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/Source/DotMeddyprojectToProjectRootPath.cpp")
-target_link_libraries(DotMeddyprojectToProjectRootPath PRIVATE ${MY_BASE_PROJECT_NAME_NAMESPACE}::${MY_BASE_PROJECT_NAME_LEAFNAME}::Static)
+target_link_libraries(DotMeddyprojectToProjectRootPath
+  PRIVATE
+    ${MY_BASE_PROJECT_NAME_NAMESPACE}::${MY_BASE_PROJECT_NAME_LEAFNAME}::Static
+    Boost::filesystem
+  )
 
 add_test(NAME MeddySDK.Meddyproject.DotMeddyprojectToProjectRootPath.UserVideos
   COMMAND DotMeddyprojectToProjectRootPath
@@ -71,7 +81,11 @@ add_test(NAME MeddySDK.Meddyproject.DotMeddyprojectToProjectRootPath.Empty
 add_executable(DotMeddyprojectToManifestFilePath)
 target_compile_features(DotMeddyprojectToManifestFilePath PUBLIC cxx_std_20)
 target_sources(DotMeddyprojectToManifestFilePath PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/Source/DotMeddyprojectToManifestFilePath.cpp")
-target_link_libraries(DotMeddyprojectToManifestFilePath PRIVATE ${MY_BASE_PROJECT_NAME_NAMESPACE}::${MY_BASE_PROJECT_NAME_LEAFNAME}::Static)
+target_link_libraries(DotMeddyprojectToManifestFilePath
+  PRIVATE
+    ${MY_BASE_PROJECT_NAME_NAMESPACE}::${MY_BASE_PROJECT_NAME_LEAFNAME}::Static
+    Boost::filesystem
+  )
 
 add_test(NAME MeddySDK.Meddyproject.DotMeddyprojectToManifestFilePath.UserVideos
   COMMAND DotMeddyprojectToManifestFilePath
@@ -94,7 +108,11 @@ add_test(NAME MeddySDK.Meddyproject.DotMeddyprojectToManifestFilePath.Empty
 add_executable(TryCreateNewProject)
 target_compile_features(TryCreateNewProject PUBLIC cxx_std_20)
 target_sources(TryCreateNewProject PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/Source/TryCreateNewProject.cpp")
-target_link_libraries(TryCreateNewProject PRIVATE ${MY_BASE_PROJECT_NAME_NAMESPACE}::${MY_BASE_PROJECT_NAME_LEAFNAME}::Static)
+target_link_libraries(TryCreateNewProject
+  PRIVATE
+    ${MY_BASE_PROJECT_NAME_NAMESPACE}::${MY_BASE_PROJECT_NAME_LEAFNAME}::Static
+    Boost::filesystem
+  )
 
 add_test(
   NAME MeddySDK.Meddyproject.TryCreateNewProject.SuccessCase

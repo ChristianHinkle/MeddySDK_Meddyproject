@@ -29,7 +29,7 @@ int main(int argc, char** argv)
 
     std::cout << '\n';
 
-    std::filesystem::path newProjectDirectoryPath = std::filesystem::weakly_canonical(newProjectDirectoryPathString);
+    boost::filesystem::path newProjectDirectoryPath = boost::filesystem::path(newProjectDirectoryPathString).lexically_normal();
     MeddySDK::Meddyproject::UncertainProjectCreationResult testResultExpectedResult = {};
 
     {
@@ -54,7 +54,7 @@ int main(int argc, char** argv)
     std::cout << '\n';
 
     MeddySDK::Meddyproject::UncertainProjectCreationResult testResultActualResult =
-        MeddySDK::Meddyproject::TryCreateNewProject(std::filesystem::path(newProjectDirectoryPath));
+        MeddySDK::Meddyproject::TryCreateNewProject(boost::filesystem::path(newProjectDirectoryPath));
 
     std::cout << "Actual result integer: " << static_cast<unsigned int>(testResultActualResult) << "." << '\n';
 

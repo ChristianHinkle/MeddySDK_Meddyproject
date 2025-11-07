@@ -2,40 +2,42 @@
 
 #include <MeddySDK_Meddyproject/Meddyproject.h>
 
-#include <filesystem>
+#include <boost/filesystem/path.hpp>
+#include <boost/filesystem/operations.hpp>
 #include <utility>
 #include <cassert>
 #include <fstream>
 #include <CppUtils_Misc/CharBufferString.h>
 #include <CppUtils_Misc/Filesystem.h>
 #include <MeddySDK_Meddyproject/FilesystemUtils.h>
+#include <CppUtils_Misc/String.h>
 
 using namespace MeddySDK::Meddyproject;
 
-std::filesystem::path MeddySDK::Meddyproject::ProjectRootToManifestFilePath(
-    std::filesystem::path&& path)
+boost::filesystem::path MeddySDK::Meddyproject::ProjectRootToManifestFilePath(
+    boost::filesystem::path&& path)
 {
     return DotMeddyprojectToManifestFilePath(
         ProjectRootToDotMeddyprojectPath(
             std::move(path)));
 }
 
-std::filesystem::path MeddySDK::Meddyproject::ProjectRootToDotMeddyprojectPath(
-    std::filesystem::path&& path)
+boost::filesystem::path MeddySDK::Meddyproject::ProjectRootToDotMeddyprojectPath(
+    boost::filesystem::path&& path)
 {
     path.append(DotMeddyprojectString);
     return std::move(path);
 }
 
-std::filesystem::path MeddySDK::Meddyproject::DotMeddyprojectToProjectRootPath(
-    std::filesystem::path&& path)
+boost::filesystem::path MeddySDK::Meddyproject::DotMeddyprojectToProjectRootPath(
+    boost::filesystem::path&& path)
 {
     assert(IsDotMeddyprojectPath(path));
     return std::move(path).parent_path();
 }
 
-std::filesystem::path MeddySDK::Meddyproject::DotMeddyprojectToManifestFilePath(
-    std::filesystem::path&& path)
+boost::filesystem::path MeddySDK::Meddyproject::DotMeddyprojectToManifestFilePath(
+    boost::filesystem::path&& path)
 {
     assert(IsDotMeddyprojectPath(path));
     path.append(ManifestFilenameString);
@@ -43,49 +45,49 @@ std::filesystem::path MeddySDK::Meddyproject::DotMeddyprojectToManifestFilePath(
 }
 
 ValidProjectRootQueryResult MeddySDK::Meddyproject::QueryWhetherPathIsValidProjectRoot(
-    std::filesystem::path&& projectRootPath)
+    boost::filesystem::path&& projectRootPath)
 {
     {
-        const std::filesystem::file_status projectRootStatus = std::filesystem::status(projectRootPath);
+        const boost::filesystem::file_status projectRootStatus = boost::filesystem::status(projectRootPath);
 
-        if (!std::filesystem::exists(projectRootStatus))
+        if (!boost::filesystem::exists(projectRootStatus))
         {
             return ValidProjectRootQueryResult::No_ProjectRootDoesNotExist;
         }
 
-        if (!std::filesystem::is_directory(projectRootStatus))
+        if (!boost::filesystem::is_directory(projectRootStatus))
         {
             return ValidProjectRootQueryResult::No_ProjectRootIsNonDirectory;
         }
     }
 
-    std::filesystem::path dotMeddyprojectPath = ProjectRootToDotMeddyprojectPath(std::move(projectRootPath));
+    boost::filesystem::path dotMeddyprojectPath = ProjectRootToDotMeddyprojectPath(std::move(projectRootPath));
 
     {
-        const std::filesystem::file_status dotMeddyprojectStatus = std::filesystem::status(dotMeddyprojectPath);
+        const boost::filesystem::file_status dotMeddyprojectStatus = boost::filesystem::status(dotMeddyprojectPath);
 
-        if (!std::filesystem::exists(dotMeddyprojectStatus))
+        if (!boost::filesystem::exists(dotMeddyprojectStatus))
         {
             return ValidProjectRootQueryResult::No_DotMeddyprojectDoesNotExist;
         }
 
-        if (!std::filesystem::is_directory(dotMeddyprojectStatus))
+        if (!boost::filesystem::is_directory(dotMeddyprojectStatus))
         {
             return ValidProjectRootQueryResult::No_DotMeddyprojectIsNonDirectory;
         }
     }
 
-    std::filesystem::path manifestFilePath = DotMeddyprojectToManifestFilePath(std::move(dotMeddyprojectPath));
+    boost::filesystem::path manifestFilePath = DotMeddyprojectToManifestFilePath(std::move(dotMeddyprojectPath));
 
     {
-        const std::filesystem::file_status manifestFileStatus = std::filesystem::status(manifestFilePath);
+        const boost::filesystem::file_status manifestFileStatus = boost::filesystem::status(manifestFilePath);
 
-        if (!std::filesystem::exists(manifestFileStatus))
+        if (!boost::filesystem::exists(manifestFileStatus))
         {
             return ValidProjectRootQueryResult::No_ManifestFileDoesNotExist;
         }
 
-        if (std::filesystem::is_directory(manifestFileStatus))
+        if (boost::filesystem::is_directory(manifestFileStatus))
         {
             return ValidProjectRootQueryResult::No_ManifestFileIsDirectory;
         }
@@ -95,9 +97,9 @@ ValidProjectRootQueryResult MeddySDK::Meddyproject::QueryWhetherPathIsValidProje
 }
 
 UncertainProjectCreationResult MeddySDK::Meddyproject::TryCreateNewProject(
-    std::filesystem::path&& projectRootPath)
+    boost::filesystem::path&& projectRootPath)
 {
-    const ValidProjectRootQueryResult projectRootQueryResult = QueryWhetherPathIsValidProjectRoot(std::filesystem::path(projectRootPath));
+    const ValidProjectRootQueryResult projectRootQueryResult = QueryWhetherPathIsValidProjectRoot(boost::filesystem::path(projectRootPath));
 
     // We can only create a project if there is no .meddyproject directory whatsoever.
     if (projectRootQueryResult == ValidProjectRootQueryResult::No_DotMeddyprojectDoesNotExist)
@@ -134,20 +136,20 @@ UncertainProjectCreationResult MeddySDK::Meddyproject::TryCreateNewProject(
 }
 
 ProjectCreationResult MeddySDK::Meddyproject::CreateNewProject(
-    std::filesystem::path&& projectRootPath)
+    boost::filesystem::path&& projectRootPath)
 {
-    assert(QueryWhetherPathIsValidProjectRoot(std::filesystem::path(projectRootPath)) == ValidProjectRootQueryResult::No_DotMeddyprojectDoesNotExist);
+    assert(QueryWhetherPathIsValidProjectRoot(boost::filesystem::path(projectRootPath)) == ValidProjectRootQueryResult::No_DotMeddyprojectDoesNotExist);
 
-    std::filesystem::path dotMeddyprojectPath = ProjectRootToDotMeddyprojectPath(std::move(projectRootPath));
+    boost::filesystem::path dotMeddyprojectPath = ProjectRootToDotMeddyprojectPath(std::move(projectRootPath));
 
-    const bool didCreateDotMeddyproject = std::filesystem::create_directory(dotMeddyprojectPath);
+    const bool didCreateDotMeddyproject = boost::filesystem::create_directory(dotMeddyprojectPath);
     if (!didCreateDotMeddyproject)
     {
         return ProjectCreationResult::Failed_FilesystemFailedToCreateDotMeddyproject;
     }
 
-    std::filesystem::path manifestFilePath = DotMeddyprojectToManifestFilePath(std::move(dotMeddyprojectPath));
-    std::ofstream manifestFileStream(std::move(manifestFilePath));
+    boost::filesystem::path manifestFilePath = DotMeddyprojectToManifestFilePath(std::move(dotMeddyprojectPath));
+    std::ofstream manifestFileStream = std::ofstream(manifestFilePath.c_str());
     manifestFileStream.flush();
     manifestFileStream.close();
 
@@ -159,16 +161,17 @@ ProjectCreationResult MeddySDK::Meddyproject::CreateNewProject(
     return ProjectCreationResult::Success;
 }
 
-bool MeddySDK::Meddyproject::IsDotMeddyprojectPath(const std::filesystem::path& filesystemPath)
+bool MeddySDK::Meddyproject::IsDotMeddyprojectPath(const boost::filesystem::path& filesystemPath)
 {
-    std::filesystem::path pathLeafName = filesystemPath.filename();
+    boost::filesystem::path pathLeafName = filesystemPath.filename();
+    const boost::filesystem::path::string_type& pathLeafNameString = pathLeafName.native();
 
-    // Note: We're avoid free-store string allocation here, but the code looks a little bit busy which I don't
-    // prefer. Maybe consider enabling the boost libraries again, because the standard library is extremely limited with
-    // this kind of stuff.
-
+    // The path's string could be storing different char types, so we need to copy and convert them to a new character
+    // buffer here before comparing them. It looks complicated because we are copying the string onto the stack to
+    // avoiding a free-store allocation.
     CppUtils::Misc::CharBufferString<char, FilesystemUtils::MaxFilenameLength> pathLeafNameCharBuffer =
-        CppUtils::Misc::Filesystem::ConstructCharacterBufferFromPath<FilesystemUtils::MaxFilenameLength, char>(pathLeafName);
+        CppUtils::Misc::String::ConstructCharacterBufferFromString<char, FilesystemUtils::MaxFilenameLength>(
+            CppUtils::Misc::String::MakeStringView(pathLeafNameString));
 
     return pathLeafNameCharBuffer.GetStringView() == DotMeddyprojectString;
 }
