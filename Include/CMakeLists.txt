@@ -97,6 +97,15 @@ target_sources(${MY_BASE_PROJECT_NAME_FULL}_Include
 # even need to exist yet because CMake only validates the existence of targets at the end of the entire
 # configuration process.
 
+find_package(CppUtils_Misc CONFIG REQUIRED COMPONENTS Include)
+
+# Add dependencies to other targets. For imported targets, it's important to only depend on them if we
+# are BUILD_LOCAL_INTERFACE, because we don't want them to get mixed into our export.
+target_link_libraries(${MY_BASE_PROJECT_NAME_FULL}_Include
+  INTERFACE
+    $<BUILD_LOCAL_INTERFACE:CppUtils::Misc::Include>
+  )
+
 # Associate our targets with an export and specify how their files would be installed.
 install(TARGETS ${MY_BASE_PROJECT_NAME_FULL}_Include
   EXPORT "${MY_BASE_PROJECT_NAME_FULL}Export"

@@ -13,6 +13,7 @@ include(CMakeFindDependencyMacro)
 
 find_dependency(Boost CONFIG COMPONENTS filesystem)
 find_dependency(CppUtils_Misc CONFIG COMPONENTS Static)
+find_dependency(CppUtils_Misc CONFIG COMPONENTS Include)
 
 # Include our export. This imports all of our targets.
 include("${CMAKE_CURRENT_LIST_DIR}/${MY_BASE_PROJECT_NAME_FULL}Export.cmake")
