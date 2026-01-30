@@ -32,22 +32,22 @@ namespace MeddySDK::Meddyproject::FilesystemUtils
     constexpr std::size_t MaxFilenameLength = 1024;
 
     template <std::size_t bufferSize, class TChar = char, class TCharTraits = std::char_traits<TChar>>
-    CppUtils::Misc::CharBufferString<TChar, bufferSize, TCharTraits> ConstructCrossPlatformPathCharacterBuffer(const boost::filesystem::path& path);
+    CppUtils::CharBufferString<TChar, bufferSize, TCharTraits> ConstructCrossPlatformPathCharacterBuffer(const boost::filesystem::path& path);
 
     template <class TFwdIt, class TChar = char>
     void ConvertPathStringToCrossPlatformFormat(TFwdIt begin, TFwdIt end);
 }
 
 template <std::size_t bufferSize, class TChar, class TCharTraits>
-CppUtils::Misc::CharBufferString<TChar, bufferSize, TCharTraits> MeddySDK::Meddyproject::FilesystemUtils::ConstructCrossPlatformPathCharacterBuffer(
+CppUtils::CharBufferString<TChar, bufferSize, TCharTraits> MeddySDK::Meddyproject::FilesystemUtils::ConstructCrossPlatformPathCharacterBuffer(
     const boost::filesystem::path& path)
 {
-    return CppUtils::Misc::CharBufferString<TChar, bufferSize, TCharTraits>(
-        [&path](CppUtils::Misc::CharBufferString<TChar, bufferSize, TCharTraits>& characterBuffer)
+    return CppUtils::CharBufferString<TChar, bufferSize, TCharTraits>(
+        [&path](CppUtils::CharBufferString<TChar, bufferSize, TCharTraits>& characterBuffer)
         {
-            CppUtils::Misc::String::AppendStringToCharacterBuffer(
+            CppUtils::AppendStringToCharacterBuffer(
                 characterBuffer,
-                CppUtils::Misc::String::MakeStringView(path.native()));
+                CppUtils::MakeStringView(path.native()));
 
             ConvertPathStringToCrossPlatformFormat(characterBuffer.begin(), characterBuffer.end());
         }

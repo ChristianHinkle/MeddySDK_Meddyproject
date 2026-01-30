@@ -169,9 +169,9 @@ bool MeddySDK::Meddyproject::IsDotMeddyprojectPath(const boost::filesystem::path
     // The path's string could be storing different char types, so we need to copy and convert them to a new character
     // buffer here before comparing them. It looks complicated because we are copying the string onto the stack to
     // avoiding a free-store allocation.
-    CppUtils::Misc::CharBufferString<char, FilesystemUtils::MaxFilenameLength> pathLeafNameCharBuffer =
-        CppUtils::Misc::String::ConstructCharacterBufferFromString<char, FilesystemUtils::MaxFilenameLength>(
-            CppUtils::Misc::String::MakeStringView(pathLeafNameString));
+    CppUtils::CharBufferString<char, FilesystemUtils::MaxFilenameLength> pathLeafNameCharBuffer =
+        CppUtils::ConstructCharacterBufferFromString<char, FilesystemUtils::MaxFilenameLength>(
+            CppUtils::MakeStringView(pathLeafNameString));
 
     return pathLeafNameCharBuffer.GetStringView() == DotMeddyprojectString;
 }
