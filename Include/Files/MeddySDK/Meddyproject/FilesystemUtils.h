@@ -9,6 +9,7 @@
 #include <CppUtils/Misc/CharBufferString.h>
 #include <algorithm>
 #include <CppUtils/Misc/String.h>
+#include <CppUtils/Core/Concepts.h>
 
 /**
  * @brief String literal alternative to `MeddySDK::PrettyPathSeparator`.
@@ -31,14 +32,14 @@ namespace MeddySDK
      */
     constexpr std::size_t MaxFilenameLength = 1024;
 
-    template <std::size_t bufferSize, class TChar = char, class TCharTraits = std::char_traits<TChar>>
+    template <std::size_t bufferSize, CppUtils::CharLike TChar = char, class TCharTraits = std::char_traits<TChar>>
     CppUtils::CharBufferString<TChar, bufferSize, TCharTraits> ConstructPrettyPathCharacterBuffer(const boost::filesystem::path& path);
 
-    template <class TFwdIt, class TChar = char>
+    template <class TFwdIt, CppUtils::CharLike TChar = char>
     void ConvertPathStringToPrettyFormat(TFwdIt begin, TFwdIt end);
 }
 
-template <std::size_t bufferSize, class TChar, class TCharTraits>
+template <std::size_t bufferSize, CppUtils::CharLike TChar, class TCharTraits>
 CppUtils::CharBufferString<TChar, bufferSize, TCharTraits> MeddySDK::ConstructPrettyPathCharacterBuffer(
     const boost::filesystem::path& path)
 {
@@ -54,7 +55,7 @@ CppUtils::CharBufferString<TChar, bufferSize, TCharTraits> MeddySDK::ConstructPr
         );
 }
 
-template <class TFwdIt, class TChar>
+template <class TFwdIt, CppUtils::CharLike TChar>
 void MeddySDK::ConvertPathStringToPrettyFormat(TFwdIt begin, TFwdIt end)
 {
     std::replace(
