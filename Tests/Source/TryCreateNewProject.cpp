@@ -30,7 +30,7 @@ int main(int argc, char** argv)
     std::cout << '\n';
 
     boost::filesystem::path newProjectDirectoryPath = boost::filesystem::path(newProjectDirectoryPathString).lexically_normal();
-    MeddySDK::Meddyproject::UncertainProjectCreationResult testResultExpectedResult = {};
+    MeddySDK::UncertainProjectCreationResult testResultExpectedResult = {};
 
     {
         unsigned char testResultExpectedInt = 0u;
@@ -45,7 +45,7 @@ int main(int argc, char** argv)
             return ErrorCodes::ResultStringToIntegerConversionFail;
         }
 
-        testResultExpectedResult = static_cast<MeddySDK::Meddyproject::UncertainProjectCreationResult>(testResultExpectedInt);
+        testResultExpectedResult = static_cast<MeddySDK::UncertainProjectCreationResult>(testResultExpectedInt);
     }
 
     std::cout << "New project directory path: " << newProjectDirectoryPath << "." << '\n';
@@ -53,8 +53,8 @@ int main(int argc, char** argv)
 
     std::cout << '\n';
 
-    MeddySDK::Meddyproject::UncertainProjectCreationResult testResultActualResult =
-        MeddySDK::Meddyproject::TryCreateNewProject(boost::filesystem::path(newProjectDirectoryPath));
+    MeddySDK::UncertainProjectCreationResult testResultActualResult =
+        MeddySDK::TryCreateNewProject(boost::filesystem::path(newProjectDirectoryPath));
 
     std::cout << "Actual result integer: " << static_cast<unsigned int>(testResultActualResult) << "." << '\n';
 

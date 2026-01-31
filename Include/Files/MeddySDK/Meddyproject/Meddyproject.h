@@ -6,9 +6,9 @@
 #include <boost/filesystem/path.hpp>
 #include <string_view>
 
-#define MEDDYSDK_MEDDYPROJECT_DOT_MEDDYPROJECT_STRING_LITERAL ".meddyproject"
+#define MEDDYSDK_DOT_MEDDYPROJECT_STRING_LITERAL ".meddyproject"
 
-#define MEDDYSDK_MEDDYPROJECT_MANIFEST_FILENAME_STRING_LITERAL "Manifest.json"
+#define MEDDYSDK_MANIFEST_FILENAME_STRING_LITERAL "Manifest.json"
 
 /**
  * @brief General utilities for working with meddyprojects and their files.
@@ -16,13 +16,13 @@
  *         get called in each specific case, as that would provide more data to the
  *         caller per case.
  */
-namespace MeddySDK::Meddyproject
+namespace MeddySDK
 {
     constexpr std::string_view DotMeddyprojectString =
-        MEDDYSDK_MEDDYPROJECT_DOT_MEDDYPROJECT_STRING_LITERAL;
+        MEDDYSDK_DOT_MEDDYPROJECT_STRING_LITERAL;
 
     constexpr std::string_view ManifestFilenameString =
-        MEDDYSDK_MEDDYPROJECT_MANIFEST_FILENAME_STRING_LITERAL;
+        MEDDYSDK_MANIFEST_FILENAME_STRING_LITERAL;
 
     MEDDYSDK_MEDDYPROJECT_EXPORT boost::filesystem::path ProjectRootToManifestFilePath(
         boost::filesystem::path&& path);

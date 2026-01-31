@@ -11,19 +11,19 @@
 #include <CppUtils/Misc/String.h>
 
 /**
- * @brief String literal alternative to `MeddySDK::Meddyproject::FilesystemUtils::CrossPlatformPathSeparator`.
+ * @brief String literal alternative to `MeddySDK::CrossPlatformPathSeparator`.
  */
-#define MEDDYSDK_MEDDYPROJECT_FILESYSTEMUTILS_CROSSPLATFORM_PATH_SEPARATOR '/'
+#define MEDDYSDK_CROSSPLATFORM_PATH_SEPARATOR '/'
 
 /**
  * @brief Filesystem utilities to extend the default std::filesystem tools.
  */
-namespace MeddySDK::Meddyproject::FilesystemUtils
+namespace MeddySDK
 {
     /**
      * @brief A character represents the most "cross platform" path separator.
      */
-    constexpr char CrossPlatformPathSeparator = MEDDYSDK_MEDDYPROJECT_FILESYSTEMUTILS_CROSSPLATFORM_PATH_SEPARATOR;
+    constexpr char CrossPlatformPathSeparator = MEDDYSDK_CROSSPLATFORM_PATH_SEPARATOR;
 
     /**
      * @brief An arbitrarily defined number that determines the maximum supported filesystem filename length.
@@ -39,7 +39,7 @@ namespace MeddySDK::Meddyproject::FilesystemUtils
 }
 
 template <std::size_t bufferSize, class TChar, class TCharTraits>
-CppUtils::CharBufferString<TChar, bufferSize, TCharTraits> MeddySDK::Meddyproject::FilesystemUtils::ConstructCrossPlatformPathCharacterBuffer(
+CppUtils::CharBufferString<TChar, bufferSize, TCharTraits> MeddySDK::ConstructCrossPlatformPathCharacterBuffer(
     const boost::filesystem::path& path)
 {
     return CppUtils::CharBufferString<TChar, bufferSize, TCharTraits>(
@@ -55,7 +55,7 @@ CppUtils::CharBufferString<TChar, bufferSize, TCharTraits> MeddySDK::Meddyprojec
 }
 
 template <class TFwdIt, class TChar>
-void MeddySDK::Meddyproject::FilesystemUtils::ConvertPathStringToCrossPlatformFormat(TFwdIt begin, TFwdIt end)
+void MeddySDK::ConvertPathStringToCrossPlatformFormat(TFwdIt begin, TFwdIt end)
 {
     std::replace(
         begin,
