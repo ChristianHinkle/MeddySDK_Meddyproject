@@ -4,11 +4,11 @@
 
 #include <MeddySDK_Meddyproject_Export.h>
 #include <boost/filesystem/path.hpp>
-#include <CppUtils_Misc/String.h>
+#include <CppUtils/Misc/String.h>
 #include <string_view>
-#include <CppUtils_Misc/CharBufferString.h>
+#include <CppUtils/Misc/CharBufferString.h>
 #include <algorithm>
-#include <CppUtils_Misc/String.h>
+#include <CppUtils/Misc/String.h>
 
 /**
  * @brief String literal alternative to `MeddySDK::Meddyproject::FilesystemUtils::CrossPlatformPathSeparator`.

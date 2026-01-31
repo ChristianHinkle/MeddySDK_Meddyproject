@@ -7,10 +7,10 @@
 #include <utility>
 #include <cassert>
 #include <fstream>
-#include <CppUtils_Misc/CharBufferString.h>
-#include <CppUtils_Misc/Filesystem.h>
+#include <CppUtils/Misc/CharBufferString.h>
+#include <CppUtils/Misc/Filesystem.h>
 #include <MeddySDK_Meddyproject/FilesystemUtils.h>
-#include <CppUtils_Misc/String.h>
+#include <CppUtils/Misc/String.h>
 
 using namespace MeddySDK::Meddyproject;
 
