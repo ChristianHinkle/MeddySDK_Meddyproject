@@ -1,6 +1,6 @@
 // Copyright (c) 2023-2025 Christian Hinkle, Brian Hinkle.
 
-#include <MeddySDK_Meddyproject/Meddyproject.h>
+#include <MeddySDK/Meddyproject/Meddyproject.h>
 
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
@@ -9,7 +9,7 @@
 #include <fstream>
 #include <CppUtils/Misc/CharBufferString.h>
 #include <CppUtils/Misc/Filesystem.h>
-#include <MeddySDK_Meddyproject/FilesystemUtils.h>
+#include <MeddySDK/Meddyproject/FilesystemUtils.h>
 #include <CppUtils/Misc/String.h>
 
 using namespace MeddySDK::Meddyproject;
