@@ -107,12 +107,16 @@ unset(FILES_CMAKE_RESULT)
 # even need to exist yet because CMake only validates the existence of targets at the end of the entire
 # configuration process.
 
+find_package(CppUtils_StdReimpl CONFIG REQUIRED COMPONENTS Include)
+find_package(CppUtils_Core CONFIG REQUIRED COMPONENTS Include)
 find_package(CppUtils_Misc CONFIG REQUIRED COMPONENTS Include)
 
 # Add dependencies to other targets. For imported targets, it's important to only depend on them if we
 # are BUILD_LOCAL_INTERFACE, because we don't want them to get mixed into our export.
 target_link_libraries(${MY_BASE_PROJECT_NAME_FULL}_Include
   INTERFACE
+    $<BUILD_LOCAL_INTERFACE:CppUtils::StdReimpl::Include>
+    $<BUILD_LOCAL_INTERFACE:CppUtils::Core::Include>
     $<BUILD_LOCAL_INTERFACE:CppUtils::Misc::Include>
   )
 

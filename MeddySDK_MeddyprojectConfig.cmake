@@ -12,8 +12,14 @@ SET(MY_BASE_PROJECT_NAME_LEAFNAME "Meddyproject")
 include(CMakeFindDependencyMacro)
 
 find_dependency(Boost CONFIG COMPONENTS filesystem)
-find_dependency(CppUtils_Misc CONFIG COMPONENTS Static)
+
+find_dependency(CppUtils_StdReimpl CONFIG COMPONENTS Include)
+find_dependency(CppUtils_Core CONFIG COMPONENTS Include)
 find_dependency(CppUtils_Misc CONFIG COMPONENTS Include)
+
+find_dependency(CppUtils_StdReimpl CONFIG COMPONENTS Static)
+find_dependency(CppUtils_Core CONFIG COMPONENTS Static)
+find_dependency(CppUtils_Misc CONFIG COMPONENTS Static)
 
 # Include our export. This imports all of our targets.
 include("${CMAKE_CURRENT_LIST_DIR}/${MY_BASE_PROJECT_NAME_FULL}Export.cmake")
