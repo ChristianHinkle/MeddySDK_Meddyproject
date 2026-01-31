@@ -11,9 +11,9 @@
 #include <CppUtils/Misc/String.h>
 
 /**
- * @brief String literal alternative to `MeddySDK::CrossPlatformPathSeparator`.
+ * @brief String literal alternative to `MeddySDK::PrettyPathSeparator`.
  */
-#define MEDDYSDK_CROSSPLATFORM_PATH_SEPARATOR '/'
+#define MEDDYSDK_PRETTY_PATH_SEPARATOR '/'
 
 /**
  * @brief Filesystem utilities to extend the default std::filesystem tools.
@@ -21,9 +21,9 @@
 namespace MeddySDK
 {
     /**
-     * @brief A character represents the most "cross platform" path separator.
+     * @brief A character that represents the most widely-accepted path separator across all platforms.
      */
-    constexpr char CrossPlatformPathSeparator = MEDDYSDK_CROSSPLATFORM_PATH_SEPARATOR;
+    constexpr char PrettyPathSeparator = MEDDYSDK_PRETTY_PATH_SEPARATOR;
 
     /**
      * @brief An arbitrarily defined number that determines the maximum supported filesystem filename length.
@@ -32,14 +32,14 @@ namespace MeddySDK
     constexpr std::size_t MaxFilenameLength = 1024;
 
     template <std::size_t bufferSize, class TChar = char, class TCharTraits = std::char_traits<TChar>>
-    CppUtils::CharBufferString<TChar, bufferSize, TCharTraits> ConstructCrossPlatformPathCharacterBuffer(const boost::filesystem::path& path);
+    CppUtils::CharBufferString<TChar, bufferSize, TCharTraits> ConstructPrettyPathCharacterBuffer(const boost::filesystem::path& path);
 
     template <class TFwdIt, class TChar = char>
-    void ConvertPathStringToCrossPlatformFormat(TFwdIt begin, TFwdIt end);
+    void ConvertPathStringToPrettyFormat(TFwdIt begin, TFwdIt end);
 }
 
 template <std::size_t bufferSize, class TChar, class TCharTraits>
-CppUtils::CharBufferString<TChar, bufferSize, TCharTraits> MeddySDK::ConstructCrossPlatformPathCharacterBuffer(
+CppUtils::CharBufferString<TChar, bufferSize, TCharTraits> MeddySDK::ConstructPrettyPathCharacterBuffer(
     const boost::filesystem::path& path)
 {
     return CppUtils::CharBufferString<TChar, bufferSize, TCharTraits>(
@@ -49,17 +49,17 @@ CppUtils::CharBufferString<TChar, bufferSize, TCharTraits> MeddySDK::ConstructCr
                 characterBuffer,
                 CppUtils::MakeStringView(path.native()));
 
-            ConvertPathStringToCrossPlatformFormat(characterBuffer.begin(), characterBuffer.end());
+            ConvertPathStringToPrettyFormat(characterBuffer.begin(), characterBuffer.end());
         }
         );
 }
 
 template <class TFwdIt, class TChar>
-void MeddySDK::ConvertPathStringToCrossPlatformFormat(TFwdIt begin, TFwdIt end)
+void MeddySDK::ConvertPathStringToPrettyFormat(TFwdIt begin, TFwdIt end)
 {
     std::replace(
         begin,
         end,
         static_cast<TChar>(boost::filesystem::path::preferred_separator),
-        static_cast<TChar>(CrossPlatformPathSeparator));
+        static_cast<TChar>(PrettyPathSeparator));
 }
