@@ -171,5 +171,5 @@ bool MeddySDK::IsDotMeddyprojectPath(const boost::filesystem::path& filesystemPa
         CppUtils::ConstructCharacterBufferFromString<char, MeddySDK::MaxFilenameLength>(
             CppUtils::MakeStringView(pathLeafNameString));
 
-    return pathLeafNameCharBuffer.GetStringView() == DotMeddyprojectString;
+    return pathLeafNameCharBuffer.ToStringView() == DotMeddyprojectString;
 }
