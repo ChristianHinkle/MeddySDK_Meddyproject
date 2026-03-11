@@ -9,6 +9,7 @@
 #include <CppUtils/Misc/CharBufferString.h>
 #include <algorithm>
 #include <CppUtils/Misc/String.h>
+#include <CppUtils/Core/String.h>
 #include <CppUtils/Core/Concepts.h>
 
 /**

@@ -11,6 +11,7 @@
 #include <CppUtils/Misc/Filesystem.h>
 #include <MeddySDK/Meddyproject/FilesystemUtils.h>
 #include <CppUtils/Misc/String.h>
+#include <CppUtils/Core/String.h>
 
 boost::filesystem::path MeddySDK::ProjectRootToManifestFilePath(
     boost::filesystem::path&& path)
