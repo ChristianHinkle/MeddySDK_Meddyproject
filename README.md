@@ -1,15 +1,17 @@
 # MeddySDK_Meddyproject
 
-The Meddy project system - a library with tools to interact with "meddyprojects".
+The Meddy project system. A library with tools to interact with "meddyprojects".
 
-For a superproject with all components Meddy has to offer, see [MeddySDK](https://github.com/ChristianHinko/MeddySDK).
+For a superproject with all components MeddySDK has to offer, see [MeddySDK](https://github.com/ChristianHinkle/MeddySDK).
 - This provides the individual MeddySDK libraries, tied together with CMake.
 
 ## Dependencies
 
 MeddySDK_Meddyproject
 - [boost_filesystem](https://github.com/boostorg/filesystem)
+- [CppUtils_Core](https://github.com/ChristianHinkle/CppUtils_Core)
 - [CppUtils_Misc](https://github.com/ChristianHinkle/CppUtils_Misc)
+- [CppUtils_StdReimpl](https://github.com/ChristianHinkle/CppUtils_StdReimpl)
 
 ## Project Structure 📂
 
@@ -81,30 +83,4 @@ Has very nice integration, but they seem behind when it comes to supporting the 
 
 ## Build Instructions 🔨
 
-This project is fully isolated from its dependencies, and therefore must be tied together by a superproject. See [MeddySDKStandalone](https://github.com/ChristianHinko/MeddySDKStandalone) for a complete build setup.
-
-### 1. Invoke CMake on the Project (the Configure Step)
-
-Command line: `cmake --preset="win-debug-default"`.
-
-IDE: Choose the `win-debug-default` configure preset, and "configure" the CMake project.
-
-### 2. Invoke a Build Command
-
-Command line: `cmake --build --preset="win-debug"`.
-
-IDE: Choose the `win-debug` build preset, and "build" it.
-
-## Test Instructions 🧪
-
-Here's how to run automated tests, to verify that our code behaves as intended.
-
-### 1. Build the Project
-
-See "Build Instructions" above.
-
-### 2. Invoke CTest
-
-Command line: `ctest --preset="meddysdk-meddyproject-win-debug"`.
-
-IDE: Choose the `meddysdk-meddyproject-win-debug` test preset, and "run tests".
+This project is fully isolated from its dependencies, and therefore must be tied together by a superproject. See [MeddySuperproject](https://github.com/ChristianHinkle/MeddySuperproject) for a complete build setup, as well as instructions for how to build, package, and test.
