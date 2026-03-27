@@ -26,7 +26,7 @@ file(MAKE_DIRECTORY "${MY_TEST_WORKING_DIRECTORY}/MyTestGeneratedFiles/GetOuterM
 file(TOUCH "${MY_TEST_WORKING_DIRECTORY}/MyTestGeneratedFiles/GetOuterMeddyproject/MyProjectDir/MyOtherCoolTextFiles/Yo.txt")
 file(TOUCH "${MY_TEST_WORKING_DIRECTORY}/MyTestGeneratedFiles/GetOuterMeddyproject/MyProjectDir/MyOtherCoolTextFiles/Hey.txt")
 
-# Invoke the c++ test program.
+# Invoke the c++ test program. Testing on a file.
 execute_process(
   COMMAND "${MY_TEST_EXECUTABLE_PATH}"
     "${MY_TEST_WORKING_DIRECTORY}/MyTestGeneratedFiles/GetOuterMeddyproject/MyProjectDir/MyOtherCoolTextFiles/Hey.txt"
@@ -43,7 +43,24 @@ if(NOT ${ResultVariable} STREQUAL 0)
   cmake_language(EXIT ${ResultVariable})
 endif()
 
-# Invoke the c++ test program.
+# Invoke the c++ test program. Testing on a directory.
+execute_process(
+  COMMAND "${MY_TEST_EXECUTABLE_PATH}"
+    "${MY_TEST_WORKING_DIRECTORY}/MyTestGeneratedFiles/GetOuterMeddyproject/MyProjectDir/MyOtherCoolTextFiles"
+    "${MY_TEST_WORKING_DIRECTORY}/MyTestGeneratedFiles/GetOuterMeddyproject/MyProjectDir/.meddyproject"
+  WORKING_DIRECTORY "${MY_TEST_WORKING_DIRECTORY}"
+  RESULT_VARIABLE ResultVariable
+  COMMAND_ECHO STDOUT
+  )
+
+message("ResultVariable: ${ResultVariable}")
+
+# Exit now if the test failed within the c++ program.
+if(NOT ${ResultVariable} STREQUAL 0)
+  cmake_language(EXIT ${ResultVariable})
+endif()
+
+# Invoke the c++ test program. Testing on a file outside the meddyproject.
 execute_process(
   COMMAND "${MY_TEST_EXECUTABLE_PATH}"
     "${MY_TEST_WORKING_DIRECTORY}/MyTestGeneratedFiles/GetOuterMeddyproject/HereIsAnExampleTextFileNextToTheProject.txt"
