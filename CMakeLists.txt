@@ -2,6 +2,9 @@
 
 cmake_minimum_required(VERSION 4.0)
 
-include(CMakeProjectFramework/CMakeProjectFramework.cmake)
+# Tell CMake where our cmake scripts ("modules") are.
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMakeProjectFramework")
+
+include(CMakeProjectFramework)
 
 cmakeprojectframework_cmakelists_mainproject_library("MeddySDK_Meddyproject" "MeddySDK" "Meddyproject")
