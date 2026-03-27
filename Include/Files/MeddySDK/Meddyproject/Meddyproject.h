@@ -5,6 +5,7 @@
 #include <MeddySDK_Meddyproject_Export.h>
 #include <boost/filesystem/path.hpp>
 #include <string_view>
+#include <MeddySDK/Meddyproject/Utils.h>
 
 #define MEDDYSDK_DOT_MEDDYPROJECT_STRING_LITERAL ".meddyproject"
 
@@ -74,4 +75,15 @@ namespace MeddySDK
     MEDDYSDK_MEDDYPROJECT_EXPORT ProjectCreationResult CreateNewProject(boost::filesystem::path&& projectRootPath);
 
     MEDDYSDK_MEDDYPROJECT_EXPORT bool IsDotMeddyprojectPath(const boost::filesystem::path& filesystemPath);
+
+    enum class Error_GetOuterDotMeddyprojectPath : unsigned char
+    {
+        PathDoesntExist,
+        NoDotMeddyprojectFound
+    };
+
+    /**
+     * @brief Get path to the outer meddyproject's .meddyproject dir.
+     */
+    MEDDYSDK_MEDDYPROJECT_EXPORT ExpectedResult<boost::filesystem::path, Error_GetOuterDotMeddyprojectPath> GetOuterDotMeddyprojectPath(boost::filesystem::path&& filesystemPath);
 }

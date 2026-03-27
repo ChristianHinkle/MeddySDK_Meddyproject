@@ -174,3 +174,30 @@ bool MeddySDK::IsDotMeddyprojectPath(const boost::filesystem::path& filesystemPa
 
     return pathLeafNameCharBuffer.ToStringView() == DotMeddyprojectString;
 }
+
+MeddySDK::ExpectedResult<boost::filesystem::path, MeddySDK::Error_GetOuterDotMeddyprojectPath> MeddySDK::GetOuterDotMeddyprojectPath(boost::filesystem::path&& filesystemPath)
+{
+    if (!boost::filesystem::exists(filesystemPath))
+    {
+        return Error_GetOuterDotMeddyprojectPath::PathDoesntExist;
+    }
+
+    if (!boost::filesystem::is_directory(filesystemPath))
+    {
+        assert(filesystemPath.has_parent_path()); // I believe this isn't possible, since we already determined it's not a directory, it must be in a directory.
+
+        filesystemPath = std::move(filesystemPath).parent_path();
+    }
+
+    // Traverse up the parent directories until we see that a .meddyproject dir exists.
+    for (boost::filesystem::path currentDir = std::move(filesystemPath); currentDir.has_parent_path(); currentDir = std::move(currentDir).parent_path())
+    {
+        boost::filesystem::path potentialDotMeddyproject = ProjectRootToDotMeddyprojectPath(boost::filesystem::path(currentDir));
+        if (boost::filesystem::exists(potentialDotMeddyproject))
+        {
+            return potentialDotMeddyproject;
+        }
+    }
+
+    return Error_GetOuterDotMeddyprojectPath::NoDotMeddyprojectFound;
+}
