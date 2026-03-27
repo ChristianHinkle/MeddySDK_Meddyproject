@@ -6,6 +6,5 @@ set(FILES_CMAKE_RESULT
   "${MY_BASE_PROJECT_NAME_FULL}_Export.cpp"
   "Utils.cpp"
   "FilesystemUtils.cpp"
-  "ExpectedResult.cpp"
   "Meddyproject.cpp"
   )

@@ -175,7 +175,7 @@ bool MeddySDK::IsDotMeddyprojectPath(const boost::filesystem::path& filesystemPa
     return pathLeafNameCharBuffer.ToStringView() == DotMeddyprojectString;
 }
 
-MeddySDK::ExpectedResult<MeddySDK::Meddyproject, MeddySDK::Error_GetOuterDotMeddyprojectPath> MeddySDK::GetOuterMeddyproject(boost::filesystem::path&& filesystemPath)
+CppUtils::ExpectedResult<MeddySDK::Meddyproject, MeddySDK::Error_GetOuterDotMeddyprojectPath> MeddySDK::GetOuterMeddyproject(boost::filesystem::path&& filesystemPath)
 {
     if (!boost::filesystem::exists(filesystemPath))
     {

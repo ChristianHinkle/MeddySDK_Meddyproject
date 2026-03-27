@@ -38,7 +38,7 @@ int main(int argc, char** argv)
 
     std::cout << '\n';
 
-    MeddySDK::ExpectedResult testResultActualResult =
+    CppUtils::ExpectedResult testResultActualResult =
         MeddySDK::GetOuterMeddyproject(boost::filesystem::path{inputPath});
 
     if (testResultActualResult.IsError())
