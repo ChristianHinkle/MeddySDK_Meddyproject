@@ -7,4 +7,5 @@ set(FILES_CMAKE_RESULT
   "Utils.cpp"
   "FilesystemUtils.cpp"
   "ExpectedResult.cpp"
+  "Meddyproject.cpp"
   )

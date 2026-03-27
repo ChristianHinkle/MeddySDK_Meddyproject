@@ -15,11 +15,11 @@ namespace MeddySDK
     {
     public:
         ExpectedResult(T&& value)
-            : Value(value)
+            : Value{value}
         {
         }
         ExpectedResult(const TError& error)
-            : Error(error)
+            : Error{error}
         {
         }
 
@@ -50,7 +50,7 @@ namespace MeddySDK
         }
 
     private:
-        std::optional<T> Value;
-        TError Error;
+        std::optional<T> Value{std::nullopt};
+        TError Error{};
     };
 }
