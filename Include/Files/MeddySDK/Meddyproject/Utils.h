@@ -3,54 +3,87 @@
 #pragma once
 
 #include <MeddySDK_Meddyproject_Export.h>
-#include <optional>
+#include <boost/filesystem/path.hpp>
+#include <string_view>
+#include <MeddySDK/Meddyproject/ExpectedResult.h>
 
+#define MEDDYSDK_DOT_MEDDYPROJECT_STRING_LITERAL ".meddyproject"
+
+#define MEDDYSDK_MANIFEST_FILENAME_STRING_LITERAL "Manifest.json"
+
+/**
+ * @brief General utilities for working with meddyprojects and their files.
+ * @remark Note: Maybe we can change this heavy usage of enums to callback functions that
+ *         get called in each specific case, as that would provide more data to the
+ *         caller per case.
+ */
 namespace MeddySDK
 {
-    /**
-     * @brief A poor man's C++23 `std::expected` alternative.
-     */
-    template <class T, class TError>
-    struct ExpectedResult
+    constexpr std::string_view DotMeddyprojectString =
+        MEDDYSDK_DOT_MEDDYPROJECT_STRING_LITERAL;
+
+    constexpr std::string_view ManifestFilenameString =
+        MEDDYSDK_MANIFEST_FILENAME_STRING_LITERAL;
+
+    MEDDYSDK_MEDDYPROJECT_EXPORT boost::filesystem::path ProjectRootToManifestFilePath(
+        boost::filesystem::path&& path);
+
+    MEDDYSDK_MEDDYPROJECT_EXPORT boost::filesystem::path ProjectRootToDotMeddyprojectPath(
+        boost::filesystem::path&& path);
+
+    MEDDYSDK_MEDDYPROJECT_EXPORT boost::filesystem::path DotMeddyprojectToProjectRootPath(
+        boost::filesystem::path&& path);
+
+    MEDDYSDK_MEDDYPROJECT_EXPORT boost::filesystem::path DotMeddyprojectToManifestFilePath(
+        boost::filesystem::path&& path);
+
+    enum class ValidProjectRootQueryResult : unsigned char
     {
-    public:
-        ExpectedResult(T&& value)
-            : Value(value)
-        {
-        }
-        ExpectedResult(const TError& error)
-            : Error(error)
-        {
-        }
-
-    public:
-        bool IsError() const
-        {
-            return !Value.has_value();
-        }
-
-        const TError& GetError() const
-        {
-            assert(IsError());
-            return Error;
-        }
-
-        const T& GetValue() const &
-        {
-            assert(!IsError());
-
-            assert(Value.has_value());
-            return *Value;
-        }
-
-        T&& GetValue() &&
-        {
-            T& value = const_cast<T&>(GetValue());
-            return std::move(value);
-        }
-
-    private:
-        std::optional<T> Value;
-        TError Error;
+        Yes_IsValidProjectRoot,
+        No_ProjectRootDoesNotExist,
+        No_ProjectRootIsNonDirectory,
+        No_DotMeddyprojectDoesNotExist,
+        No_DotMeddyprojectIsNonDirectory,
+        No_ManifestFileDoesNotExist,
+        No_ManifestFileIsDirectory
     };
+
+    enum class UncertainProjectCreationResult : unsigned char
+    {
+        Success,
+        Failed_ValidProjectAlreadyExists,
+        Failed_ProjectRootIsNonDirectory,
+        Failed_ProjectRootDoesNotExist,
+        Failed_DotMeddyprojectAlreadyExists,
+        Failed_DotMeddyprojectAlreadyExistsAndIsNonDirectory,
+        Failed_FilesystemFailedToCreateDotMeddyproject,
+        Failed_FilesystemFailedToCreateManifestFile
+    };
+
+    enum class ProjectCreationResult : unsigned char
+    {
+        Success,
+        Failed_FilesystemFailedToCreateDotMeddyproject,
+        Failed_FilesystemFailedToCreateManifestFile
+    };
+
+    MEDDYSDK_MEDDYPROJECT_EXPORT ValidProjectRootQueryResult QueryWhetherPathIsValidProjectRoot(
+        boost::filesystem::path&& projectRootPath);
+
+    MEDDYSDK_MEDDYPROJECT_EXPORT UncertainProjectCreationResult TryCreateNewProject(boost::filesystem::path&& projectRootPath);
+
+    MEDDYSDK_MEDDYPROJECT_EXPORT ProjectCreationResult CreateNewProject(boost::filesystem::path&& projectRootPath);
+
+    MEDDYSDK_MEDDYPROJECT_EXPORT bool IsDotMeddyprojectPath(const boost::filesystem::path& filesystemPath);
+
+    enum class Error_GetOuterDotMeddyprojectPath : unsigned char
+    {
+        PathDoesntExist,
+        NoDotMeddyprojectFound
+    };
+
+    /**
+     * @brief Get path to the outer meddyproject's .meddyproject dir.
+     */
+    MEDDYSDK_MEDDYPROJECT_EXPORT ExpectedResult<boost::filesystem::path, Error_GetOuterDotMeddyprojectPath> GetOuterDotMeddyprojectPath(boost::filesystem::path&& filesystemPath);
 }
