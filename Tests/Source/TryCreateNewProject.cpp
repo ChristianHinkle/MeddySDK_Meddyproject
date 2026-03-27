@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string_view>
 #include <charconv>
+#include <CppUtils/StdReimpl/utility.h>
 
 namespace ErrorCodes
 {
@@ -29,15 +30,15 @@ int main(int argc, char** argv)
 
     std::cout << '\n';
 
-    boost::filesystem::path newProjectDirectoryPath = boost::filesystem::path(newProjectDirectoryPathString).lexically_normal();
-    MeddySDK::UncertainProjectCreationResult testResultExpectedResult = {};
+    boost::filesystem::path newProjectDirectoryPath = boost::filesystem::path{newProjectDirectoryPathString}.lexically_normal();
+    MeddySDK::UncertainProjectCreationResult testResultExpectedResult{};
 
     {
-        unsigned char testResultExpectedInt = 0u;
+        unsigned char testResultExpectedInt{};
         const std::from_chars_result fromCharsResult =
             std::from_chars(testResultExpectedString.data(), testResultExpectedString.data() + testResultExpectedString.length(), testResultExpectedInt);
 
-        const bool isFromCharsSuccess = fromCharsResult.ec == std::errc();
+        const bool isFromCharsSuccess = fromCharsResult.ec == std::errc{};
         if (!isFromCharsSuccess)
         {
             std::cout << "Bad arguments given. <expected-result> must be an unsigned integer." << '\n';
@@ -49,14 +50,14 @@ int main(int argc, char** argv)
     }
 
     std::cout << "New project directory path: " << newProjectDirectoryPath << "." << '\n';
-    std::cout << "Expected result integer: " << static_cast<unsigned int>(testResultExpectedResult) << "." << '\n';
+    std::cout << "Expected result integer: " << StdReimpl::to_underlying(testResultExpectedResult) << "." << '\n';
 
     std::cout << '\n';
 
     MeddySDK::UncertainProjectCreationResult testResultActualResult =
-        MeddySDK::TryCreateNewProject(boost::filesystem::path(newProjectDirectoryPath));
+        MeddySDK::TryCreateNewProject(boost::filesystem::path{newProjectDirectoryPath});
 
-    std::cout << "Actual result integer: " << static_cast<unsigned int>(testResultActualResult) << "." << '\n';
+    std::cout << "Actual result integer: " << StdReimpl::to_underlying(testResultActualResult) << "." << '\n';
 
     const bool didTestPass = testResultActualResult == testResultExpectedResult;
     if (!didTestPass)
