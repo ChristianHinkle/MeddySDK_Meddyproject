@@ -2,6 +2,6 @@
 
 cmake_minimum_required(VERSION 4.0)
 
-include(CMakeProjectFramework)
+include(${CMAKE_CURRENT_SOURCE_DIR}/../CMakeProjectFramework/CMakeProjectFramework.cmake)
 
 cmakeprojectframework_cmakelists_sourceproject("MeddySDK_Meddyproject" "MeddySDK" "Meddyproject")
