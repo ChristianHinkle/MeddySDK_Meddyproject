@@ -9,7 +9,7 @@
 #include <cassert>
 #include <fstream>
 #include <CppUtils/Misc/CharBufferString.h>
-#include <CppUtils/Misc/Filesystem.h>
+#include <CppUtils/Core/Filesystem.h>
 #include <MeddySDK/Meddyproject/FilesystemUtils.h>
 #include <CppUtils/Misc/String.h>
 #include <CppUtils/Core/String.h>
