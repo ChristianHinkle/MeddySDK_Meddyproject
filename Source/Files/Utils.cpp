@@ -43,6 +43,12 @@ boost::filesystem::path MeddySDK::DotMeddyprojectToManifestFilePath(
     return std::move(path);
 }
 
+bool MeddySDK::IsValidProjectRoot(boost::filesystem::path&& projectRootPath)
+{
+    ValidProjectRootQueryResult result = QueryWhetherPathIsValidProjectRoot(std::move(projectRootPath));
+    return result == ValidProjectRootQueryResult::Yes_IsValidProjectRoot;
+}
+
 MeddySDK::ValidProjectRootQueryResult MeddySDK::QueryWhetherPathIsValidProjectRoot(
     boost::filesystem::path&& projectRootPath)
 {
@@ -163,20 +169,12 @@ MeddySDK::ProjectCreationResult MeddySDK::CreateNewProject(
 bool MeddySDK::IsDotMeddyprojectPath(const boost::filesystem::path& filesystemPath)
 {
     boost::filesystem::path pathLeafName = filesystemPath.filename();
-    const boost::filesystem::path::string_type& pathLeafNameString = pathLeafName.native();
-
-    // The path's string could be storing different char types, so we need to copy and convert them to a new character
-    // buffer here before comparing them. It looks complicated because we are copying the string onto the stack to
-    // avoiding a free-store allocation.
-    CppUtils::CharBufferString<char, MeddySDK::MaxFilenameLength> pathLeafNameCharBuffer =
-        CppUtils::ConstructCharacterBufferFromString<char, MeddySDK::MaxFilenameLength>(
-            CppUtils::MakeStringView(pathLeafNameString));
-
-    return pathLeafNameCharBuffer.ToStringView() == DotMeddyprojectString;
+    return MeddySDK::IsPathEqualToString(pathLeafName, DotMeddyprojectString);
 }
 
 CppUtils::ExpectedResult<MeddySDK::Meddyproject, MeddySDK::Error_GetOuterDotMeddyprojectPath> MeddySDK::GetOuterMeddyproject(boost::filesystem::path&& filesystemPath)
 {
+    // TODO: Make version of this function which allows it not to exist.
     if (!boost::filesystem::exists(filesystemPath))
     {
         return Error_GetOuterDotMeddyprojectPath::PathDoesntExist;

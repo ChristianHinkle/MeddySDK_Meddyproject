@@ -18,9 +18,7 @@
 MeddySDK::Meddyproject::Meddyproject(boost::filesystem::path&& projectRootDir)
     : ProjectRootDir{std::move(projectRootDir)}
 {
-    MeddySDK::ValidProjectRootQueryResult result = MeddySDK::QueryWhetherPathIsValidProjectRoot(boost::filesystem::path{ProjectRootDir});
-
-    if (result != MeddySDK::ValidProjectRootQueryResult::Yes_IsValidProjectRoot)
+    if (!MeddySDK::IsValidProjectRoot(boost::filesystem::path{ProjectRootDir}))
     {
         std::cerr << "Error: " << "Tried constructing a meddyproject struct with a non-meddyproject path!" << '\n';
         assert(false);

@@ -68,6 +68,8 @@ namespace MeddySDK
         Failed_FilesystemFailedToCreateManifestFile
     };
 
+    MEDDYSDK_MEDDYPROJECT_EXPORT bool IsValidProjectRoot(boost::filesystem::path&& projectRootPath);
+
     MEDDYSDK_MEDDYPROJECT_EXPORT ValidProjectRootQueryResult QueryWhetherPathIsValidProjectRoot(
         boost::filesystem::path&& projectRootPath);
 

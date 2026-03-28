@@ -4,12 +4,8 @@
 
 #include <MeddySDK_Meddyproject_Export.h>
 #include <boost/filesystem/path.hpp>
-#include <CppUtils/Misc/String.h>
 #include <string_view>
 #include <CppUtils/Misc/CharBufferString.h>
-#include <algorithm>
-#include <CppUtils/Misc/String.h>
-#include <CppUtils/Core/String.h>
 #include <CppUtils/Core/Concepts.h>
 
 /**
@@ -38,30 +34,9 @@ namespace MeddySDK
 
     template <class TFwdIt, CppUtils::CharLike TChar = char>
     void ConvertPathStringToPrettyFormat(TFwdIt begin, TFwdIt end);
+
+    template <CppUtils::CharLike TChar, class TCharTraits>
+    bool IsPathEqualToString(const boost::filesystem::path& path, const std::basic_string_view<TChar, TCharTraits> string);
 }
 
-template <std::size_t bufferSize, CppUtils::CharLike TChar, class TCharTraits>
-CppUtils::CharBufferString<TChar, bufferSize, TCharTraits> MeddySDK::ConstructPrettyPathCharacterBuffer(
-    const boost::filesystem::path& path)
-{
-    return CppUtils::CharBufferString<TChar, bufferSize, TCharTraits>(
-        [&path](CppUtils::CharBufferString<TChar, bufferSize, TCharTraits>& characterBuffer)
-        {
-            CppUtils::AppendStringToCharacterBuffer(
-                characterBuffer,
-                CppUtils::MakeStringView(path.native()));
-
-            ConvertPathStringToPrettyFormat(characterBuffer.begin(), characterBuffer.end());
-        }
-        );
-}
-
-template <class TFwdIt, CppUtils::CharLike TChar>
-void MeddySDK::ConvertPathStringToPrettyFormat(TFwdIt begin, TFwdIt end)
-{
-    std::replace(
-        begin,
-        end,
-        static_cast<TChar>(boost::filesystem::path::preferred_separator),
-        static_cast<TChar>(PrettyPathSeparator));
-}
+#include <MeddySDK/Meddyproject/FilesystemUtils.inl>
