@@ -10,7 +10,7 @@
 
 #define MEDDYSDK_DOT_MEDDYPROJECT_STRING_LITERAL ".meddyproject"
 
-#define MEDDYSDK_MANIFEST_FILENAME_STRING_LITERAL "Manifest.json"
+#define MEDDYSDK_MEDDYPROJECT_MANIFEST_FILENAME_STRING_LITERAL "Manifest.json"
 
 /**
  * @brief General utilities for working with meddyprojects and their files.
@@ -23,8 +23,8 @@ namespace MeddySDK
     constexpr std::string_view DotMeddyprojectString =
         MEDDYSDK_DOT_MEDDYPROJECT_STRING_LITERAL;
 
-    constexpr std::string_view ManifestFilenameString =
-        MEDDYSDK_MANIFEST_FILENAME_STRING_LITERAL;
+    constexpr std::string_view MeddyprojectManifestFilenameString =
+        MEDDYSDK_MEDDYPROJECT_MANIFEST_FILENAME_STRING_LITERAL;
 
     MEDDYSDK_MEDDYPROJECT_EXPORT boost::filesystem::path ProjectRootToManifestFilePath(
         boost::filesystem::path&& path);

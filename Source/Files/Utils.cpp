@@ -6,7 +6,6 @@
 #include <boost/filesystem/operations.hpp>
 #include <utility>
 #include <cassert>
-#include <fstream>
 #include <CppUtils/Misc/CharBufferString.h>
 #include <CppUtils/Core/Filesystem.h>
 #include <MeddySDK/Meddyproject/FilesystemUtils.h>
@@ -39,7 +38,7 @@ boost::filesystem::path MeddySDK::DotMeddyprojectToManifestFilePath(
     boost::filesystem::path&& path)
 {
     assert(IsDotMeddyprojectPath(path));
-    path.append(ManifestFilenameString);
+    path.append(MeddyprojectManifestFilenameString);
     return std::move(path);
 }
 
@@ -154,11 +153,9 @@ MeddySDK::ProjectCreationResult MeddySDK::CreateNewProject(
     }
 
     boost::filesystem::path manifestFilePath = DotMeddyprojectToManifestFilePath(std::move(dotMeddyprojectPath));
-    std::ofstream manifestFileStream = std::ofstream(manifestFilePath.c_str());
-    manifestFileStream.flush();
-    manifestFileStream.close();
 
-    if (manifestFileStream.fail())
+    const bool didCreateFile = CppUtils::TouchNewFile(manifestFilePath.native());
+    if (!didCreateFile)
     {
         return ProjectCreationResult::Failed_FilesystemFailedToCreateManifestFile;
     }
