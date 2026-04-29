@@ -164,32 +164,31 @@ MeddySDK::ProjectCreationResult MeddySDK::CreateNewProject(
         return ProjectCreationResult::Failed_FilesystemFailedToCreateManifestFile;
     }
 
-    // Write the default json contents to the file.
+    // Populate the json file.
+    {
+        // Write the default json contents.
 
-    constexpr auto jsonString =
-R"(
-{
-}
-)";
+        rapidjson::Document jsonDocument{};
+        jsonDocument.SetObject();
 
-    rapidjson::Document jsonDocument{};
-    jsonDocument.Parse(jsonString);
+        // Serialize this json document to the file.
 
-    CppUtils::CharBufferString manifestFilePathConverted = CppUtils::ConstructCharacterBufferFromString<char, MeddySDK::MaxFilenameLength>(
-        CppUtils::StdPathStringView{manifestFilePath.native()});
+        CppUtils::CharBufferString manifestFilePathConverted = CppUtils::ConstructCharacterBufferFromString<char, MeddySDK::MaxFilenameLength>(
+            CppUtils::StdPathStringView{manifestFilePath.native()});
 
-    std::FILE* manifestFilePtr = std::fopen(manifestFilePathConverted.ToStringView().data(), "wb");
+        std::FILE* manifestFilePtr = std::fopen(manifestFilePathConverted.ToStringView().data(), "wb");
 
-    constexpr std::size_t jsonWriteBufferSize = 65536u;
-    char jsonWriteBuffer[jsonWriteBufferSize];
-    rapidjson::FileWriteStream jsonFileWriteStream{manifestFilePtr, jsonWriteBuffer, jsonWriteBufferSize};
+        constexpr std::size_t jsonWriteBufferSize = 65536u;
+        char jsonWriteBuffer[jsonWriteBufferSize];
+        rapidjson::FileWriteStream jsonFileWriteStream{manifestFilePtr, jsonWriteBuffer, jsonWriteBufferSize};
 
-    rapidjson::PrettyWriter<rapidjson::FileWriteStream> jsonWriter{jsonFileWriteStream};
-    MeddySDK::ApplyPrettyJsonDefaults(jsonWriter);
+        rapidjson::PrettyWriter<rapidjson::FileWriteStream> jsonWriter{jsonFileWriteStream};
+        MeddySDK::ApplyPrettyJsonDefaults(jsonWriter);
 
-    jsonDocument.Accept(jsonWriter);
+        jsonDocument.Accept(jsonWriter);
 
-    std::fclose(manifestFilePtr);
+        std::fclose(manifestFilePtr);
+    }
 
     return ProjectCreationResult::Success;
 }
