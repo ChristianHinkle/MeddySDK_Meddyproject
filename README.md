@@ -8,7 +8,8 @@ For a superproject with all components MeddySDK has to offer, see [MeddySDK](htt
 ## Dependencies
 
 MeddySDK_Meddyproject
-- [boost_filesystem](https://github.com/boostorg/filesystem)
+- [Boost.Filesystem](https://github.com/boostorg/filesystem)
+- [RapidJSON](https://github.com/Tencent/rapidjson)
 - [CppUtils_Core](https://github.com/ChristianHinkle/CppUtils_Core)
 - [CppUtils_Misc](https://github.com/ChristianHinkle/CppUtils_Misc)
 - [CppUtils_StdReimpl](https://github.com/ChristianHinkle/CppUtils_StdReimpl)
