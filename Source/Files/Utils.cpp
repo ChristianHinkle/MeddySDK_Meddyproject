@@ -12,8 +12,9 @@
 #include <CppUtils/Misc/String.h>
 #include <CppUtils/Core/String.h>
 #include <rapidjson/document.h>
-#include <rapidjson/writer.h>
+#include <rapidjson/prettywriter.h>
 #include <rapidjson/filewritestream.h>
+#include <MeddySDK/Meddyproject/Json.h>
 
 boost::filesystem::path MeddySDK::ProjectRootToManifestFilePath(
     boost::filesystem::path&& path)
@@ -183,7 +184,9 @@ R"(
     char jsonWriteBuffer[jsonWriteBufferSize];
     rapidjson::FileWriteStream jsonFileWriteStream{manifestFilePtr, jsonWriteBuffer, jsonWriteBufferSize};
 
-    rapidjson::Writer<rapidjson::FileWriteStream> jsonWriter{jsonFileWriteStream};
+    rapidjson::PrettyWriter<rapidjson::FileWriteStream> jsonWriter{jsonFileWriteStream};
+    MeddySDK::ApplyPrettyJsonDefaults(jsonWriter);
+
     jsonDocument.Accept(jsonWriter);
 
     std::fclose(manifestFilePtr);

@@ -7,4 +7,5 @@ set(FILES_CMAKE_RESULT
   "Utils.cpp"
   "FilesystemUtils.cpp"
   "Meddyproject.cpp"
+  "Json.cpp"
   )
