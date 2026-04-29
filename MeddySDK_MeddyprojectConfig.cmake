@@ -11,6 +11,8 @@ SET(MY_BASE_PROJECT_NAME_LEAFNAME "Meddyproject")
 
 include(CMakeFindDependencyMacro)
 
+find_dependency(RapidJsonCmakeInterface CONFIG)
+
 find_dependency(Boost CONFIG COMPONENTS filesystem)
 
 find_dependency(CppUtils_StdReimpl CONFIG COMPONENTS Include)

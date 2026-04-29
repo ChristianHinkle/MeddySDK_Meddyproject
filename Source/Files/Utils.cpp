@@ -11,6 +11,9 @@
 #include <MeddySDK/Meddyproject/FilesystemUtils.h>
 #include <CppUtils/Misc/String.h>
 #include <CppUtils/Core/String.h>
+#include <rapidjson/document.h>
+#include <rapidjson/writer.h>
+#include <rapidjson/filewritestream.h>
 
 boost::filesystem::path MeddySDK::ProjectRootToManifestFilePath(
     boost::filesystem::path&& path)
@@ -159,6 +162,31 @@ MeddySDK::ProjectCreationResult MeddySDK::CreateNewProject(
     {
         return ProjectCreationResult::Failed_FilesystemFailedToCreateManifestFile;
     }
+
+    // Write the default json contents to the file.
+
+    constexpr auto jsonString =
+R"(
+{
+}
+)";
+
+    rapidjson::Document jsonDocument{};
+    jsonDocument.Parse(jsonString);
+
+    CppUtils::CharBufferString manifestFilePathConverted = CppUtils::ConstructCharacterBufferFromString<char, MeddySDK::MaxFilenameLength>(
+        CppUtils::StdPathStringView{manifestFilePath.native()});
+
+    std::FILE* manifestFilePtr = std::fopen(manifestFilePathConverted.ToStringView().data(), "wb");
+
+    constexpr std::size_t jsonWriteBufferSize = 65536u;
+    char jsonWriteBuffer[jsonWriteBufferSize];
+    rapidjson::FileWriteStream jsonFileWriteStream{manifestFilePtr, jsonWriteBuffer, jsonWriteBufferSize};
+
+    rapidjson::Writer<rapidjson::FileWriteStream> jsonWriter{jsonFileWriteStream};
+    jsonDocument.Accept(jsonWriter);
+
+    std::fclose(manifestFilePtr);
 
     return ProjectCreationResult::Success;
 }
