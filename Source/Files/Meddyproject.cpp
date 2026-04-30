@@ -35,11 +35,11 @@ boost::filesystem::path MeddySDK::Meddyproject::GetRootPath() &&
     return std::move(result);
 }
 
-boost::filesystem::path MeddySDK::Meddyproject::GetDotMeddyprojectPath() const &
+boost::filesystem::path MeddySDK::Meddyproject::GetMeddyprojectDirPath() const &
 {
-    return MeddySDK::ProjectRootToDotMeddyprojectPath(boost::filesystem::path{ProjectRootDir});
+    return MeddySDK::ProjectRootToMeddyprojectDirPath(boost::filesystem::path{ProjectRootDir});
 }
-boost::filesystem::path MeddySDK::Meddyproject::GetDotMeddyprojectPath() &&
+boost::filesystem::path MeddySDK::Meddyproject::GetMeddyprojectDirPath() &&
 {
-    return MeddySDK::ProjectRootToDotMeddyprojectPath(std::move(ProjectRootDir));
+    return MeddySDK::ProjectRootToMeddyprojectDirPath(std::move(ProjectRootDir));
 }

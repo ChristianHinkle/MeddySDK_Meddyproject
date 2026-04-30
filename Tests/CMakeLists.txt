@@ -24,85 +24,85 @@ find_package(Boost 0 CONFIG REQUIRED COMPONENTS filesystem)
 # even need to exist yet because CMake only validates the existence of targets at the end of the entire
 # configuration process.
 
-add_executable(${MY_BASE_PROJECT_NAME_FULL}_ProjectRootToDotMeddyprojectPath)
-target_compile_features(${MY_BASE_PROJECT_NAME_FULL}_ProjectRootToDotMeddyprojectPath PUBLIC cxx_std_20)
-target_sources(${MY_BASE_PROJECT_NAME_FULL}_ProjectRootToDotMeddyprojectPath PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/Source/ProjectRootToDotMeddyprojectPath.cpp")
-target_link_libraries(${MY_BASE_PROJECT_NAME_FULL}_ProjectRootToDotMeddyprojectPath
+add_executable(${MY_BASE_PROJECT_NAME_FULL}_ProjectRootToMeddyprojectDirPath)
+target_compile_features(${MY_BASE_PROJECT_NAME_FULL}_ProjectRootToMeddyprojectDirPath PUBLIC cxx_std_20)
+target_sources(${MY_BASE_PROJECT_NAME_FULL}_ProjectRootToMeddyprojectDirPath PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/Source/ProjectRootToMeddyprojectDirPath.cpp")
+target_link_libraries(${MY_BASE_PROJECT_NAME_FULL}_ProjectRootToMeddyprojectDirPath
   PRIVATE
     ${MY_BASE_PROJECT_NAME_NAMESPACE}::${MY_BASE_PROJECT_NAME_LEAFNAME}::Static
     Boost::filesystem
   )
 
-add_test(NAME ${MY_BASE_PROJECT_NAME_NAMESPACE}.${MY_BASE_PROJECT_NAME_LEAFNAME}.ProjectRootToDotMeddyprojectPath.UserVideos
-  COMMAND ${MY_BASE_PROJECT_NAME_FULL}_ProjectRootToDotMeddyprojectPath
+add_test(NAME ${MY_BASE_PROJECT_NAME_NAMESPACE}.${MY_BASE_PROJECT_NAME_LEAFNAME}.ProjectRootToMeddyprojectDirPath.UserVideos
+  COMMAND ${MY_BASE_PROJECT_NAME_FULL}_ProjectRootToMeddyprojectDirPath
     "/Users/Meddy Man/Videos"
-    "/Users/Meddy Man/Videos/.meddyproject"
+    "/Users/Meddy Man/Videos/_meddyproject"
   )
 
-add_test(NAME ${MY_BASE_PROJECT_NAME_NAMESPACE}.${MY_BASE_PROJECT_NAME_LEAFNAME}.ProjectRootToDotMeddyprojectPath.AbsoluteRoot
-  COMMAND ${MY_BASE_PROJECT_NAME_FULL}_ProjectRootToDotMeddyprojectPath
+add_test(NAME ${MY_BASE_PROJECT_NAME_NAMESPACE}.${MY_BASE_PROJECT_NAME_LEAFNAME}.ProjectRootToMeddyprojectDirPath.AbsoluteRoot
+  COMMAND ${MY_BASE_PROJECT_NAME_FULL}_ProjectRootToMeddyprojectDirPath
     "/"
-    "/.meddyproject"
+    "/_meddyproject"
   )
 
-add_test(NAME ${MY_BASE_PROJECT_NAME_NAMESPACE}.${MY_BASE_PROJECT_NAME_LEAFNAME}.ProjectRootToDotMeddyprojectPath.Empty
-  COMMAND ${MY_BASE_PROJECT_NAME_FULL}_ProjectRootToDotMeddyprojectPath
+add_test(NAME ${MY_BASE_PROJECT_NAME_NAMESPACE}.${MY_BASE_PROJECT_NAME_LEAFNAME}.ProjectRootToMeddyprojectDirPath.Empty
+  COMMAND ${MY_BASE_PROJECT_NAME_FULL}_ProjectRootToMeddyprojectDirPath
     ""
-    ".meddyproject"
+    "_meddyproject"
   )
 
-add_executable(${MY_BASE_PROJECT_NAME_FULL}_DotMeddyprojectToProjectRootPath)
-target_compile_features(${MY_BASE_PROJECT_NAME_FULL}_DotMeddyprojectToProjectRootPath PUBLIC cxx_std_20)
-target_sources(${MY_BASE_PROJECT_NAME_FULL}_DotMeddyprojectToProjectRootPath PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/Source/DotMeddyprojectToProjectRootPath.cpp")
-target_link_libraries(${MY_BASE_PROJECT_NAME_FULL}_DotMeddyprojectToProjectRootPath
+add_executable(${MY_BASE_PROJECT_NAME_FULL}_MeddyprojectDirToProjectRootPath)
+target_compile_features(${MY_BASE_PROJECT_NAME_FULL}_MeddyprojectDirToProjectRootPath PUBLIC cxx_std_20)
+target_sources(${MY_BASE_PROJECT_NAME_FULL}_MeddyprojectDirToProjectRootPath PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/Source/MeddyprojectDirToProjectRootPath.cpp")
+target_link_libraries(${MY_BASE_PROJECT_NAME_FULL}_MeddyprojectDirToProjectRootPath
   PRIVATE
     ${MY_BASE_PROJECT_NAME_NAMESPACE}::${MY_BASE_PROJECT_NAME_LEAFNAME}::Static
     Boost::filesystem
   )
 
-add_test(NAME ${MY_BASE_PROJECT_NAME_NAMESPACE}.${MY_BASE_PROJECT_NAME_LEAFNAME}.DotMeddyprojectToProjectRootPath.UserVideos
-  COMMAND ${MY_BASE_PROJECT_NAME_FULL}_DotMeddyprojectToProjectRootPath
-    "/Users/Meddy Man/Videos/.meddyproject"
+add_test(NAME ${MY_BASE_PROJECT_NAME_NAMESPACE}.${MY_BASE_PROJECT_NAME_LEAFNAME}.MeddyprojectDirToProjectRootPath.UserVideos
+  COMMAND ${MY_BASE_PROJECT_NAME_FULL}_MeddyprojectDirToProjectRootPath
+    "/Users/Meddy Man/Videos/_meddyproject"
     "/Users/Meddy Man/Videos"
   )
 
-add_test(NAME ${MY_BASE_PROJECT_NAME_NAMESPACE}.${MY_BASE_PROJECT_NAME_LEAFNAME}.DotMeddyprojectToProjectRootPath.AbsoluteRoot
-  COMMAND ${MY_BASE_PROJECT_NAME_FULL}_DotMeddyprojectToProjectRootPath
-    "/.meddyproject"
+add_test(NAME ${MY_BASE_PROJECT_NAME_NAMESPACE}.${MY_BASE_PROJECT_NAME_LEAFNAME}.MeddyprojectDirToProjectRootPath.AbsoluteRoot
+  COMMAND ${MY_BASE_PROJECT_NAME_FULL}_MeddyprojectDirToProjectRootPath
+    "/_meddyproject"
     "/"
   )
 
-add_test(NAME ${MY_BASE_PROJECT_NAME_NAMESPACE}.${MY_BASE_PROJECT_NAME_LEAFNAME}.DotMeddyprojectToProjectRootPath.Empty
-  COMMAND ${MY_BASE_PROJECT_NAME_FULL}_DotMeddyprojectToProjectRootPath
-    ".meddyproject"
+add_test(NAME ${MY_BASE_PROJECT_NAME_NAMESPACE}.${MY_BASE_PROJECT_NAME_LEAFNAME}.MeddyprojectDirToProjectRootPath.Empty
+  COMMAND ${MY_BASE_PROJECT_NAME_FULL}_MeddyprojectDirToProjectRootPath
+    "_meddyproject"
     ""
   )
 
-add_executable(${MY_BASE_PROJECT_NAME_FULL}_DotMeddyprojectToManifestFilePath)
-target_compile_features(${MY_BASE_PROJECT_NAME_FULL}_DotMeddyprojectToManifestFilePath PUBLIC cxx_std_20)
-target_sources(${MY_BASE_PROJECT_NAME_FULL}_DotMeddyprojectToManifestFilePath PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/Source/DotMeddyprojectToManifestFilePath.cpp")
-target_link_libraries(${MY_BASE_PROJECT_NAME_FULL}_DotMeddyprojectToManifestFilePath
+add_executable(${MY_BASE_PROJECT_NAME_FULL}_MeddyprojectDirToManifestFilePath)
+target_compile_features(${MY_BASE_PROJECT_NAME_FULL}_MeddyprojectDirToManifestFilePath PUBLIC cxx_std_20)
+target_sources(${MY_BASE_PROJECT_NAME_FULL}_MeddyprojectDirToManifestFilePath PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/Source/MeddyprojectDirToManifestFilePath.cpp")
+target_link_libraries(${MY_BASE_PROJECT_NAME_FULL}_MeddyprojectDirToManifestFilePath
   PRIVATE
     ${MY_BASE_PROJECT_NAME_NAMESPACE}::${MY_BASE_PROJECT_NAME_LEAFNAME}::Static
     Boost::filesystem
   )
 
-add_test(NAME ${MY_BASE_PROJECT_NAME_NAMESPACE}.${MY_BASE_PROJECT_NAME_LEAFNAME}.DotMeddyprojectToManifestFilePath.UserVideos
-  COMMAND ${MY_BASE_PROJECT_NAME_FULL}_DotMeddyprojectToManifestFilePath
-    "/Users/Meddy Man/Videos/.meddyproject"
-    "/Users/Meddy Man/Videos/.meddyproject/manifest.json"
+add_test(NAME ${MY_BASE_PROJECT_NAME_NAMESPACE}.${MY_BASE_PROJECT_NAME_LEAFNAME}.MeddyprojectDirToManifestFilePath.UserVideos
+  COMMAND ${MY_BASE_PROJECT_NAME_FULL}_MeddyprojectDirToManifestFilePath
+    "/Users/Meddy Man/Videos/_meddyproject"
+    "/Users/Meddy Man/Videos/_meddyproject/manifest.json"
   )
 
-add_test(NAME ${MY_BASE_PROJECT_NAME_NAMESPACE}.${MY_BASE_PROJECT_NAME_LEAFNAME}.DotMeddyprojectToManifestFilePath.AbsoluteRoot
-  COMMAND ${MY_BASE_PROJECT_NAME_FULL}_DotMeddyprojectToManifestFilePath
-    "/.meddyproject"
-    "/.meddyproject/manifest.json"
+add_test(NAME ${MY_BASE_PROJECT_NAME_NAMESPACE}.${MY_BASE_PROJECT_NAME_LEAFNAME}.MeddyprojectDirToManifestFilePath.AbsoluteRoot
+  COMMAND ${MY_BASE_PROJECT_NAME_FULL}_MeddyprojectDirToManifestFilePath
+    "/_meddyproject"
+    "/_meddyproject/manifest.json"
   )
 
-add_test(NAME ${MY_BASE_PROJECT_NAME_NAMESPACE}.${MY_BASE_PROJECT_NAME_LEAFNAME}.DotMeddyprojectToManifestFilePath.Empty
-  COMMAND ${MY_BASE_PROJECT_NAME_FULL}_DotMeddyprojectToManifestFilePath
-    ".meddyproject"
-    ".meddyproject/manifest.json"
+add_test(NAME ${MY_BASE_PROJECT_NAME_NAMESPACE}.${MY_BASE_PROJECT_NAME_LEAFNAME}.MeddyprojectDirToManifestFilePath.Empty
+  COMMAND ${MY_BASE_PROJECT_NAME_FULL}_MeddyprojectDirToManifestFilePath
+    "_meddyproject"
+    "_meddyproject/manifest.json"
   )
 
 add_executable(${MY_BASE_PROJECT_NAME_FULL}_TryCreateNewProject)

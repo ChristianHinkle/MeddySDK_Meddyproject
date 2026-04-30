@@ -17,8 +17,8 @@ namespace MeddySDK
     public:
         const boost::filesystem::path& GetRootPath() const &;
         boost::filesystem::path GetRootPath() &&;
-        boost::filesystem::path GetDotMeddyprojectPath() const &;
-        boost::filesystem::path GetDotMeddyprojectPath() &&;
+        boost::filesystem::path GetMeddyprojectDirPath() const &;
+        boost::filesystem::path GetMeddyprojectDirPath() &&;
 
     private:
 

@@ -32,7 +32,7 @@ int main(int argc, char** argv)
     std::cout << '\n';
 
     boost::filesystem::path testResultActualPath = boost::filesystem::path(
-        MeddySDK::DotMeddyprojectToManifestFilePath(boost::filesystem::path(testInputPath))
+        MeddySDK::MeddyprojectDirToManifestFilePath(boost::filesystem::path(testInputPath))
         ).lexically_normal();
 
     std::cout << "Actual result path: " << testResultActualPath << "." << '\n';
