@@ -177,6 +177,7 @@ MeddySDK::ProjectCreationResult MeddySDK::CreateNewProject(
             CppUtils::StdPathStringView{manifestFilePath.native()});
 
         std::FILE* manifestFilePtr = std::fopen(manifestFilePathConverted.ToStringView().data(), "wb");
+        assert(manifestFilePtr);
 
         constexpr std::size_t jsonWriteBufferSize = 65536u;
         char jsonWriteBuffer[jsonWriteBufferSize];
@@ -186,6 +187,10 @@ MeddySDK::ProjectCreationResult MeddySDK::CreateNewProject(
         MeddySDK::ApplyPrettyJsonDefaults(jsonWriter);
 
         jsonDocument.Accept(jsonWriter);
+
+        // Write a newline at end of file.
+        jsonFileWriteStream.Put('\n');
+        jsonFileWriteStream.Flush();
 
         std::fclose(manifestFilePtr);
     }
