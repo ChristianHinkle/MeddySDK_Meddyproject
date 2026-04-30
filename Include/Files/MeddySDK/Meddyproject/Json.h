@@ -4,6 +4,14 @@
 
 #include <MeddySDK_Meddyproject_Export.h>
 #include <rapidjson/prettywriter.h>
+#include <CppUtils/Core/Filesystem.h>
+#include <string_view>
+
+namespace rapidjson
+{
+    template <typename Encoding, typename Allocator, typename StackAllocator>
+    class GenericDocument;
+}
 
 namespace MeddySDK
 {
@@ -18,4 +26,10 @@ namespace MeddySDK
         jsonPrettyWriter.SetFormatOptions(MeddySDK::PrettyJsonFormatOptions);
         jsonPrettyWriter.SetIndent(MeddySDK::PrettyJsonIndentChar, MeddySDK::PrettyJsonIndentCount);
     }
+
+    template <class Encoding, class Allocator, class StackAllocator>
+    bool SaveJsonDocumentToFile(CppUtils::StdPathStringView pathnameString, const rapidjson::GenericDocument<Encoding, Allocator, StackAllocator>& jsonDocument);
+
+    template <class Encoding, class Allocator, class StackAllocator>
+    bool SaveJsonDocumentToFile(const char* pathnameString, const rapidjson::GenericDocument<Encoding, Allocator, StackAllocator>& jsonDocument);
 }
