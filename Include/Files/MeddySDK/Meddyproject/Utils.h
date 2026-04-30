@@ -10,7 +10,7 @@
 
 #define MEDDYSDK_DOT_MEDDYPROJECT_STRING_LITERAL ".meddyproject"
 
-#define MEDDYSDK_MEDDYPROJECT_MANIFEST_FILENAME_STRING_LITERAL "Manifest.json"
+#define MEDDYSDK_MEDDYPROJECT_MANIFEST_FILENAME_STRING_LITERAL "manifest.json"
 
 /**
  * @brief General utilities for working with meddyprojects and their files.

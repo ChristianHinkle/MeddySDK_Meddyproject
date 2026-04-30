@@ -50,7 +50,7 @@ if(NOT EXISTS "${MY_TEST_WORKING_DIRECTORY}/MyTestGeneratedFiles/${MY_TEST_NAME}
   cmake_language(EXIT 4)
 endif()
 
-if(NOT EXISTS "${MY_TEST_WORKING_DIRECTORY}/MyTestGeneratedFiles/${MY_TEST_NAME}/MyProjectDir/.meddyproject/Manifest.json")
+if(NOT EXISTS "${MY_TEST_WORKING_DIRECTORY}/MyTestGeneratedFiles/${MY_TEST_NAME}/MyProjectDir/.meddyproject/manifest.json")
   message("Failed. Project manifest file does not exist.")
   cmake_language(EXIT 5)
 endif()

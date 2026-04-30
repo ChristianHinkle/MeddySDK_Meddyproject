@@ -90,19 +90,19 @@ target_link_libraries(${MY_BASE_PROJECT_NAME_FULL}_DotMeddyprojectToManifestFile
 add_test(NAME ${MY_BASE_PROJECT_NAME_NAMESPACE}.${MY_BASE_PROJECT_NAME_LEAFNAME}.DotMeddyprojectToManifestFilePath.UserVideos
   COMMAND ${MY_BASE_PROJECT_NAME_FULL}_DotMeddyprojectToManifestFilePath
     "/Users/Meddy Man/Videos/.meddyproject"
-    "/Users/Meddy Man/Videos/.meddyproject/Manifest.json"
+    "/Users/Meddy Man/Videos/.meddyproject/manifest.json"
   )
 
 add_test(NAME ${MY_BASE_PROJECT_NAME_NAMESPACE}.${MY_BASE_PROJECT_NAME_LEAFNAME}.DotMeddyprojectToManifestFilePath.AbsoluteRoot
   COMMAND ${MY_BASE_PROJECT_NAME_FULL}_DotMeddyprojectToManifestFilePath
     "/.meddyproject"
-    "/.meddyproject/Manifest.json"
+    "/.meddyproject/manifest.json"
   )
 
 add_test(NAME ${MY_BASE_PROJECT_NAME_NAMESPACE}.${MY_BASE_PROJECT_NAME_LEAFNAME}.DotMeddyprojectToManifestFilePath.Empty
   COMMAND ${MY_BASE_PROJECT_NAME_FULL}_DotMeddyprojectToManifestFilePath
     ".meddyproject"
-    ".meddyproject/Manifest.json"
+    ".meddyproject/manifest.json"
   )
 
 add_executable(${MY_BASE_PROJECT_NAME_FULL}_TryCreateNewProject)
