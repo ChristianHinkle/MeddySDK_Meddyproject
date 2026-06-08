@@ -5,10 +5,10 @@
 #include <MeddySDK/Meddyproject/FilesystemUtils.h>
 
 #include <CppUtils/Misc/CharBufferString.h>
-#include <algorithm>
 #include <CppUtils/Misc/String.h>
 #include <CppUtils/Core/String.h>
 #include <CppUtils/Core/Concepts.h>
+#include <CppUtils/Core/Filesystem.h>
 
 template <std::size_t bufferSize, CppUtils::CharLike TChar, class TCharTraits>
 CppUtils::CharBufferString<TChar, bufferSize, TCharTraits> MeddySDK::ConstructPrettyPathCharacterBuffer(
@@ -21,19 +21,9 @@ CppUtils::CharBufferString<TChar, bufferSize, TCharTraits> MeddySDK::ConstructPr
                 characterBuffer,
                 CppUtils::MakeStringView(path.native()));
 
-            ConvertPathStringToPrettyFormat(characterBuffer.begin(), characterBuffer.end());
+            CppUtils::ConvertPathStringToPrettyFormat(characterBuffer.begin(), characterBuffer.end());
         }
         );
-}
-
-template <class TFwdIt, CppUtils::CharLike TChar>
-void MeddySDK::ConvertPathStringToPrettyFormat(TFwdIt begin, TFwdIt end)
-{
-    std::replace(
-        begin,
-        end,
-        static_cast<TChar>(boost::filesystem::path::preferred_separator),
-        static_cast<TChar>(PrettyPathSeparator));
 }
 
 template <CppUtils::CharLike TChar, class TCharTraits>
