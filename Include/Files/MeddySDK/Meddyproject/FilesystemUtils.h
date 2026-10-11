@@ -20,7 +20,7 @@ namespace MeddySDK
     constexpr std::size_t MaxFilenameLength = 1024;
 
     template <std::size_t bufferSize, CppUtils::CharLike TChar = char, class TCharTraits = std::char_traits<TChar>>
-    CppUtils::CharBufferString<TChar, bufferSize, TCharTraits> ConstructPrettyPathCharacterBuffer(const boost::filesystem::path& path);
+    CppUtils::CharBufferString<TChar, bufferSize, TCharTraits> ConstructGenericPathCharacterBuffer(const boost::filesystem::path& path);
 
     template <CppUtils::CharLike TChar, class TCharTraits>
     bool IsPathEqualToString(const boost::filesystem::path& path, const std::basic_string_view<TChar, TCharTraits> string);

@@ -11,7 +11,7 @@
 #include <CppUtils/Core/Filesystem.h>
 
 template <std::size_t bufferSize, CppUtils::CharLike TChar, class TCharTraits>
-CppUtils::CharBufferString<TChar, bufferSize, TCharTraits> MeddySDK::ConstructPrettyPathCharacterBuffer(
+CppUtils::CharBufferString<TChar, bufferSize, TCharTraits> MeddySDK::ConstructGenericPathCharacterBuffer(
     const boost::filesystem::path& path)
 {
     return CppUtils::CharBufferString<TChar, bufferSize, TCharTraits>(
@@ -21,7 +21,7 @@ CppUtils::CharBufferString<TChar, bufferSize, TCharTraits> MeddySDK::ConstructPr
                 characterBuffer,
                 CppUtils::MakeStringView(path.native()));
 
-            CppUtils::ConvertPathStringToPrettyFormat(characterBuffer.begin(), characterBuffer.end());
+            CppUtils::ConvertPathStringToGenericFormat(characterBuffer.begin(), characterBuffer.end());
         }
         );
 }
