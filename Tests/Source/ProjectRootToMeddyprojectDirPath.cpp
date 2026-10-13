@@ -22,8 +22,8 @@ int main(int argc, char** argv)
     std::cout << '\n';
 
     //
-    // @Christian: Note: [std][boost][cpp] Using `boost::filesystem` here is important because `std::filesystem` gives
-    // some inconsistent results on MSVC. Here is a breakdown of that problem:
+    // @Christian: Note: Using `std::filesystem` gives some inconsistent results on MSVC. Here is
+    // a breakdown of that problem:
     // - `std::filesystem::weakly_canonical("/")` returns "C:\"
     // - `std::filesystem::weakly_canonical("/MyFile")` returns "\MyFile"
     //     - We need this one to return "C:\MyFile" instead.
@@ -31,21 +31,22 @@ int main(int argc, char** argv)
     //
     // On Linux, though, `std::filesystem` gives nice, consistent behavior.
     //
-    // We switched to `boost::filesystem` for more consistent behavior.
+    // Be aware of this nuance and carefully account for it. TODO: [todo] Maybe we can make some utilities for more consistent
+    // cross-platform behavior in CppUtils.
     //
 
     // Note: [boost] This `lexically_normal` function doesn't have an rvalue overload, unfortunately. So it is causing
     // a useless copy.
-    boost::filesystem::path testInputPath = boost::filesystem::path(testInputString).lexically_normal();
-    boost::filesystem::path testResultPathExpectedPath = boost::filesystem::path(testResultExpectedString).lexically_normal();
+    std::filesystem::path testInputPath = std::filesystem::path(testInputString).lexically_normal();
+    std::filesystem::path testResultPathExpectedPath = std::filesystem::path(testResultExpectedString).lexically_normal();
 
     std::cout << "Input path: " << testInputPath << "." << '\n';
     std::cout << "Expected result path: " << testResultPathExpectedPath << "." << '\n';
 
     std::cout << '\n';
 
-    boost::filesystem::path testResultActualPath = boost::filesystem::path(
-        MeddySDK::ProjectRootToMeddyprojectDirPath(boost::filesystem::path(testInputPath))
+    std::filesystem::path testResultActualPath = std::filesystem::path(
+        MeddySDK::ProjectRootToMeddyprojectDirPath(std::filesystem::path(testInputPath))
         ).lexically_normal();
 
     std::cout << "Actual result path: " << testResultActualPath << "." << '\n';

@@ -3,7 +3,7 @@
 #pragma once
 
 #include <MeddySDK_Meddyproject_Export.h>
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
 #include <string_view>
 #include <CppUtils/Misc/CharBufferString.h>
 #include <CppUtils/Core/Concepts.h>
@@ -20,10 +20,10 @@ namespace MeddySDK
     constexpr std::size_t MaxFilenameLength = 1024;
 
     template <std::size_t bufferSize, CppUtils::CharLike TChar = char, class TCharTraits = std::char_traits<TChar>>
-    CppUtils::CharBufferString<TChar, bufferSize, TCharTraits> ConstructGenericPathCharacterBuffer(const boost::filesystem::path& path);
+    CppUtils::CharBufferString<TChar, bufferSize, TCharTraits> ConstructGenericPathCharacterBuffer(const std::filesystem::path& path);
 
     template <CppUtils::CharLike TChar, class TCharTraits>
-    bool IsPathEqualToString(const boost::filesystem::path& path, const std::basic_string_view<TChar, TCharTraits> string);
+    bool IsPathEqualToString(const std::filesystem::path& path, const std::basic_string_view<TChar, TCharTraits> string);
 }
 
 #include <MeddySDK/Meddyproject/FilesystemUtils.inl>

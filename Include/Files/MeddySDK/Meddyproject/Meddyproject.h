@@ -3,7 +3,7 @@
 #pragma once
 
 #include <MeddySDK_Meddyproject_Export.h>
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
 #include <string_view>
 #include <utility>
 
@@ -12,16 +12,16 @@ namespace MeddySDK
     struct MEDDYSDK_MEDDYPROJECT_EXPORT Meddyproject
     {
     public:
-        explicit Meddyproject(boost::filesystem::path&& projectRootDir);
+        explicit Meddyproject(std::filesystem::path&& projectRootDir);
 
     public:
-        const boost::filesystem::path& GetRootPath() const &;
-        boost::filesystem::path GetRootPath() &&;
-        boost::filesystem::path GetMeddyprojectDirPath() const &;
-        boost::filesystem::path GetMeddyprojectDirPath() &&;
+        const std::filesystem::path& GetRootPath() const &;
+        std::filesystem::path GetRootPath() &&;
+        std::filesystem::path GetMeddyprojectDirPath() const &;
+        std::filesystem::path GetMeddyprojectDirPath() &&;
 
     private:
 
-        boost::filesystem::path ProjectRootDir;
+        std::filesystem::path ProjectRootDir;
     };
 }

@@ -16,8 +16,6 @@ project(${MY_BASE_PROJECT_NAME_FULL}_Tests
   LANGUAGES CXX
   )
 
-find_package(Boost 0 CONFIG REQUIRED COMPONENTS filesystem)
-
 # Note that we do not "find package" for our parent project. We don't need to since we are built in the same
 # cmake invocation as the it. That means we're being processed during the same configuration step as them, which
 # means we'll have all their targets. Also, the targets that we reference in `target_link_libraries` commands don't
@@ -30,7 +28,6 @@ target_sources(${MY_BASE_PROJECT_NAME_FULL}_ProjectRootToMeddyprojectDirPath PRI
 target_link_libraries(${MY_BASE_PROJECT_NAME_FULL}_ProjectRootToMeddyprojectDirPath
   PRIVATE
     ${MY_BASE_PROJECT_NAME_NAMESPACE}::${MY_BASE_PROJECT_NAME_LEAFNAME}::Static
-    Boost::filesystem
   )
 
 add_test(NAME ${MY_BASE_PROJECT_NAME_NAMESPACE}.${MY_BASE_PROJECT_NAME_LEAFNAME}.ProjectRootToMeddyprojectDirPath.UserVideos
@@ -57,7 +54,6 @@ target_sources(${MY_BASE_PROJECT_NAME_FULL}_MeddyprojectDirToProjectRootPath PRI
 target_link_libraries(${MY_BASE_PROJECT_NAME_FULL}_MeddyprojectDirToProjectRootPath
   PRIVATE
     ${MY_BASE_PROJECT_NAME_NAMESPACE}::${MY_BASE_PROJECT_NAME_LEAFNAME}::Static
-    Boost::filesystem
   )
 
 add_test(NAME ${MY_BASE_PROJECT_NAME_NAMESPACE}.${MY_BASE_PROJECT_NAME_LEAFNAME}.MeddyprojectDirToProjectRootPath.UserVideos
@@ -84,7 +80,6 @@ target_sources(${MY_BASE_PROJECT_NAME_FULL}_MeddyprojectDirToManifestFilePath PR
 target_link_libraries(${MY_BASE_PROJECT_NAME_FULL}_MeddyprojectDirToManifestFilePath
   PRIVATE
     ${MY_BASE_PROJECT_NAME_NAMESPACE}::${MY_BASE_PROJECT_NAME_LEAFNAME}::Static
-    Boost::filesystem
   )
 
 add_test(NAME ${MY_BASE_PROJECT_NAME_NAMESPACE}.${MY_BASE_PROJECT_NAME_LEAFNAME}.MeddyprojectDirToManifestFilePath.UserVideos
@@ -111,7 +106,6 @@ target_sources(${MY_BASE_PROJECT_NAME_FULL}_TryCreateNewProject PRIVATE "${CMAKE
 target_link_libraries(${MY_BASE_PROJECT_NAME_FULL}_TryCreateNewProject
   PRIVATE
     ${MY_BASE_PROJECT_NAME_NAMESPACE}::${MY_BASE_PROJECT_NAME_LEAFNAME}::Static
-    Boost::filesystem
   )
 
 add_test(
@@ -129,7 +123,6 @@ target_sources(${MY_BASE_PROJECT_NAME_FULL}_GetOuterMeddyproject PRIVATE "${CMAK
 target_link_libraries(${MY_BASE_PROJECT_NAME_FULL}_GetOuterMeddyproject
   PRIVATE
     ${MY_BASE_PROJECT_NAME_NAMESPACE}::${MY_BASE_PROJECT_NAME_LEAFNAME}::Static
-    Boost::filesystem
   )
 
 add_test(

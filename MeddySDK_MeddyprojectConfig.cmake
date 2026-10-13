@@ -13,8 +13,6 @@ include(CMakeFindDependencyMacro)
 
 find_dependency(RapidJsonCmakeInterface CONFIG)
 
-find_dependency(Boost CONFIG COMPONENTS filesystem)
-
 find_dependency(CppUtils_StdReimpl CONFIG COMPONENTS Include)
 find_dependency(CppUtils_Core CONFIG COMPONENTS Include)
 find_dependency(CppUtils_Misc CONFIG COMPONENTS Include)

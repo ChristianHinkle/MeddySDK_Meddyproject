@@ -3,7 +3,7 @@
 #pragma once
 
 #include <MeddySDK_Meddyproject_Export.h>
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
 #include <string_view>
 #include <CppUtils/Core/ExpectedResult.h>
 #include <MeddySDK/Meddyproject/Meddyproject.h>
@@ -26,17 +26,17 @@ namespace MeddySDK
     constexpr std::string_view MeddyprojectManifestFilenameString =
         MEDDYSDK_MEDDYPROJECT_MANIFEST_FILENAME_STRING_LITERAL;
 
-    MEDDYSDK_MEDDYPROJECT_EXPORT boost::filesystem::path ProjectRootToManifestFilePath(
-        boost::filesystem::path&& path);
+    MEDDYSDK_MEDDYPROJECT_EXPORT std::filesystem::path ProjectRootToManifestFilePath(
+        std::filesystem::path&& path);
 
-    MEDDYSDK_MEDDYPROJECT_EXPORT boost::filesystem::path ProjectRootToMeddyprojectDirPath(
-        boost::filesystem::path&& path);
+    MEDDYSDK_MEDDYPROJECT_EXPORT std::filesystem::path ProjectRootToMeddyprojectDirPath(
+        std::filesystem::path&& path);
 
-    MEDDYSDK_MEDDYPROJECT_EXPORT boost::filesystem::path MeddyprojectDirToProjectRootPath(
-        boost::filesystem::path&& path);
+    MEDDYSDK_MEDDYPROJECT_EXPORT std::filesystem::path MeddyprojectDirToProjectRootPath(
+        std::filesystem::path&& path);
 
-    MEDDYSDK_MEDDYPROJECT_EXPORT boost::filesystem::path MeddyprojectDirToManifestFilePath(
-        boost::filesystem::path&& path);
+    MEDDYSDK_MEDDYPROJECT_EXPORT std::filesystem::path MeddyprojectDirToManifestFilePath(
+        std::filesystem::path&& path);
 
     enum class ValidProjectRootQueryResult : unsigned char
     {
@@ -68,16 +68,16 @@ namespace MeddySDK
         Failed_FilesystemFailedToCreateManifestFile
     };
 
-    MEDDYSDK_MEDDYPROJECT_EXPORT bool IsValidProjectRoot(boost::filesystem::path&& projectRootPath);
+    MEDDYSDK_MEDDYPROJECT_EXPORT bool IsValidProjectRoot(std::filesystem::path&& projectRootPath);
 
     MEDDYSDK_MEDDYPROJECT_EXPORT ValidProjectRootQueryResult QueryWhetherPathIsValidProjectRoot(
-        boost::filesystem::path&& projectRootPath);
+        std::filesystem::path&& projectRootPath);
 
-    MEDDYSDK_MEDDYPROJECT_EXPORT UncertainProjectCreationResult TryCreateNewProject(boost::filesystem::path&& projectRootPath);
+    MEDDYSDK_MEDDYPROJECT_EXPORT UncertainProjectCreationResult TryCreateNewProject(std::filesystem::path&& projectRootPath);
 
-    MEDDYSDK_MEDDYPROJECT_EXPORT ProjectCreationResult CreateNewProject(boost::filesystem::path&& projectRootPath);
+    MEDDYSDK_MEDDYPROJECT_EXPORT ProjectCreationResult CreateNewProject(std::filesystem::path&& projectRootPath);
 
-    MEDDYSDK_MEDDYPROJECT_EXPORT bool IsMeddyprojectDirPath(const boost::filesystem::path& filesystemPath);
+    MEDDYSDK_MEDDYPROJECT_EXPORT bool IsMeddyprojectDirPath(const std::filesystem::path& filesystemPath);
 
     enum class Error_GetOuterMeddyprojectDirPath : unsigned char
     {
@@ -88,5 +88,5 @@ namespace MeddySDK
     /**
      * @brief Get path to the outer meddyproject's _meddyproject dir.
      */
-    MEDDYSDK_MEDDYPROJECT_EXPORT CppUtils::ExpectedResult<MeddySDK::Meddyproject, Error_GetOuterMeddyprojectDirPath> GetOuterMeddyproject(boost::filesystem::path&& filesystemPath);
+    MEDDYSDK_MEDDYPROJECT_EXPORT CppUtils::ExpectedResult<MeddySDK::Meddyproject, Error_GetOuterMeddyprojectDirPath> GetOuterMeddyproject(std::filesystem::path&& filesystemPath);
 }

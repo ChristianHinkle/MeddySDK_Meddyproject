@@ -2,8 +2,7 @@
 
 #include <MeddySDK/Meddyproject/Utils.h>
 
-#include <boost/filesystem/path.hpp>
-#include <boost/filesystem/operations.hpp>
+#include <filesystem>
 #include <utility>
 #include <cassert>
 #include <CppUtils/Misc/CharBufferString.h>
@@ -15,86 +14,86 @@
 #include <MeddySDK/Meddyproject/Json.h>
 #include <MeddySDK/Meddyproject/Json.inl>
 
-boost::filesystem::path MeddySDK::ProjectRootToManifestFilePath(
-    boost::filesystem::path&& path)
+std::filesystem::path MeddySDK::ProjectRootToManifestFilePath(
+    std::filesystem::path&& path)
 {
     return MeddyprojectDirToManifestFilePath(
         ProjectRootToMeddyprojectDirPath(
             std::move(path)));
 }
 
-boost::filesystem::path MeddySDK::ProjectRootToMeddyprojectDirPath(
-    boost::filesystem::path&& path)
+std::filesystem::path MeddySDK::ProjectRootToMeddyprojectDirPath(
+    std::filesystem::path&& path)
 {
     path.append(MeddyprojectDirString);
     return std::move(path);
 }
 
-boost::filesystem::path MeddySDK::MeddyprojectDirToProjectRootPath(
-    boost::filesystem::path&& path)
+std::filesystem::path MeddySDK::MeddyprojectDirToProjectRootPath(
+    std::filesystem::path&& path)
 {
     assert(IsMeddyprojectDirPath(path));
     return std::move(path).parent_path();
 }
 
-boost::filesystem::path MeddySDK::MeddyprojectDirToManifestFilePath(
-    boost::filesystem::path&& path)
+std::filesystem::path MeddySDK::MeddyprojectDirToManifestFilePath(
+    std::filesystem::path&& path)
 {
     assert(IsMeddyprojectDirPath(path));
     path.append(MeddyprojectManifestFilenameString);
     return std::move(path);
 }
 
-bool MeddySDK::IsValidProjectRoot(boost::filesystem::path&& projectRootPath)
+bool MeddySDK::IsValidProjectRoot(std::filesystem::path&& projectRootPath)
 {
     ValidProjectRootQueryResult result = QueryWhetherPathIsValidProjectRoot(std::move(projectRootPath));
     return result == ValidProjectRootQueryResult::Yes_IsValidProjectRoot;
 }
 
 MeddySDK::ValidProjectRootQueryResult MeddySDK::QueryWhetherPathIsValidProjectRoot(
-    boost::filesystem::path&& projectRootPath)
+    std::filesystem::path&& projectRootPath)
 {
     {
-        const boost::filesystem::file_status projectRootStatus = boost::filesystem::status(projectRootPath);
+        const std::filesystem::file_status projectRootStatus = std::filesystem::status(projectRootPath);
 
-        if (!boost::filesystem::exists(projectRootStatus))
+        if (!std::filesystem::exists(projectRootStatus))
         {
             return ValidProjectRootQueryResult::No_ProjectRootDoesNotExist;
         }
 
-        if (!boost::filesystem::is_directory(projectRootStatus))
+        if (!std::filesystem::is_directory(projectRootStatus))
         {
             return ValidProjectRootQueryResult::No_ProjectRootIsNonDirectory;
         }
     }
 
-    boost::filesystem::path meddyprojectDirPath = ProjectRootToMeddyprojectDirPath(std::move(projectRootPath));
+    std::filesystem::path meddyprojectDirPath = ProjectRootToMeddyprojectDirPath(std::move(projectRootPath));
 
     {
-        const boost::filesystem::file_status meddyprojectDirStatus = boost::filesystem::status(meddyprojectDirPath);
+        const std::filesystem::file_status meddyprojectDirStatus = std::filesystem::status(meddyprojectDirPath);
 
-        if (!boost::filesystem::exists(meddyprojectDirStatus))
+        if (!std::filesystem::exists(meddyprojectDirStatus))
         {
             return ValidProjectRootQueryResult::No_MeddyprojectDirDoesNotExist;
         }
 
-        if (!boost::filesystem::is_directory(meddyprojectDirStatus))
+        if (!std::filesystem::is_directory(meddyprojectDirStatus))
         {
             return ValidProjectRootQueryResult::No_MeddyprojectDirIsNonDirectory;
         }
     }
 
-    boost::filesystem::path manifestFilePath = MeddyprojectDirToManifestFilePath(std::move(meddyprojectDirPath));
+    std::filesystem::path manifestFilePath = MeddyprojectDirToManifestFilePath(std::move(meddyprojectDirPath));
 
     {
-        const boost::filesystem::file_status manifestFileStatus = boost::filesystem::status(manifestFilePath);
+        const std::filesystem::file_status manifestFileStatus = std::filesystem::status(manifestFilePath);
 
-        if (!boost::filesystem::exists(manifestFileStatus))
+        if (!std::filesystem::exists(manifestFileStatus))
         {
             return ValidProjectRootQueryResult::No_ManifestFileDoesNotExist;
         }
 
-        if (boost::filesystem::is_directory(manifestFileStatus))
+        if (std::filesystem::is_directory(manifestFileStatus))
         {
             return ValidProjectRootQueryResult::No_ManifestFileIsDirectory;
         }
@@ -104,9 +103,9 @@ MeddySDK::ValidProjectRootQueryResult MeddySDK::QueryWhetherPathIsValidProjectRo
 }
 
 MeddySDK::UncertainProjectCreationResult MeddySDK::TryCreateNewProject(
-    boost::filesystem::path&& projectRootPath)
+    std::filesystem::path&& projectRootPath)
 {
-    const ValidProjectRootQueryResult projectRootQueryResult = QueryWhetherPathIsValidProjectRoot(boost::filesystem::path(projectRootPath));
+    const ValidProjectRootQueryResult projectRootQueryResult = QueryWhetherPathIsValidProjectRoot(std::filesystem::path(projectRootPath));
 
     // We can only create a project if there is no _meddyproject directory whatsoever.
     if (projectRootQueryResult == ValidProjectRootQueryResult::No_MeddyprojectDirDoesNotExist)
@@ -143,19 +142,19 @@ MeddySDK::UncertainProjectCreationResult MeddySDK::TryCreateNewProject(
 }
 
 MeddySDK::ProjectCreationResult MeddySDK::CreateNewProject(
-    boost::filesystem::path&& projectRootPath)
+    std::filesystem::path&& projectRootPath)
 {
-    assert(QueryWhetherPathIsValidProjectRoot(boost::filesystem::path(projectRootPath)) == ValidProjectRootQueryResult::No_MeddyprojectDirDoesNotExist);
+    assert(QueryWhetherPathIsValidProjectRoot(std::filesystem::path(projectRootPath)) == ValidProjectRootQueryResult::No_MeddyprojectDirDoesNotExist);
 
-    boost::filesystem::path meddyprojectDirPath = ProjectRootToMeddyprojectDirPath(std::move(projectRootPath));
+    std::filesystem::path meddyprojectDirPath = ProjectRootToMeddyprojectDirPath(std::move(projectRootPath));
 
-    const bool didCreateMeddyprojectDir = boost::filesystem::create_directory(meddyprojectDirPath);
+    const bool didCreateMeddyprojectDir = std::filesystem::create_directory(meddyprojectDirPath);
     if (!didCreateMeddyprojectDir)
     {
         return ProjectCreationResult::Failed_FilesystemFailedToCreateMeddyprojectDir;
     }
 
-    boost::filesystem::path manifestFilePath = MeddyprojectDirToManifestFilePath(std::move(meddyprojectDirPath));
+    std::filesystem::path manifestFilePath = MeddyprojectDirToManifestFilePath(std::move(meddyprojectDirPath));
 
     const bool didCreateFile = CppUtils::TouchNewFile(manifestFilePath.native());
     if (!didCreateFile)
@@ -177,21 +176,21 @@ MeddySDK::ProjectCreationResult MeddySDK::CreateNewProject(
     return ProjectCreationResult::Success;
 }
 
-bool MeddySDK::IsMeddyprojectDirPath(const boost::filesystem::path& filesystemPath)
+bool MeddySDK::IsMeddyprojectDirPath(const std::filesystem::path& filesystemPath)
 {
-    boost::filesystem::path pathLeafName = filesystemPath.filename();
+    std::filesystem::path pathLeafName = filesystemPath.filename();
     return MeddySDK::IsPathEqualToString(pathLeafName, MeddyprojectDirString);
 }
 
-CppUtils::ExpectedResult<MeddySDK::Meddyproject, MeddySDK::Error_GetOuterMeddyprojectDirPath> MeddySDK::GetOuterMeddyproject(boost::filesystem::path&& filesystemPath)
+CppUtils::ExpectedResult<MeddySDK::Meddyproject, MeddySDK::Error_GetOuterMeddyprojectDirPath> MeddySDK::GetOuterMeddyproject(std::filesystem::path&& filesystemPath)
 {
     // TODO: Make version of this function which allows it not to exist.
-    if (!boost::filesystem::exists(filesystemPath))
+    if (!std::filesystem::exists(filesystemPath))
     {
         return Error_GetOuterMeddyprojectDirPath::PathDoesntExist;
     }
 
-    if (!boost::filesystem::is_directory(filesystemPath))
+    if (!std::filesystem::is_directory(filesystemPath))
     {
         assert(filesystemPath.has_parent_path()); // I believe this isn't possible, since we already determined it's not a directory, it must be in a directory.
 
@@ -199,10 +198,10 @@ CppUtils::ExpectedResult<MeddySDK::Meddyproject, MeddySDK::Error_GetOuterMeddypr
     }
 
     // Traverse up the parent directories until we see that a _meddyproject dir exists.
-    for (boost::filesystem::path currentDir = std::move(filesystemPath); currentDir.has_parent_path(); currentDir = std::move(currentDir).parent_path())
+    for (std::filesystem::path currentDir = std::move(filesystemPath); currentDir.has_parent_path(); currentDir = std::move(currentDir).parent_path())
     {
-        boost::filesystem::path potentialMeddyprojectDir = ProjectRootToMeddyprojectDirPath(boost::filesystem::path(currentDir));
-        if (boost::filesystem::exists(potentialMeddyprojectDir))
+        std::filesystem::path potentialMeddyprojectDir = ProjectRootToMeddyprojectDirPath(std::filesystem::path(currentDir));
+        if (std::filesystem::exists(potentialMeddyprojectDir))
         {
             return MeddySDK::Meddyproject{std::move(currentDir)};
         }

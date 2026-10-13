@@ -3,8 +3,7 @@
 #include <MeddySDK/Meddyproject/Meddyproject.h>
 
 #include <MeddySDK/Meddyproject/Utils.h>
-#include <boost/filesystem/path.hpp>
-#include <boost/filesystem/operations.hpp>
+#include <filesystem>
 #include <utility>
 #include <cassert>
 #include <fstream>
@@ -15,31 +14,31 @@
 #include <CppUtils/Core/String.h>
 #include <iostream>
 
-MeddySDK::Meddyproject::Meddyproject(boost::filesystem::path&& projectRootDir)
+MeddySDK::Meddyproject::Meddyproject(std::filesystem::path&& projectRootDir)
     : ProjectRootDir{std::move(projectRootDir)}
 {
-    if (!MeddySDK::IsValidProjectRoot(boost::filesystem::path{ProjectRootDir}))
+    if (!MeddySDK::IsValidProjectRoot(std::filesystem::path{ProjectRootDir}))
     {
         std::cerr << "Error: " << "Tried constructing a meddyproject struct with a non-meddyproject path!" << '\n';
         assert(false);
     }
 }
 
-const boost::filesystem::path& MeddySDK::Meddyproject::GetRootPath() const &
+const std::filesystem::path& MeddySDK::Meddyproject::GetRootPath() const &
 {
     return ProjectRootDir;
 }
-boost::filesystem::path MeddySDK::Meddyproject::GetRootPath() &&
+std::filesystem::path MeddySDK::Meddyproject::GetRootPath() &&
 {
-    boost::filesystem::path& result = const_cast<boost::filesystem::path&>(GetRootPath());
+    std::filesystem::path& result = const_cast<std::filesystem::path&>(GetRootPath());
     return std::move(result);
 }
 
-boost::filesystem::path MeddySDK::Meddyproject::GetMeddyprojectDirPath() const &
+std::filesystem::path MeddySDK::Meddyproject::GetMeddyprojectDirPath() const &
 {
-    return MeddySDK::ProjectRootToMeddyprojectDirPath(boost::filesystem::path{ProjectRootDir});
+    return MeddySDK::ProjectRootToMeddyprojectDirPath(std::filesystem::path{ProjectRootDir});
 }
-boost::filesystem::path MeddySDK::Meddyproject::GetMeddyprojectDirPath() &&
+std::filesystem::path MeddySDK::Meddyproject::GetMeddyprojectDirPath() &&
 {
     return MeddySDK::ProjectRootToMeddyprojectDirPath(std::move(ProjectRootDir));
 }
