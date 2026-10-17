@@ -198,7 +198,8 @@ CppUtils::ExpectedResult<MeddySDK::Meddyproject, MeddySDK::Error_GetOuterMeddypr
     }
 
     // Traverse up the parent directories until we see that a _meddyproject dir exists.
-    for (std::filesystem::path currentDir = std::move(filesystemPath); currentDir.has_parent_path(); currentDir = std::move(currentDir).parent_path())
+    // TODO: [todo][techdebt] Fix loop condition to also allow the iteration on the root directory if it gets to that point.
+    for (std::filesystem::path currentDir = std::move(filesystemPath); !CppUtils::IsRootPath(currentDir); currentDir = std::move(currentDir).parent_path())
     {
         std::filesystem::path potentialMeddyprojectDir = ProjectRootToMeddyprojectDirPath(std::filesystem::path(currentDir));
         if (std::filesystem::exists(potentialMeddyprojectDir))
